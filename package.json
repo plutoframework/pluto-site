@@ -1,0 +1,16 @@
+{
+  "name": "pluto-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The Pluto framework static website",
+  "scripts": {
+    "check": "python3 scripts/check.py",
+    "serve": "python3 -m http.server 4173 --bind 127.0.0.1 --directory ..",
+    "capture": "node scripts/capture.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.64.1",
+    "prettier": "^3.9.10"
+  }
+}

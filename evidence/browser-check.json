@@ -1,0 +1,46 @@
+{
+  "url": "http://127.0.0.1:4173/pluto-site/",
+  "desktop": {
+    "width": 1440,
+    "scroll": 1440,
+    "fonts": [
+      {
+        "family": "Bricolage",
+        "status": "loaded"
+      },
+      {
+        "family": "Manrope",
+        "status": "loaded"
+      },
+      {
+        "family": "Plex",
+        "status": "loaded"
+      }
+    ]
+  },
+  "widths": [
+    320,
+    390,
+    768,
+    1024,
+    1440
+  ],
+  "errors": [],
+  "interactions": [
+    "code tabs",
+    "arrow keys and Home",
+    "copy success",
+    "copy failure/manual selection",
+    "mobile menu",
+    "Escape focus return",
+    "quickstart anchor",
+    "guide disclosure",
+    "skip link"
+  ],
+  "motion": {
+    "reduced": true,
+    "duration": "1e-05s",
+    "focus": "BODY"
+  },
+  "focusOutline": "solid"
+}

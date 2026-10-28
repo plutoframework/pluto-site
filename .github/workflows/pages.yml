@@ -1,0 +1,44 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check static site
+        run: python3 scripts/check.py
+      - uses: actions/configure-pages@v5
+      - name: Assemble public files
+        run: |
+          mkdir _site
+          cp index.html styles.css responsive.css script.js robots.txt sitemap.xml _site/
+          cp -R assets _site/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

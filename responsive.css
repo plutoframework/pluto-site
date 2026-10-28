@@ -1,0 +1,513 @@
+@media (min-width: 1500px) {
+  .hero {
+    min-height: 770px;
+  }
+  .hero-art {
+    margin-left: -35px;
+  }
+}
+@media (max-width: 1150px) {
+  .page-grid,
+  .nav-shell {
+    width: calc(100% - 64px);
+  }
+  .nav-shell {
+    padding-inline: 25px;
+  }
+  nav {
+    gap: 21px;
+  }
+  .nav-source {
+    margin-left: 0;
+  }
+  .hero-copy {
+    padding-left: 30px;
+  }
+  h1 {
+    font-size: 6.5vw;
+  }
+  .hero {
+    min-height: 650px;
+  }
+  .hero-art {
+    margin-left: -10px;
+  }
+  .hero-actions {
+    gap: 20px;
+  }
+  .hero-actions .button {
+    gap: 20px;
+    padding-inline: 18px;
+  }
+  .section-space {
+    padding: 80px 30px;
+  }
+  .approach {
+    gap: 35px;
+  }
+  .practice > .page-grid {
+    gap: 35px;
+    grid-template-columns: 0.7fr 1.3fr;
+  }
+  .demo-tabs button {
+    padding-inline: 12px;
+    font-size: 9px;
+  }
+  .demo-panel pre {
+    font-size: 10px;
+    padding-inline: 20px;
+  }
+  .ecosystem {
+    gap: 35px;
+  }
+  .quickstart .page-grid {
+    gap: 35px;
+  }
+  .spec-strip span {
+    padding-inline: 20px;
+    font-size: 9px;
+  }
+  .spec-strip b {
+    margin-right: 10px;
+  }
+  .foundation-note {
+    align-items: start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .closing {
+    padding-inline: 30px;
+  }
+  footer p {
+    display: none;
+  }
+}
+@media (max-width: 850px) {
+  .page-grid,
+  .nav-shell {
+    width: calc(100% - 40px);
+  }
+  .nav-shell {
+    min-height: 76px;
+    padding-inline: 22px;
+  }
+  .brand {
+    font-size: 35px;
+  }
+  .brand svg {
+    width: 27px;
+  }
+  .menu-toggle {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: none;
+    border: 0;
+    font-size: 12px;
+    padding: 10px 0 10px 10px;
+  }
+  .menu-toggle span {
+    font: 24px var(--mono);
+    color: var(--accent);
+  }
+  .menu-toggle[aria-expanded="true"] span {
+    transform: rotate(45deg);
+  }
+  nav {
+    display: none;
+    position: absolute;
+    top: 76px;
+    left: 20px;
+    right: 20px;
+    padding: 25px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-top: 0;
+    box-shadow: 0 12px 20px #172e3b0d;
+  }
+  nav.is-open {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+  nav > a {
+    padding: 12px 0;
+  }
+  nav .button {
+    margin-top: 14px;
+    padding: 14px 18px;
+  }
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hero-copy {
+    padding: 50px 32px 0;
+  }
+  h1 {
+    font-size: clamp(58px, 9.7vw, 82px);
+  }
+  .hero-description {
+    max-width: 395px;
+  }
+  .hero-art {
+    max-width: 540px;
+    width: 100%;
+    margin: -10px auto 35px;
+    padding: 0 25px;
+  }
+  .hero-footnote {
+    margin-top: 30px;
+  }
+  .art-caption {
+    padding-top: 0;
+  }
+  .spec-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .spec-strip span {
+    padding: 21px;
+  }
+  .spec-strip span:nth-child(2) {
+    border-right: 0;
+  }
+  .spec-strip span:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+  .section-space {
+    padding: 65px 30px;
+  }
+  .approach {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .approach-intro {
+    padding-top: 0;
+    max-width: 550px;
+  }
+  .principles {
+    margin-top: 13px;
+  }
+  .principles article {
+    padding-inline: 20px;
+  }
+  .principles h3 {
+    font-size: 22px;
+  }
+  .principles p {
+    font-size: 12px;
+    min-height: 170px;
+  }
+  .mini-path {
+    gap: 6px;
+    font-size: 7px;
+  }
+  .mini-wiring {
+    font-size: 9px;
+  }
+  .practice > .page-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .practice-intro > p:not(.eyebrow) {
+    max-width: 420px;
+  }
+  .signal-diagram {
+    display: none;
+  }
+  .code-demo {
+    max-width: 100%;
+  }
+  .demo-panel pre {
+    font-size: 12px;
+  }
+  .demo-tabs button {
+    font-size: 10px;
+  }
+  .ecosystem {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .ecosystem-heading {
+    position: relative;
+  }
+  .ecosystem-heading > p:not(.eyebrow) {
+    max-width: 350px;
+  }
+  .ecosystem-orbit {
+    display: none;
+  }
+  .ecosystem-list p {
+    max-width: 100%;
+  }
+  .quickstart .page-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .install-command code {
+    font-size: 11px;
+  }
+  .quickstart-heading .requirements {
+    margin-top: 25px !important;
+  }
+  .closing {
+    grid-template-columns: 1fr;
+    padding-block: 65px;
+  }
+  .closing > div {
+    max-width: 440px;
+    margin-top: 8px;
+  }
+  footer {
+    padding-inline: 25px;
+  }
+  footer > div {
+    gap: 18px;
+  }
+}
+@media (max-width: 540px) {
+  html {
+    scroll-padding-top: 92px;
+  }
+  .page-grid,
+  .nav-shell {
+    width: calc(100% - 32px);
+  }
+  .nav-shell {
+    padding-inline: 18px;
+    min-height: 72px;
+  }
+  nav {
+    top: 72px;
+    left: 16px;
+    right: 16px;
+  }
+  .hero-copy {
+    padding: 38px 20px 0;
+  }
+  .preview-label {
+    font-size: 8px;
+    margin-bottom: 29px;
+    gap: 9px;
+  }
+  h1 {
+    font-size: clamp(34px, 10.4vw, 58px);
+    line-height: 1.06;
+  }
+  .hero-description {
+    font-size: 13px;
+    line-height: 1.9;
+    margin-top: 25px;
+    max-width: 285px;
+  }
+  .hero-actions {
+    gap: 21px;
+    align-items: start;
+    flex-direction: column;
+    margin-top: 26px;
+  }
+  .hero-actions .button {
+    font-size: 12px;
+    padding: 14px 18px;
+    gap: 30px;
+  }
+  .text-link {
+    font-size: 11px;
+  }
+  .hero-footnote {
+    font-size: 7px;
+    margin-top: 28px;
+  }
+  .hero-art {
+    margin-top: 0;
+    padding-inline: 7px;
+    margin-bottom: 26px;
+  }
+  .art-caption {
+    gap: 15px;
+    font-size: 6px;
+    padding-inline: 13px;
+  }
+  .art-caption span:last-child {
+    max-width: 140px;
+    text-align: right;
+  }
+  .spec-strip span {
+    font-size: 8px;
+    padding: 19px 15px;
+  }
+  .spec-strip b {
+    margin-right: 7px;
+  }
+  .section-space {
+    padding: 57px 20px;
+  }
+  .eyebrow {
+    font-size: 9px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 43px;
+  }
+  .large-copy {
+    font-size: 25px;
+  }
+  .approach-intro > p:last-child {
+    font-size: 13px;
+  }
+  .principles {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .principles article {
+    padding: 23px 0 0;
+    border-right: 0;
+  }
+  .principle-number {
+    margin-bottom: 20px;
+  }
+  .principles h3 {
+    font-size: 26px;
+    margin-bottom: 13px;
+  }
+  .principles p {
+    min-height: 0;
+    max-width: 100%;
+    font-size: 13px;
+  }
+  .mini-path,
+  .mini-wiring,
+  .mini-ruler {
+    height: 36px;
+    margin-top: 15px;
+    font-size: 10px;
+  }
+  .mini-path {
+    gap: 13px;
+    font-size: 9px;
+  }
+  .practice h2,
+  .quickstart h2 {
+    font-size: 49px;
+  }
+  .practice-intro > p:not(.eyebrow) {
+    font-size: 13px;
+  }
+  .demo-tabs button {
+    font-size: 8px;
+    padding: 16px 7px;
+  }
+  .code-bar {
+    padding: 14px;
+    font-size: 7px;
+  }
+  .code-language {
+    font-size: 7px;
+  }
+  .demo-panel pre {
+    padding: 21px 14px;
+    font-size: 9px;
+    line-height: 2;
+  }
+  .demo-panel {
+    min-height: 386px;
+  }
+  .code-note {
+    padding: 15px;
+    font-size: 9px;
+  }
+  .ecosystem h2 {
+    font-size: 43px;
+  }
+  .ecosystem-list > a {
+    grid-template-columns: 19px 1fr 18px;
+    gap: 10px;
+    padding-block: 24px;
+  }
+  .ecosystem-list h3 {
+    font-size: 25px;
+  }
+  .ecosystem-list p {
+    font-size: 12px;
+  }
+  .foundation-note p {
+    font-size: 10px;
+    line-height: 2.3;
+  }
+  .foundation-note p span {
+    padding-inline: 5px;
+  }
+  .step {
+    grid-template-columns: 20px 1fr;
+    gap: 9px;
+  }
+  .step h3 {
+    font-size: 23px;
+  }
+  .step p {
+    font-size: 11px;
+  }
+  .install-command {
+    padding: 12px;
+    flex-wrap: wrap;
+  }
+  .install-command code {
+    font-size: 10px;
+    flex-basis: 100%;
+  }
+  .copy-button {
+    padding: 4px 0;
+  }
+  .quick-code pre {
+    font-size: 9px;
+    padding: 13px;
+  }
+  summary {
+    font-size: 12px;
+  }
+  details > p {
+    font-size: 12px;
+  }
+  .closing {
+    padding: 55px 20px;
+    gap: 26px;
+  }
+  .closing h2 {
+    font-size: 57px;
+  }
+  .closing-star {
+    right: 18px;
+    top: 100px;
+    font-size: 30px;
+  }
+  .closing .eyebrow {
+    font-size: 8px;
+  }
+  .closing > div p {
+    font-size: 13px;
+  }
+  footer {
+    align-items: start;
+    flex-direction: column;
+    padding: 30px 20px;
+    gap: 22px;
+  }
+  footer > div {
+    width: 100%;
+    justify-content: space-between;
+    font-size: 9px;
+    gap: 9px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
