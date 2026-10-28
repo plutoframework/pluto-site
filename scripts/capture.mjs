@@ -136,6 +136,9 @@ try {
   await page.screenshot({ path: "evidence/mobile.png" });
   await page.screenshot({ path: "evidence/mobile-full.png", fullPage: true });
   await page.locator("#tab-scaffold").evaluate((element) => element.blur());
+  await page.addStyleTag({
+    content: ".site-header, .skip-link { visibility: hidden !important; }",
+  });
   await page
     .locator(".practice")
     .screenshot({ path: "evidence/mobile-code.png" });
@@ -167,6 +170,7 @@ try {
   const svg = await page.locator(".orbital").evaluate((node) => node.outerHTML);
   const social = await context.newPage();
   await social.setViewportSize({ width: 1200, height: 630 });
+  await social.goto(url, { waitUntil: "networkidle" });
   await social.setContent(
     `<!doctype html><html><head>
     <link rel="stylesheet" href="${url}styles.css">
@@ -188,7 +192,11 @@ try {
     </div></body></html>`,
     { waitUntil: "networkidle" },
   );
-  await social.evaluate(() => document.fonts.ready);
+  const socialFonts = await social.evaluate(async () => {
+    await document.fonts.ready;
+    return [...document.fonts].every((font) => font.status === "loaded");
+  });
+  assert.equal(socialFonts, true, "Social preview fonts failed to load");
   await social.screenshot({ path: "assets/social.png" });
   const report = {
     url,
