@@ -1,6 +1,6 @@
 # Pluto site
 
-The public, static product site for the early Pluto Go API framework and CLI.
+The public, static product site for the Pluto Go API framework and CLI, including its separate React frontend scaffold.
 
 - Website: <https://plutoframework.github.io/pluto-site/>
 - Repository: <https://github.com/plutoframework/pluto-site>
@@ -57,8 +57,7 @@ commands and endpoint templates. Examples are marked as excerpts where code
 is omitted. The CLI is a changing preview: generated operations intentionally
 remain unimplemented, authentication and role grants require application wiring,
 and migrations remain explicit. The site makes no benchmark, adoption,
-independent audit or production-readiness claims. It does not advertise ongoing
-credential or pagination/idempotency work as shipped features.
+independent audit or production-readiness claims. Frontend copy is verified against CLI v0.7.0 (9cd36a1), its README, docs/THEMES.md and docs/COMPONENT-REGISTRIES.md. It covers native/HeroUI v3/shadcn profiles, typed bindings, the build-time theme pipeline and local registries. Auth screens require an already enabled local-credential backend. Registry packs are local; existing frontend source is never implicitly migrated.
 
 ## Deployment
 
@@ -84,6 +83,8 @@ Browser captures and the machine-readable check report are in `evidence/`:
 - [Full desktop page](evidence/desktop-full.png)
 - [Mobile hero](evidence/mobile.png)
 - [Full mobile page](evidence/mobile-full.png)
+- [Frontend desktop](evidence/frontend-desktop.png)
+- [Frontend mobile](evidence/frontend-mobile.png)
 - [Desktop code demo](evidence/code-demo.png)
 - [Mobile code demo](evidence/mobile-code.png)
 - [Mobile guide](evidence/mobile-guide.png)

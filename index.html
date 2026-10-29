@@ -7,7 +7,7 @@
     <title>Pluto — A small framework for your next big idea.</title>
     <meta
       name="description"
-      content="An opinionated Go API framework and CLI. Clear conventions, explicit dependencies, and room for your ideas. Explore the early preview."
+      content="An opinionated Go API framework and CLI. Clear conventions, explicit dependencies, and room for your ideas. Now with React scaffolding, TOML themes and local component registries."
     />
     <link rel="canonical" href="https://plutoframework.github.io/pluto-site/" />
     <meta property="og:type" content="website" />
@@ -17,7 +17,7 @@
     />
     <meta
       property="og:description"
-      content="An opinionated Go API framework and CLI for humans, agents, and the ideas ahead."
+      content="Go APIs, typed React frontends, TOML themes and local component registries. A small framework with a wider orbit."
     />
     <meta
       property="og:url"
@@ -68,7 +68,7 @@
           Menu <span aria-hidden="true">+</span>
         </button>
         <nav id="site-nav" aria-label="Main navigation">
-          <a href="#philosophy">The approach</a>
+          <a href="#frontend">Frontend</a>
           <a href="#in-practice">In practice</a>
           <a href="#ecosystem">Ecosystem</a>
           <a class="nav-source" href="https://github.com/plutoframework"
@@ -83,8 +83,8 @@
     <main id="main">
       <section class="hero page-grid" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <a class="preview-label" href="#preview-note">
-            <span class="status-dot"></span> GO-NATIVE / EARLY PREVIEW
+          <a class="preview-label" href="#frontend">
+            <span class="status-dot"></span> CLI v0.7.0 / A WIDER ORBIT
             <span aria-hidden="true">↗</span>
           </a>
           <h1 id="hero-title">
@@ -92,8 +92,8 @@
           </h1>
           <p class="hero-description">
             Less ceremony. More lift.<br />
-            An opinionated Go API framework and CLI for humans, agents, and the
-            ideas ahead.
+            An API-first Go framework and CLI. Now with a separate, typed React
+            frontend, TOML themes, and components you can make your own.
           </p>
           <div class="hero-actions">
             <a class="button" href="#quickstart"
@@ -289,7 +289,7 @@
       <div class="spec-strip page-grid" aria-label="Framework foundations">
         <span><b>01</b> Go-native</span><span><b>02</b> API-first</span>
         <span><b>03</b> Explicit by default</span
-        ><span><b>04</b> Frontend-independent</span>
+        ><span><b>04</b> React-ready</span>
       </div>
       <section class="approach page-grid section-space" id="philosophy">
         <div class="section-heading">
@@ -497,6 +497,149 @@ output, err := operation.Execute(
           </div>
         </div>
       </section>
+      <section
+        class="frontend page-grid section-space"
+        id="frontend"
+        aria-labelledby="frontend-title"
+      >
+        <div class="frontend-heading">
+          <p class="eyebrow">NEW IN ORBIT / CLI v0.7.0</p>
+          <h2 id="frontend-title">
+            Your API.<br /><span>A whole new surface.</span>
+          </h2>
+          <p class="large-copy">Go at the center. React in orbit.</p>
+          <p>
+            Scaffold a separate React + TypeScript app with TanStack Router and
+            Query. Generate typed bindings from your Go OpenAPI contract, then
+            build inside explicit feature boundaries. Choose native controls,
+            HeroUI v3 or shadcn; Pluto saves the profile in
+            <code>pluto.toml</code>.
+          </p>
+          <a
+            class="text-link"
+            href="https://github.com/plutoframework/cli#react-frontend-and-ui-libraries"
+            >Explore frontend scaffolding ↗</a
+          >
+        </div>
+        <div class="flight-plan">
+          <div class="code-bar">
+            <span>terminal / new project</span><span>REACT + GO</span>
+          </div>
+          <pre><code id="frontend-command"><span class="command">pluto</span> init orbital --local-credentials
+cd orbital
+<span class="command">pluto</span> frontend init --ui heroui-v3 --auth
+<span class="command">pluto</span> frontend add component purchase-form --kind form</code></pre>
+          <button
+            class="copy-button"
+            data-copy="frontend-command"
+            aria-label="Copy frontend scaffold commands"
+          >
+            <span aria-hidden="true">⧉</span> Copy
+          </button>
+          <p>
+            Raw commands for automation. A Bubble Tea wizard for terminal
+            exploration: run <code>pluto frontend</code> without arguments.
+          </p>
+          <div
+            class="contract-orbit"
+            aria-label="Go OpenAPI generates TypeScript bindings consumed by React features"
+          >
+            <span>GO / OPENAPI</span><b aria-hidden="true">→</b
+            ><span>TYPED BINDINGS</span><b aria-hidden="true">→</b
+            ><span>REACT FEATURES</span>
+          </div>
+          <p class="frontend-note">
+            Auth screens require an existing local-credential backend.
+            <code>--auth</code> never enables credential issuance. Add screens
+            later with <code>pluto frontend add auth</code>.
+          </p>
+        </div>
+        <div class="surface-grid">
+          <article class="surface-card theme-card">
+            <p class="eyebrow">01 / SET THE ATMOSPHERE</p>
+            <h3>One manifest. Your palette.</h3>
+            <p>
+              Light, dark, or system mode. Semantic hex colors, radius and font
+              family flow through adapters for all three UI profiles.
+            </p>
+            <div class="palette" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><span>LIGHT ↔ DARK</span>
+            </div>
+            <pre><code>[frontend.theme]
+mode = "system"
+radius = "0.75rem"
+
+[frontend.theme.light]
+accent = "#BE4323"
+
+[frontend.theme.dark]
+accent = "#FF9C73"</code></pre>
+            <p>
+              Profile defaults → generated tokens → authored CSS. Vite
+              regenerates on start, build and TOML changes. Your override
+              stylesheet stays yours; backend secrets never become browser
+              assets.
+            </p>
+            <p>
+              <code>pluto frontend theme</code><br /><code
+                >pluto frontend theme --check</code
+              >
+            </p>
+            <a
+              class="text-link"
+              href="https://github.com/plutoframework/cli/blob/main/docs/THEMES.md"
+              >Read the theme guide ↗</a
+            >
+          </article>
+          <article class="surface-card registry-card">
+            <p class="eyebrow">02 / EXTEND YOUR ORBIT · v0.7</p>
+            <h3>Your components. A local launchpad.</h3>
+            <p>
+              Keep reusable compositions in a local registry. A declarative
+              <code>registry.toml</code> packages component files, tests and
+              styles, exact npm pins, and dependencies on other local
+              components.
+            </p>
+            <pre><code>[frontend.registries.company]
+path = ".pluto/components"</code></pre>
+            <pre><code id="registry-command">pluto frontend components list
+pluto frontend add component purchase-review \
+  --from company/approval-panel --dry-run</code></pre>
+            <button
+              class="copy-button"
+              data-copy="registry-command"
+              aria-label="Copy local registry preview commands"
+            >
+              <span aria-hidden="true">⧉</span> Copy
+            </button>
+            <p>
+              To try it, copy <code>examples/component-registry</code> from the
+              CLI repository into <code>.pluto/components</code>. Preview first;
+              remove <code>--dry-run</code> to install. The included HeroUI
+              approval panel has an interaction test validated in generated
+              consumers.
+            </p>
+            <p>
+              Source SHA-256 provenance tracks what you installed. Preflight
+              checks catch file conflicts, profile mismatches, cycles, unsafe
+              paths, symlinks and unsupported hooks. Authored files are never
+              overwritten.
+            </p>
+            <a
+              class="text-link"
+              href="https://github.com/plutoframework/cli/blob/main/docs/COMPONENT-REGISTRIES.md"
+              >Build a local registry ↗</a
+            >
+          </article>
+        </div>
+        <p class="surface-scope">
+          CURRENT FLIGHT ENVELOPE / Registries are local. Remote packs,
+          arbitrary UI-library profiles, custom input schemas and shadcn
+          registry imports are not supported. Existing frontend files require
+          explicit adoption of the theme pipeline; changing a profile does not
+          migrate components.
+        </p>
+      </section>
       <section class="ecosystem page-grid section-space" id="ecosystem">
         <div class="ecosystem-heading">
           <p class="eyebrow">03 / A CONNECTED SYSTEM</p>
@@ -537,7 +680,7 @@ output, err := operation.Execute(
               <h3>Pluto CLI</h3>
               <p>
                 Cobra-powered scaffolding, project metadata, formatting,
-                verification and OpenAPI generation.
+                verification, OpenAPI generation and React frontend tooling.
               </p>
             </div>
             <span class="external" aria-label="View source">↗</span>
@@ -590,7 +733,7 @@ output, err := operation.Execute(
             <p class="eyebrow">04 / PRE-FLIGHT CHECKLIST</p>
             <h2>Your next idea<br />starts <em>here.</em></h2>
             <p>A Go toolchain. A blank directory.<br />A little curiosity.</p>
-            <p class="requirements">REQUIRES GO 1.25.5+ AND GIT</p>
+            <p class="requirements">GO 1.25.5+ + GIT / FRONTEND: NODE 24</p>
             <a
               class="text-link light-link"
               href="https://github.com/plutoframework/cli#readme"
@@ -605,7 +748,7 @@ output, err := operation.Execute(
                 <p>Make sure your Go binary directory is on PATH.</p>
                 <div class="install-command">
                   <!-- prettier-ignore -->
-                  <code id="install-text">go install github.com/plutoframework/cli/cmd/pluto@latest</code>
+                  <code id="install-text">go install github.com/plutoframework/cli/cmd/pluto@v0.7.0</code>
                   <button
                     class="copy-button"
                     data-copy="install-text"
@@ -654,9 +797,11 @@ go run ./cmd/api</code></pre>
               <p>
                 A Go/Chi application, endpoint models and operations, a TOML
                 project manifest, tests, OpenAPI output, and configurable
-                Docker, mise and fnox development presets. Use
-                <code>--no-docker</code>, <code>--no-mise</code> or
-                <code>--no-fnox</code> on init to omit individual presets.
+                Docker, mise and fnox development presets. Optionally scaffold a
+                separate React app with typed API bindings using
+                <code>pluto frontend init</code>. Use <code>--no-docker</code>,
+                <code>--no-mise</code> or <code>--no-fnox</code> on init to omit
+                individual presets.
               </p>
             </details>
             <details>
@@ -716,7 +861,7 @@ go run ./cmd/api</code></pre>
       <div>
         <a href="#quickstart">Quickstart</a>
         <a href="https://github.com/plutoframework/pluto-example"
-          >Example API ↗</a
+          >Example app ↗</a
         >
         <a href="https://github.com/plutoframework/pluto-site">Site source ↗</a>
       </div>

@@ -78,7 +78,11 @@ for (const button of document.querySelectorAll("[data-copy]")) {
       }
       await navigator.clipboard.writeText(source.textContent.trim());
       button.innerHTML = '<span aria-hidden="true">✓</span> Copied';
-      showStatus("Install command copied. Ready for your terminal.");
+      showStatus(
+        button.dataset.copy === "install-text"
+          ? "Install command copied. Ready for your terminal."
+          : "Commands copied. Ready for your terminal.",
+      );
       setTimeout(() => {
         button.innerHTML = '<span aria-hidden="true">⧉</span> Copy';
       }, 3000);

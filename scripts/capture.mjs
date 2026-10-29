@@ -74,8 +74,28 @@ try {
     .waitFor();
   assert.equal(
     await page.evaluate(() => navigator.clipboard.readText()),
-    "go install github.com/plutoframework/cli/cmd/pluto@latest",
+    "go install github.com/plutoframework/cli/cmd/pluto@v0.7.0",
   );
+  for (const [label, id] of [
+    ["Copy frontend scaffold commands", "frontend-command"],
+    ["Copy local registry preview commands", "registry-command"],
+  ]) {
+    await page.getByRole("button", { name: label }).click();
+    assert.equal(
+      await page.evaluate(() => navigator.clipboard.readText()),
+      (await page.locator(`#${id}`).textContent()).trim(),
+    );
+  }
+  await page.locator("#frontend").screenshot({
+    path: "evidence/frontend-desktop.png",
+    style:
+      ".site-header, .skip-link, .copy-status { visibility: hidden !important; }",
+  });
+  for (const href of await page
+    .locator('a[href^="#"]')
+    .evaluateAll((nodes) => nodes.map((n) => n.hash))) {
+    assert.equal(await page.locator(href).count(), 1, `Broken anchor ${href}`);
+  }
   await page.evaluate(() => {
     Object.defineProperty(navigator, "clipboard", {
       configurable: true,
@@ -135,6 +155,11 @@ try {
   await layout(390, 844);
   await page.screenshot({ path: "evidence/mobile.png" });
   await page.screenshot({ path: "evidence/mobile-full.png", fullPage: true });
+  await page.locator("#frontend").screenshot({
+    path: "evidence/frontend-mobile.png",
+    style:
+      ".site-header, .skip-link, .copy-status { visibility: hidden !important; }",
+  });
   await page.locator("#tab-scaffold").evaluate((element) => element.blur());
   await page.addStyleTag({
     content: ".site-header, .skip-link { visibility: hidden !important; }",
@@ -204,6 +229,8 @@ try {
     widths: [320, 390, 768, 1024, 1440],
     errors,
     interactions: [
+      "frontend scaffold and local registry clipboard contents",
+      "internal navigation targets",
       "code tabs",
       "arrow keys and Home",
       "copy success",

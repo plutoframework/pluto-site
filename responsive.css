@@ -511,3 +511,151 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* A new surface in the same mission atlas. */
+.frontend {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 48px;
+}
+.frontend-heading > p:not(.eyebrow) {
+  margin-top: 24px;
+  max-width: 540px;
+}
+.frontend-heading .text-link {
+  display: inline-block;
+  margin-top: 24px;
+}
+.flight-plan {
+  background: var(--night);
+  color: var(--paper);
+  padding: 28px;
+  min-width: 0;
+  align-self: start;
+}
+.frontend pre {
+  overflow-x: auto;
+  font: 12px/1.9 var(--mono);
+  margin: 24px 0;
+  padding-bottom: 8px;
+}
+.frontend code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+}
+.frontend pre code {
+  font-size: inherit;
+}
+.flight-plan > p {
+  margin-top: 22px;
+  font-size: 13px;
+}
+.frontend .copy-button {
+  position: static;
+  margin-bottom: 8px;
+}
+.contract-orbit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 24px 0;
+  margin-top: 20px;
+  border-block: 1px solid #49606b;
+  font: 10px/1.7 var(--mono);
+}
+.contract-orbit b {
+  color: var(--orange);
+}
+.frontend-note {
+  color: #c1ced3;
+}
+.surface-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--line);
+}
+.surface-card {
+  padding: 36px;
+  min-width: 0;
+}
+.surface-card + .surface-card {
+  border-left: 1px solid var(--line);
+}
+.surface-card h3 {
+  font: 600 30px/1.15 var(--display);
+  margin: 18px 0;
+}
+.surface-card p + p {
+  margin-top: 20px;
+}
+.surface-card pre {
+  background: #e8e8df;
+  padding: 22px;
+}
+.surface-card .text-link {
+  display: inline-block;
+  margin-top: 24px;
+}
+.palette {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+.palette i {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: #f4f2e9;
+}
+.palette i:nth-child(2) {
+  background: #be4323;
+}
+.palette i:nth-child(3) {
+  background: #102632;
+}
+.palette i:nth-child(4) {
+  background: #ff9c73;
+}
+.palette span {
+  font: 10px var(--mono);
+  margin-left: 8px;
+}
+.surface-scope {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  color: var(--muted);
+  border-left: 2px solid var(--accent);
+  padding-left: 20px;
+}
+@media (max-width: 850px) {
+  .frontend {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .surface-grid {
+    grid-template-columns: 1fr;
+  }
+  .surface-card + .surface-card {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .surface-card,
+  .flight-plan {
+    padding: 24px;
+  }
+}
+.surface-card .copy-button {
+  color: var(--ink);
+  border: 1px solid var(--muted);
+  padding: 10px 16px;
+}
+@media (max-width: 600px) {
+  .frontend pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}

@@ -27,6 +27,8 @@
   ],
   "errors": [],
   "interactions": [
+    "frontend scaffold and local registry clipboard contents",
+    "internal navigation targets",
     "code tabs",
     "arrow keys and Home",
     "copy success",
