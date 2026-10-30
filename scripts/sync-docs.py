@@ -12,6 +12,7 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = [
     ('cli/reference', 'CLI reference', 'pluto-cli', 'README.md'),
+    ('frontend/state', 'Typed UI state', 'pluto-frontend', 'README.md'),
     ('frontend/profiles', 'React and UI libraries', 'pluto-cli', 'docs/FRONTEND.md'),
     ('frontend/themes', 'TOML themes', 'pluto-cli', 'docs/THEMES.md'),
     ('frontend/registries', 'Custom component registries', 'pluto-cli', 'docs/COMPONENT-REGISTRIES.md'),

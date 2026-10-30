@@ -3,14 +3,14 @@ title: "CLI reference"
 description: "CLI reference for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.11.0** · [Source at `1dc5bb6`](https://github.com/plutoframework/cli/blob/1dc5bb615867a932bf896ccaa6f491988b143231/README.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.12.1** · [Source at `1d700c5`](https://github.com/plutoframework/cli/blob/1d700c5ad2bca33469460f249bf7de39dc08c5fb/README.md). Commands and integration limits below belong to this revision.
 
 
 A working Cobra generator for small Go/Chi APIs. The application uses provisional
 app-local primitives, **not an imaginary published Pluto framework**. The module is
 `github.com/plutoframework/cli`. Go 1.25.5+ and Git are required.
 The executable is named `pluto`; install the release with
-`go install github.com/plutoframework/cli/cmd/pluto@v0.11.0`.
+`go install github.com/plutoframework/cli/cmd/pluto@v0.12.1`.
 
 ```sh
 git clone https://github.com/plutoframework/cli.git pluto-cli
@@ -599,7 +599,7 @@ pluto frontend add component purchase-review --from company/approval-panel --dry
 pluto frontend add component purchase-review --from company/approval-panel
 ```
 
-See [the registry contract](https://github.com/plutoframework/cli/blob/1dc5bb615867a932bf896ccaa6f491988b143231/docs/COMPONENT-REGISTRIES.md) and the runnable HeroUI
+See [the registry contract](https://github.com/plutoframework/cli/blob/1d700c5ad2bca33469460f249bf7de39dc08c5fb/docs/COMPONENT-REGISTRIES.md) and the runnable HeroUI
 registry in examples/component-registry. This first version supports local,
 declarative multi-file items, exact npm pins, dependency graphs, saved source
 digests and optional curated shadcn primitives. It preserves authored code and
@@ -691,3 +691,30 @@ pluto fmt
 pluto vet
 go test ./internal/domain/purchases -run '^$' -fuzz FuzzLifecycle -fuzztime=5s
 ```
+
+
+## Expanded frontend readability
+
+New React scaffolds include pinned ESLint Stylistic 5.10.0 and a visible
+`scripts/readability.mjs` policy. `npm run fmt` combines 80-column Prettier output
+with ESLint structural fixes; `npm run lint` verifies the same canonical result.
+The policy requires braces, expanded blocks, logical blank lines, one statement
+per line and separate object/type member lines. Nested ternaries are errors;
+rewrite them as named values or explicit branches. Formatter regression tests
+run in the standard test command. Generated API/catalog/theme artifacts keep
+their machine-owned formatting and are still type-checked.
+
+These are project defaults, editable in `.prettierrc.json` and
+`scripts/readability.mjs`. Existing frontends are not overwritten by a CLI upgrade.
+To adopt the policy, review/copy the formatter, regression test, readability
+policy and ESLint configuration from a fresh scaffold, install the pinned dev
+plugin, and update the fmt/lint/test scripts before running `npm run fmt` and
+`npm run check`. No manifest or runtime API migration is required.
+
+
+Standalone comment blocks have one blank line above them, except at line 1.
+Consecutive comment lines stay together, and the comment remains attached to the
+code below. JavaScript and TypeScript lint/format checks enforce this convention,
+including the start of a function or branch. Inline trailing comments are kept
+in place, and next-line compiler/linter directives retain their target. The
+cross-language convention is also recorded in AGENTS.md for future changes.

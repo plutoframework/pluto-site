@@ -3,7 +3,7 @@ title: "Feature flags"
 description: "Feature flags for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.11.0** · [Source at `1dc5bb6`](https://github.com/plutoframework/cli/blob/1dc5bb615867a932bf896ccaa6f491988b143231/docs/FEATURE-FLAGS.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.12.1** · [Source at `1d700c5`](https://github.com/plutoframework/cli/blob/1d700c5ad2bca33469460f249bf7de39dc08c5fb/docs/FEATURE-FLAGS.md). Commands and integration limits below belong to this revision.
 
 
 Feature flags were already wired into endpoint scaffolding. The CLI saves each

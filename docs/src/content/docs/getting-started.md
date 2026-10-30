@@ -3,12 +3,12 @@ title: "Your first application"
 description: "Your first application with Pluto."
 ---
 
-This walkthrough targets CLI **v0.11.0**. Install Go **1.25.5+** and Git. Docker is needed when you run the generated PostgreSQL stack. Format/check commands require golangci-lint **2.15.0**, available through the generated mise setup.
+This walkthrough targets CLI **v0.12.1**. Install Go **1.25.5+** and Git. Docker is needed when you run the generated PostgreSQL stack. Format/check commands require golangci-lint **2.15.0**, available through the generated mise setup.
 
 ## Install Pluto
 
 ```sh
-go install github.com/plutoframework/cli/cmd/pluto@v0.11.0
+go install github.com/plutoframework/cli/cmd/pluto@v0.12.1
 pluto version
 ```
 

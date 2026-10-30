@@ -16,3 +16,11 @@ Write original Pluto instructions; do not copy their prose.
 
 Reference snapshots preserve upstream package wording and exact source revisions.
 Edit those in the package repository, then refresh with scripts/sync-docs.py.
+
+## Agent readers
+
+- Keep skill guidance in `plutoframework/pluto-skills`; link to canonical topics.
+- `scripts/export-markdown.py` publishes each content page as `/docs/<slug>.md`.
+- `docs/llms.txt` lists topics; the site-root `llms.txt` points to that index.
+- Keep exports derived from the checked-in source. Do not maintain a second manual.
+- Check Markdown targets with `scripts/check-docs.py` after assembling the site.
