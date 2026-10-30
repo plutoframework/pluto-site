@@ -2,49 +2,49 @@
   {
     "page": "cli/reference",
     "repository": "https://github.com/plutoframework/cli",
-    "revision": "1d700c5ad2bca33469460f249bf7de39dc08c5fb",
+    "revision": "95aeac2a84c95df0f4a4af5e24b041d561acc7b7",
     "source": "README.md",
-    "version": "v0.12.1",
-    "sha256": "77a08336bda42a1b3a94008c6740e3353982702cf1022fad464241996edb51ce"
+    "version": "v0.13.0",
+    "sha256": "e99fd563f3d3047ffc03d056ffb8886123076cc3b83950808ff8d35a4b8aae79"
   },
   {
     "page": "frontend/state",
     "repository": "https://github.com/plutoframework/pluto-frontend",
-    "revision": "3ccf23b758cf1149b2dd22f6b40f69cadefe22b2",
+    "revision": "5955c9376e363c04e296f00245292123485543cd",
     "source": "README.md",
-    "version": "v0.1.3",
-    "sha256": "1d84eaa5146776704f612680f9aba78ce136844c1ef72d2bace4a196359c4118"
+    "version": "v0.2.1",
+    "sha256": "f3e04973003c450bfb30b318a3b90281bd985061de43184c37ceab53ac07ed3b"
   },
   {
     "page": "frontend/profiles",
     "repository": "https://github.com/plutoframework/cli",
-    "revision": "1d700c5ad2bca33469460f249bf7de39dc08c5fb",
+    "revision": "95aeac2a84c95df0f4a4af5e24b041d561acc7b7",
     "source": "docs/FRONTEND.md",
-    "version": "v0.12.1",
-    "sha256": "ce10fd28bb38fa3beb57a3c53583ff978ea1f4fe1c3db6fc1f17eb7080a31840"
+    "version": "v0.13.0",
+    "sha256": "201f9489505279bcc09c5d6e12094668d4c5913916f4f0e3d4f07440d1118c89"
   },
   {
     "page": "frontend/themes",
     "repository": "https://github.com/plutoframework/cli",
-    "revision": "1d700c5ad2bca33469460f249bf7de39dc08c5fb",
+    "revision": "95aeac2a84c95df0f4a4af5e24b041d561acc7b7",
     "source": "docs/THEMES.md",
-    "version": "v0.12.1",
+    "version": "v0.13.0",
     "sha256": "e2a8bfd1cb4428945c20df7d5c5013ed83595770f6ea991908061b030850dbec"
   },
   {
     "page": "frontend/registries",
     "repository": "https://github.com/plutoframework/cli",
-    "revision": "1d700c5ad2bca33469460f249bf7de39dc08c5fb",
+    "revision": "95aeac2a84c95df0f4a4af5e24b041d561acc7b7",
     "source": "docs/COMPONENT-REGISTRIES.md",
-    "version": "v0.12.1",
+    "version": "v0.13.0",
     "sha256": "2bfb5f90cf8cfba2ad2c541bfcc2e3137159cc1c3d9ac1b2e2198f19c3f43a37"
   },
   {
     "page": "backend/features",
     "repository": "https://github.com/plutoframework/cli",
-    "revision": "1d700c5ad2bca33469460f249bf7de39dc08c5fb",
+    "revision": "95aeac2a84c95df0f4a4af5e24b041d561acc7b7",
     "source": "docs/FEATURE-FLAGS.md",
-    "version": "v0.12.1",
+    "version": "v0.13.0",
     "sha256": "117ef033db01d16979cc185e166180a9bc22b4fa6070d53a80ca265857ce4018"
   },
   {
@@ -114,9 +114,9 @@
   {
     "page": "example",
     "repository": "https://github.com/plutoframework/pluto-example",
-    "revision": "115ad7186375dbc578c08da1e1399c52ad4b49e2",
+    "revision": "4f52859420a95adeeecac5914b754e8b0cbd0199",
     "source": "README.md",
-    "version": "115ad71",
-    "sha256": "d27ac0ca4b42cea6e215a9f435cd5a466da909481421b42a00e7df4c85871f92"
+    "version": "4f52859",
+    "sha256": "d9a8e2b549b1b5da60c429d4733433d910b418fea5334261c47ad7089fedeb18"
   }
 ]

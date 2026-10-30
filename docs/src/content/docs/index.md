@@ -5,7 +5,7 @@ description: "Welcome aboard with Pluto."
 
 Pluto gives Go APIs a clear home: explicit routes, small HTTP handlers, testable operations, and shared primitives. Add a React frontend when your application needs one.
 
-This field guide covers **CLI v0.12.1** and **Core v0.4.0**. Package reference pages identify their own source revision. Pluto is an evolving framework preview; read each integration's operational requirements before deploying.
+This field guide covers **CLI v0.13.0** and **Core v0.4.0**. Package reference pages identify their own source revision. Pluto is an evolving framework preview; read each integration's operational requirements before deploying.
 
 ## Get started
 

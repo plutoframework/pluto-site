@@ -3,7 +3,7 @@ title: "React and UI libraries"
 description: "React and UI libraries for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.12.1** · [Source at `1d700c5`](https://github.com/plutoframework/cli/blob/1d700c5ad2bca33469460f249bf7de39dc08c5fb/docs/FRONTEND.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.13.0** · [Source at `95aeac2`](https://github.com/plutoframework/cli/blob/95aeac2a84c95df0f4a4af5e24b041d561acc7b7/docs/FRONTEND.md). Commands and integration limits below belong to this revision.
 
 
 The CLI supports three curated React profiles: native, heroui-v3 and shadcn.
@@ -103,6 +103,34 @@ not changed. Traces, video and credential storage-state artifacts are not enable
   wizard scenarios passed. The mutation smoke killed all twelve seeded guards,
   with no survivors, invalid builds or timeouts.
 
-Visual samples: [native](https://github.com/plutoframework/cli/blob/1d700c5ad2bca33469460f249bf7de39dc08c5fb/docs/evidence/native-components.png),
-[HeroUI v3](https://github.com/plutoframework/cli/blob/1d700c5ad2bca33469460f249bf7de39dc08c5fb/docs/evidence/heroui-v3-components.png),
-[shadcn](https://github.com/plutoframework/cli/blob/1d700c5ad2bca33469460f249bf7de39dc08c5fb/docs/evidence/shadcn-components.png).
+Visual samples: [native](https://github.com/plutoframework/cli/blob/95aeac2a84c95df0f4a4af5e24b041d561acc7b7/docs/evidence/native-components.png),
+[HeroUI v3](https://github.com/plutoframework/cli/blob/95aeac2a84c95df0f4a4af5e24b041d561acc7b7/docs/evidence/heroui-v3-components.png),
+[shadcn](https://github.com/plutoframework/cli/blob/95aeac2a84c95df0f4a4af5e24b041d561acc7b7/docs/evidence/shadcn-components.png).
+
+## Responsive actions
+
+New built-in forms use `@plutoframework/frontend/react` `useActions` with a
+pending-confirmation policy: show accessible progress immediately, prevent
+conflicting submissions, preserve input on failure and clear it only after the
+feature callback confirms completion. No transport is generated inside controls.
+Pass a scope derived from actor/session/tenant (and resource when applicable),
+or remount the form with that scope as its key; scope changes clear old input
+and fence late completion. Existing authored forms are never silently migrated.
+
+Unknown failures keep the form locked until the host verifies the result. A
+`classifyError` callback may return `rejected` only for definite server refusal;
+it then permits correction/retry. Timeout or disconnect does not prove rollback.
+Connected forms refuse submission without an explicit scope; the unconnected
+catalog demo uses a local placeholder.
+
+For feature mutations, use the optional `/query` entrypoint's
+`useActionMutation`: apply confirmed responses to scoped cache in `confirm`,
+then reconcile in the background. Show `refreshError` separately from write
+failure. For safe optimistic interactions, explicitly select `mode: "optimistic"`
+with a pure projection over current query data. Never restore a whole-list
+snapshot across concurrent writes. See the [frontend library](https://github.com/plutoframework/pluto-frontend#responsive-actions)
+for the API, uncertainty resolution, resource locks and limitations.
+
+Generated form tests hold responses open, assert immediate progress and no
+repeated submit, preserve failed input and fence old-scope completion. Add tests
+for action-specific optimistic behavior and delayed/reordered responses.

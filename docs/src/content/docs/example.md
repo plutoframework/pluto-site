@@ -3,16 +3,16 @@ title: "Purchasing application walkthrough"
 description: "Purchasing application walkthrough for the Pluto framework."
 ---
 
-> Reference snapshot: **115ad71** · [Source at `115ad71`](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/README.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **4f52859** · [Source at `4f52859`](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/README.md). Commands and integration limits below belong to this revision.
 
 
 A runnable Go ergonomics prototype for an organization purchasing API. Northstar Research orders lab equipment; Harbor Studio buys production supplies. Members draft and submit requests, approvers decide requests from colleagues, and administrators manage existing memberships. Audit history follows the same organization boundary.
 
-This is original synthetic application code, intended for review before extracting a framework. `internal/pluto` holds provisional HTTP helpers. The framework, CLI, auth and RBAC libraries are developed in separate repositories. A React purchasing frontend now lives in [web/](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/web/README.md). There is no production delivery provider or framework plugin system.
+This is original synthetic application code, intended for review before extracting a framework. `internal/pluto` holds provisional HTTP helpers. The framework, CLI, auth and RBAC libraries are developed in separate repositories. A React purchasing frontend now lives in [web/](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/web/README.md). There is no production delivery provider or framework plugin system.
 
 ## Review the full-stack application
 
-See [web/README.md](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/web/README.md) for the HTTPS React application, feature layout,
+See [web/README.md](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/web/README.md) for the HTTPS React application, feature layout,
 contract generation, architecture checks and real API/browser walkthrough. The
 frontend is a convention prototype for review before frontend CLI generators.
 It uses React/TypeScript, Vite, TanStack Router/Query and generated OpenAPI bindings.
@@ -57,9 +57,9 @@ it retains at most 100 messages in process memory, with no mounted storage.
 Discard it afterwards. Mailpit has no relay configuration. Its UI is loopback
 http://127.0.0.1:8025. No real recipients or external delivery are used.
 
-[requests.http](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/requests.http) shows individual requests. The
-[OpenAPI document](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/openapi/openapi.json) references [auth paths](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/openapi/auth.json)
-and [wire schemas](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/openapi/schemas.json). Named endpoint metadata remains in
+[requests.http](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/requests.http) shows individual requests. The
+[OpenAPI document](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/openapi/openapi.json) references [auth paths](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/openapi/auth.json)
+and [wire schemas](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/openapi/schemas.json). Named endpoint metadata remains in
 `internal/paths`; local credentials use the published `passwordhttp` adapter.
 
 POST /auth/enroll, /verification, /verify, /signin, /recovery, /reset and /logout
@@ -101,14 +101,14 @@ cannot be interrupted; queueing and downstream work honor cancellation.
 
 ## Read the code in this order
 
-1. [Project manifest](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/pluto.toml) and [runtime configuration](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/config/config.go): tooling metadata stays separate from one loaded, validated, injected settings value. Multi-tenancy is an explicit choice for this example. A future framework could default to single tenancy; that second application is not implemented here.
-2. [Purchase endpoints](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/paths/purchases.go): stable endpoint IDs, human names, descriptions, methods, templates, permissions, flags, and concrete wire models. Route strings live only in this catalog. [Roles and permissions](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/domain/catalog.go) have independent IDs and human descriptions for future administration interfaces.
-3. [Composition root](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/app/app.go) and [route wiring](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/app/routes.go): concrete adapters and constructor injection; no initialization registration or service locator.
-4. [Purchase adapters](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/handlers/purchases/create.go) and [HTTP boundary](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/pluto/register.go): exact JSON field names, body limit, verified principal, operation call, consistent response/error envelope. Endpoint permission/feature checks happen before invoking a handler operation.
-5. [Purchase operations](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/operations/purchases.go) and [role/audit operations](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/operations/administration.go): permissions, ownership, no self-decision, valid transitions, and tenant-scoped repository calls. These packages have no HTTP or database dependency. [Unit tests](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/operations/purchases_test.go) exercise operations using a small fake.
-6. [Feature definitions and evaluator](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/features/features.go): immutable startup snapshot with absent-versus-explicit-false handling, declared fallbacks, and an internal-only flag proving the client allowlist. `/api/features` and the export gate share this evaluator. A flag enables a capability; it does not grant permissions. This adapter is not an OpenFeature/OFREP implementation.
-7. [Transaction adapter](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/storage/postgres/transactions.go), [SQL queries](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/db/queries/purchases.sql), and [migration](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/db/migrations/001_initial.sql): tenant predicates, composite tenant keys, optimistic versions, and purchase/role writes plus audit inserts in one transaction. [Memory adapter](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/storage/memory/store.go) uses one mutex per write/audit pair for demonstration; it has no durability or PostgreSQL transaction guarantees.
-8. [Router tests](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/app/routes_test.go), [architecture check](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/architecture/architecture_test.go), and [SQL integration test](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/storage/postgres/integration_test.go): real middleware/registration with fake operations, tenant and response assertions, dependency rules, and opt-in SQL verification.
+1. [Project manifest](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/pluto.toml) and [runtime configuration](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/config/config.go): tooling metadata stays separate from one loaded, validated, injected settings value. Multi-tenancy is an explicit choice for this example. A future framework could default to single tenancy; that second application is not implemented here.
+2. [Purchase endpoints](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/paths/purchases.go): stable endpoint IDs, human names, descriptions, methods, templates, permissions, flags, and concrete wire models. Route strings live only in this catalog. [Roles and permissions](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/domain/catalog.go) have independent IDs and human descriptions for future administration interfaces.
+3. [Composition root](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/app/app.go) and [route wiring](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/app/routes.go): concrete adapters and constructor injection; no initialization registration or service locator.
+4. [Purchase adapters](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/handlers/purchases/create.go) and [HTTP boundary](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/pluto/register.go): exact JSON field names, body limit, verified principal, operation call, consistent response/error envelope. Endpoint permission/feature checks happen before invoking a handler operation.
+5. [Purchase operations](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/operations/purchases.go) and [role/audit operations](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/operations/administration.go): permissions, ownership, no self-decision, valid transitions, and tenant-scoped repository calls. These packages have no HTTP or database dependency. [Unit tests](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/operations/purchases_test.go) exercise operations using a small fake.
+6. [Feature definitions and evaluator](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/features/features.go): immutable startup snapshot with absent-versus-explicit-false handling, declared fallbacks, and an internal-only flag proving the client allowlist. `/api/features` and the export gate share this evaluator. A flag enables a capability; it does not grant permissions. This adapter is not an OpenFeature/OFREP implementation.
+7. [Transaction adapter](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/storage/postgres/transactions.go), [SQL queries](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/db/queries/purchases.sql), and [migration](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/db/migrations/001_initial.sql): tenant predicates, composite tenant keys, optimistic versions, and purchase/role writes plus audit inserts in one transaction. [Memory adapter](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/storage/memory/store.go) uses one mutex per write/audit pair for demonstration; it has no durability or PostgreSQL transaction guarantees.
+8. [Router tests](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/app/routes_test.go), [architecture check](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/architecture/architecture_test.go), and [SQL integration test](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/storage/postgres/integration_test.go): real middleware/registration with fake operations, tenant and response assertions, dependency rules, and opt-in SQL verification.
 
 ## Domain and transport contracts
 
@@ -118,9 +118,9 @@ Members read their own requests and their own audit actions. Approvers/administr
 
 Successful responses use `{"data": ...}`. Errors use `{"error":{"code":"...","message":"...","request_id":"..."}}`. Statuses: 400 invalid input, 401 unauthenticated, 403 permission/policy or disabled feature, 404 hidden/missing resource, 405 method, 409 stale version/invalid transition, 413 oversized body, 500 unexpected failure. Error text does not reveal database internals.
 
-The server has read/header/write/idle timeouts, a 16 KiB JSON request limit, a 16 KiB header limit, generated request IDs, panic recovery, and global [security headers](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/pluto/security.go). Gzip is optional and negotiated through Chi's existing compression middleware for JSON. The HTTPS frontend uses a same-origin development proxy; there is no wildcard CORS middleware. No request body or bearer token is logged. Diagnostic JSON slog records include status and verified endpoint/actor/organization enrichment, including denied feature checks. Log output can fan out to stdout and a file.
+The server has read/header/write/idle timeouts, a 16 KiB JSON request limit, a 16 KiB header limit, generated request IDs, panic recovery, and global [security headers](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/pluto/security.go). Gzip is optional and negotiated through Chi's existing compression middleware for JSON. The HTTPS frontend uses a same-origin development proxy; there is no wildcard CORS middleware. No request body or bearer token is logged. Diagnostic JSON slog records include status and verified endpoint/actor/organization enrichment, including denied feature checks. Log output can fan out to stdout and a file.
 
-The security policy matches the CLI generator: `nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: no-referrer`, `no-store`, a restrictive JSON-API CSP (`default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`), disabled camera/microphone/geolocation permissions, and Helmet-style cross-origin and legacy browser policies. It runs before authentication/recovery so success, denied, malformed, missing-route, method-error and recovered-panic responses retain the headers. [Router tests](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/app/security_test.go) check that wiring. The authored middleware is the customization point for HTML/docs or embeddable resources. CSP applies to the API document, not a separately hosted UI; CORP does not configure CORS. Set HSTS at the HTTPS terminator after choosing a domain policy; the local HTTP example neither trusts forwarded protocol headers nor enables HSTS/subdomains/preload automatically. Headers do not replace authorization, validation or CSRF defenses for cookie authentication.
+The security policy matches the CLI generator: `nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: no-referrer`, `no-store`, a restrictive JSON-API CSP (`default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`), disabled camera/microphone/geolocation permissions, and Helmet-style cross-origin and legacy browser policies. It runs before authentication/recovery so success, denied, malformed, missing-route, method-error and recovered-panic responses retain the headers. [Router tests](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/app/security_test.go) check that wiring. The authored middleware is the customization point for HTML/docs or embeddable resources. CSP applies to the API document, not a separately hosted UI; CORP does not configure CORS. Set HSTS at the HTTPS terminator after choosing a domain policy; the local HTTP example neither trusts forwarded protocol headers nor enables HSTS/subdomains/preload automatically. Headers do not replace authorization, validation or CSRF defenses for cookie authentication.
 
 Audit events are an explicit business API containing event identity, actor, organization, action, resource, outcome, and time. Only successful writes are persisted in this prototype. Denied requests appear in diagnostic logs, not durable audit records. PostgreSQL records business mutation and audit atomically. Each successful API business mutation also enqueues a tenant-scoped audit-delivery job in that same transaction. The separate worker archives the canonical event in an idempotent local demonstration sink; no external SIEM connection is configured.
 
@@ -128,7 +128,7 @@ Audit events are an explicit business API containing event identity, actor, orga
 
 The example imports the published `github.com/plutoframework/pluto-rbac` module,
 pinned to `v0.1.0` in go.mod/go.sum. There is no local
-replacement or dependency on a sibling checkout. [The application catalog](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/domain/catalog.go)
+replacement or dependency on a sibling checkout. [The application catalog](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/domain/catalog.go)
 uses the library's permission/role types: members have base capabilities,
 approvers inherit members, and administrators inherit approvers.
 `domain.NewPolicy()` compiles and validates the catalog once at startup.
@@ -149,7 +149,7 @@ integration does not imply transactional authorization/revocation guarantees.
 
 ## Configuration
 
-[.env.example](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/.env.example) documents every supported environment override. The application **does not load `.env` automatically**. For a local shell, explicitly export its values (for example `set -a; . ./.env.example; set +a`) or use the inline commands above. No secret belongs in `pluto.toml`.
+[.env.example](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/.env.example) documents every supported environment override. The application **does not load `.env` automatically**. For a local shell, explicitly export its values (for example `set -a; . ./.env.example; set +a`) or use the inline commands above. No secret belongs in `pluto.toml`.
 
 Only uppercase `PLUTO_EXAMPLE_` names are used. Defaults plus environment are supported; no runtime config-file loader is implied. Unknown variables are ignored; invalid values for recognized booleans, addresses, modes, and log levels fail startup. Feature settings preserve unset versus false with `*bool`. Export defaults to false and requires restart after a setting change. Server timeout/body/header defaults are set explicitly in configuration/code; only address and gzip have environment overrides in this sample.
 
@@ -157,7 +157,7 @@ Only uppercase `PLUTO_EXAMPLE_` names are used. Defaults plus environment are su
 
 Compose initializes a new disposable database with migrations 001 through 004 and
 synthetic domain fixtures. Existing databases must explicitly apply
-[004_local_credentials.sql](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/db/migrations/004_local_credentials.sql) **after**
+[004_local_credentials.sql](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/db/migrations/004_local_credentials.sql) **after**
 001_initial, 002_auth_sessions and 003_idempotency. It adds accounts, digest-only
 challenges and versioned session bindings without changing existing session-only
 rows. No constructor performs DDL. Do not apply fixtures to a production database.
@@ -175,7 +175,7 @@ PLUTO_EXAMPLE_TEST_DATABASE_URL those tests report SKIP, not SQL evidence.
 
 ## Repeatable checks
 
-The example pins **golangci-lint 2.15.0** in [mise.toml](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/mise.toml). After reviewing the project configuration, set up the tool and use these entry points:
+The example pins **golangci-lint 2.15.0** in [mise.toml](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/mise.toml). After reviewing the project configuration, set up the tool and use these entry points:
 
 ```sh
 mise trust
@@ -187,7 +187,7 @@ mise run check
 
 The scripts also work directly (`./scripts/fmt.sh`, `./scripts/golangci.sh run ./...`, `./scripts/check.sh`). They use the pinned version through mise, or an already installed matching golangci-lint binary. Python 3.11+ is required by the scripts; Go itself remains sufficient for `go test ./cmd/... ./internal/...`.
 
-[.golangci.yml](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/.golangci.yml) defines a focused readability policy:
+[.golangci.yml](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/.golangci.yml) defines a focused readability policy:
 
 - `golines` wraps long signatures and calls at an 80-column default target. Projects can change `formatters.settings.golines.max-len` in `.golangci.yml`. Long indivisible strings/comments may remain longer; this is a formatting target, not a hard byte limit.
 - `wsl_v5` separates unrelated assignments, completed blocks, and returns while keeping immediate error checks next to their calls and related calls together.
@@ -208,7 +208,7 @@ python3 scripts/mutation-smoke.py
 go run ./cmd/openapi -check
 ```
 
-Native fuzz tests assert policy/no-write invariants and bounded exact-key JSON decoding, rather than only checking for panics. [Seeded mutation smoke](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/scripts/mutation-smoke.py) removes eleven meaningful guards in temporary copies and independently runs the relevant behavior tests. It reports killed, surviving, invalid/build-failed, and timed-out mutations separately and fails unless all eleven are killed. This is a small reproducible smoke check, not comprehensive mutation coverage or a general mutation engine. Expand real mutation tooling once the framework surface stabilizes; CRAP metrics are deferred.
+Native fuzz tests assert policy/no-write invariants and bounded exact-key JSON decoding, rather than only checking for panics. [Seeded mutation smoke](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/scripts/mutation-smoke.py) removes eleven meaningful guards in temporary copies and independently runs the relevant behavior tests. It reports killed, surviving, invalid/build-failed, and timed-out mutations separately and fails unless all eleven are killed. This is a small reproducible smoke check, not comprehensive mutation coverage or a general mutation engine. Expand real mutation tooling once the framework surface stabilizes; CRAP metrics are deferred.
 
 Regenerate the two committed artifacts reproducibly:
 
@@ -221,7 +221,7 @@ sqlc is a pinned development generator, not a runtime dependency. sqlc 1.31.1
 uses a Go 1.26+ toolchain for generation (Go can download it automatically); the
 application continues to target Go 1.25.5+. OpenAPI derives route metadata and concrete JSON model structure from shared Go definitions, with reusable schema references. It does not infer business policies, amount/title constraints, enums, or every runtime validation rule. Errors use a shared default response; status mapping is documented above. It is intentionally a sample generator, not a general schema engine.
 
-The architecture test walks source imports transitively, rejects handler access to database adapters/drivers and business access to HTTP/storage, checks paths do not reach handlers, and enforces a 1,000-line Go source limit including generated code. [check.sh](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/scripts/check.sh) runs the non-mutating golangci-lint checks, checks every non-Git project file's line count, runs tests/vet, and verifies OpenAPI freshness. It can be invoked unchanged by a future Git hook or CI job; this example does not install a hook or remote CI workflow. These checks enforce dependency boundaries; they do not semantically prove that handlers contain no business logic.
+The architecture test walks source imports transitively, rejects handler access to database adapters/drivers and business access to HTTP/storage, checks paths do not reach handlers, and enforces a 1,000-line Go source limit including generated code. [check.sh](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/scripts/check.sh) runs the non-mutating golangci-lint checks, checks every non-Git project file's line count, runs tests/vet, and verifies OpenAPI freshness. It can be invoked unchanged by a future Git hook or CI job; this example does not install a hook or remote CI workflow. These checks enforce dependency boundaries; they do not semantically prove that handlers contain no business logic.
 
 ## Prototype limits and review questions
 
@@ -431,7 +431,7 @@ ports. Fixture setup respects explicitly supplied environment configuration.
 
 ## Purchase lifecycle rules
 
-[Purchase lifecycle](https://github.com/plutoframework/pluto-example/blob/115ad7186375dbc578c08da1e1399c52ad4b49e2/internal/domain/purchase_lifecycle.go) uses the published
+[Purchase lifecycle](https://github.com/plutoframework/pluto-example/blob/4f52859420a95adeeecac5914b754e8b0cbd0199/internal/domain/purchase_lifecycle.go) uses the published
 `github.com/plutoframework/pluto-core/state` package (Core v0.4.0). Draft requests
 can be submitted by their creator; submitted requests can be approved or rejected
 by another actor. Approved/rejected are terminal. Guard facts come from the loaded

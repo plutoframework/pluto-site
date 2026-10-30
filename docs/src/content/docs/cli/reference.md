@@ -3,7 +3,7 @@ title: "CLI reference"
 description: "CLI reference for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.12.1** · [Source at `1d700c5`](https://github.com/plutoframework/cli/blob/1d700c5ad2bca33469460f249bf7de39dc08c5fb/README.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.13.0** · [Source at `95aeac2`](https://github.com/plutoframework/cli/blob/95aeac2a84c95df0f4a4af5e24b041d561acc7b7/README.md). Commands and integration limits below belong to this revision.
 
 
 A working Cobra generator for small Go/Chi APIs. The application uses provisional
@@ -599,7 +599,7 @@ pluto frontend add component purchase-review --from company/approval-panel --dry
 pluto frontend add component purchase-review --from company/approval-panel
 ```
 
-See [the registry contract](https://github.com/plutoframework/cli/blob/1d700c5ad2bca33469460f249bf7de39dc08c5fb/docs/COMPONENT-REGISTRIES.md) and the runnable HeroUI
+See [the registry contract](https://github.com/plutoframework/cli/blob/95aeac2a84c95df0f4a4af5e24b041d561acc7b7/docs/COMPONENT-REGISTRIES.md) and the runnable HeroUI
 registry in examples/component-registry. This first version supports local,
 declarative multi-file items, exact npm pins, dependency graphs, saved source
 digests and optional curated shadcn primitives. It preserves authored code and
@@ -718,3 +718,12 @@ code below. JavaScript and TypeScript lint/format checks enforce this convention
 including the start of a function or branch. Inline trailing comments are kept
 in place, and next-line compiler/linter directives retain their target. The
 cross-language convention is also recorded in AGENTS.md for future changes.
+
+### Responsive frontend actions
+
+Generated forms use published Pluto action helpers for immediate accessible
+pending feedback, duplicate protection, scope-owned cleanup and preserved input
+on failure. Connected callbacks require an explicit actor/session/tenant scope.
+Optimistic projection is an explicit feature-layer choice; uncertain write
+outcomes require reconciliation before retry. Existing authored forms are not
+rewritten by a CLI upgrade. See [frontend guidance](https://github.com/plutoframework/cli/blob/95aeac2a84c95df0f4a4af5e24b041d561acc7b7/docs/FRONTEND.md#responsive-actions).

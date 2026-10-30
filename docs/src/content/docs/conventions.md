@@ -39,3 +39,10 @@ Generated projects use an 80-column formatter target, expanded Go formatting and
 ## Humans and agents
 
 Use the wizard for discovery. Use deterministic raw commands with `--no-input` for automation. Generators preserve authored files and offer `--dry-run`. Existing generated contracts require intentional migrations when the manifest schema changes.
+
+## Asynchronous feedback
+
+Every action acknowledges immediately with accessible pending feedback, preserves
+failed input and resolves to a clear outcome. Use published action primitives;
+select optimism explicitly and test delayed responses, definite rejection,
+uncertainty, concurrent actions and scope changes. See [responsive actions](../frontend/actions/).
