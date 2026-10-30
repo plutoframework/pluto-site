@@ -30,6 +30,8 @@ npx skills add plutoframework/pluto-skills --skill pluto-api -a codex
 | `pluto-frontend` | React, UI libraries, themes, registries and UI state |
 | `pluto-agents`   | Typed AI runs and tool authorization                 |
 
+| `pluto-maintainer` | Framework changes, experience improvements and security validation |
+
 The maintainer skill has a short entrypoint and focused implementation, experience
 and security references. It applies to work on Pluto itself; the other skills
 guide application work.
