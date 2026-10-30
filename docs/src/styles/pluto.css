@@ -1,0 +1,59 @@
+@font-face {
+  font-family: Manrope;
+  src: url("/pluto-site/assets/fonts/manrope.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: Bricolage;
+  src: url("/pluto-site/assets/fonts/bricolage-grotesque.ttf")
+    format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/pluto-site/assets/fonts/ibm-plex-mono.ttf") format("truetype");
+  font-display: swap;
+}
+:root {
+  --sl-font: Manrope, sans-serif;
+  --sl-font-mono: "IBM Plex Mono", monospace;
+  --sl-color-accent-low: #302319;
+  --sl-color-accent: #f29c64;
+  --sl-color-accent-high: #ffdabd;
+  --sl-color-bg: #101d2c;
+  --sl-color-bg-nav: #132234;
+  --sl-color-bg-sidebar: #132234;
+  --sl-content-width: 50rem;
+}
+:root[data-theme="light"] {
+  --sl-color-accent-low: #fff0df;
+  --sl-color-accent: #a83b13;
+  --sl-color-accent-high: #7c290d;
+  --sl-color-bg: #fbf8f1;
+  --sl-color-bg-nav: #fbf8f1;
+  --sl-color-bg-sidebar: #f3efe6;
+  --sl-color-text: #263b51;
+  --sl-color-white: #152b43;
+}
+h1,
+h2,
+h3,
+.site-title {
+  font-family: Bricolage, Manrope, sans-serif;
+  letter-spacing: -0.035em;
+}
+h1 {
+  font-weight: 600;
+}
+header.header {
+  border-bottom: 1px solid var(--sl-color-gray-5);
+}
+.sl-markdown-content a {
+  text-underline-offset: 0.2em;
+}
+.sidebar-content a[aria-current="page"] {
+  border-radius: 2px;
+}
+.sl-markdown-content pre {
+  border-radius: 3px;
+}

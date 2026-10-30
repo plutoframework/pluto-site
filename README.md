@@ -8,7 +8,7 @@ The public, static product site for the Pluto Go API framework and CLI, includin
 
 ## Run locally
 
-No Node installation, build step or runtime dependency is required:
+The landing page can be previewed without a build:
 
 ```sh
 cd /Users/dhoenisch/code/pluto-site
@@ -69,8 +69,8 @@ gh run list --repo plutoframework/pluto-site --workflow pages.yml --limit 5
 ```
 
 `.github/workflows/pages.yml` checks the static site, assembles `_site/`, uploads
-the Pages artifact and deploys it. Only `index.html`, the two stylesheets,
-`script.js`, robots/sitemap files and `assets/` are published. Deployment has
+the Pages artifact and deploys it. The workflow builds Starlight with pinned Node dependencies, compiles the documented
+CLI workflow, checks links and combines the landing page and documentation in `_site/`. Deployment has
 `pages:write` and `id-token:write`; the build has read-only repository access.
 A dedicated concurrency group prevents competing deployments. No custom domain
 is configured.
@@ -95,3 +95,34 @@ twice with `Preview automation snapshot timed out after 15000ms.` Local Chrome
 was used for visual inspection and captures after those failures. The browser
 checks verify site behavior, not the Go product's implementation. No backend,
 Go package test suite or assistive-technology certification is implied.
+
+
+## Documentation
+
+The docs live at https://plutoframework.github.io/pluto-site/docs/ and use
+Astro Starlight. Node 24.22.1 is pinned in CI; dependencies are frozen in
+`docs/package-lock.json`. No server is required for the published output.
+
+```sh
+mise exec node@24.22.1 -- npm --prefix docs ci
+mise exec node@24.22.1 -- npm --prefix docs run build
+python3 scripts/build-site.py
+python3 scripts/check-docs.py
+python3 scripts/docs-smoke.py
+```
+
+Serve `_site/` under `/pluto-site/` to reproduce the Pages base path. For authoring,
+`npm --prefix docs run dev` starts Astro's docs-only development server.
+
+Guides are authored Markdown in `docs/src/content/docs`. Reference pages are
+snapshots from committed package revisions recorded in `docs/sources.json`.
+Run `python3 scripts/sync-docs.py` with the sibling repositories checked out to
+refresh them, review the diff, and rebuild. CI needs only this repository and
+never reads local environment or fnox files. See `docs/WRITING.md` for the
+OpenCode-inspired editorial conventions. Search is indexed locally at build time.
+
+The docs link checker verifies all local HTML targets/assets across the assembled
+site. The smoke check installs the public CLI v0.11.0 and compiles the documented
+endpoint + lifecycle workflow in a disposable project. These checks run on Pages
+builds. The site currently has one guide set with explicit reference revisions;
+it does not advertise historical version switching.

@@ -37,7 +37,7 @@ for link in page.links:
 for link in re.findall(r"url\(['\"]?([^)'\"]+)", (ROOT / "styles.css").read_text()):
     assert (ROOT / link).is_file(), f"Missing CSS asset: {link}"
 for path in ROOT.rglob("*"):
-    if any(part in {"node_modules", ".git", "_site"} for part in path.relative_to(ROOT).parts):
+    if any(part in {"node_modules", ".git", "_site", "dist", ".astro"} for part in path.relative_to(ROOT).parts):
         continue
     if path.suffix in (".html", ".css", ".js", ".py", ".yml"):
         assert len(path.read_text().splitlines()) < 1000, str(path)

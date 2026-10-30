@@ -17,14 +17,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.22.1"
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.5"
+          cache: false
+      - run: npm --prefix docs ci
+      - run: npm --prefix docs run build
+      - run: python3 scripts/docs-smoke.py
       - name: Check static site
         run: python3 scripts/check.py
       - uses: actions/configure-pages@v5
       - name: Assemble public files
         run: |
-          mkdir _site
-          cp index.html styles.css responsive.css script.js robots.txt sitemap.xml _site/
-          cp -R assets _site/
+          python3 scripts/build-site.py
+          python3 scripts/check-docs.py
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
