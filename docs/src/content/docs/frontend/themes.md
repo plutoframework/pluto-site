@@ -3,7 +3,7 @@ title: "TOML themes"
 description: "TOML themes for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.13.0-3-gd3374da** · [Source at `d3374da`](https://github.com/plutoframework/cli/blob/d3374da662c857e72bef657883c43e778378a5cb/docs/THEMES.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.13.0-4-gb40f5e3** · [Source at `b40f5e3`](https://github.com/plutoframework/cli/blob/b40f5e3f34ae512e6d3c420955b3c3d522d1e339/docs/THEMES.md). Commands and integration limits below belong to this revision.
 
 
 New CLI frontends include the theme pipeline automatically. Existing frontends

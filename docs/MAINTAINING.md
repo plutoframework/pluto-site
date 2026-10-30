@@ -39,6 +39,25 @@ manual copy selection, skip navigation, visible keyboard focus and reduced motio
 It refreshes `evidence/` and the original social preview image `assets/social.png`.
 Evidence is deliberately excluded from the public Pages artifact.
 
+## Documentation checks
+
+Go code fences use golangci-lint 2.15.0's gofumpt/golines formatters with an
+80-column target. Complete example sources also pass their owning repository's
+gci/wsl checks and tests. Format the source guide before refreshing snapshots;
+reference snapshots are validated against their committed example sources.
+
+```sh
+mise exec golangci-lint@2.15.0 -- python3 scripts/format-go-docs.py
+python3 scripts/test-doc-markdown.py
+npm --prefix docs run build
+python3 scripts/build-site.py
+python3 scripts/check-docs.py
+```
+
+The Pages workflow runs the formatting and regression checks. Markdown link
+rewriting must leave fenced source untouched, including Go generic calls.
+See [the authoring guide](src/content/docs/maintainers/documentation.md).
+
 ## Design and content
 
 A mission-atlas art direction: warm paper, ink blue, signal orange, fine grid

@@ -3,7 +3,7 @@ title: "Typed AI agents"
 description: "Typed AI agents for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.1.3-3-g7a93b3b** · [Source at `7a93b3b`](https://github.com/plutoframework/pluto-agent/blob/7a93b3bd421ba8e35700c13a2fef3d0e8f51ede6/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.1.3-4-g8926b58** · [Source at `8926b58`](https://github.com/plutoframework/pluto-agent/blob/8926b584fd9665d2f8fc222c80f3b37acd5defc8/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 Typed, testable AI-backed Go application features: summarization,
@@ -37,17 +37,17 @@ It does not configure an SDK or exporter. Its SDK dependency is used by tests.
 
 Use the released OpenAI adapter for real inference. Load the key privately from
 your environment or secret manager; never store it in source or `pluto.toml`.
-The complete [summary command](https://github.com/plutoframework/pluto-agent/blob/7a93b3bd421ba8e35700c13a2fef3d0e8f51ede6/examples/summary/main.go) has imports, bounded
+The complete [summary command](https://github.com/plutoframework/pluto-agent/blob/8926b584fd9665d2f8fc222c80f3b37acd5defc8/examples/summary/main.go) has imports, bounded
 stdin, HTTP and run deadlines, host-generated run IDs and error handling.
-Its [run guide](https://github.com/plutoframework/pluto-agent/blob/7a93b3bd421ba8e35700c13a2fef3d0e8f51ede6/examples/summary/README.md) lists provider prerequisites.
+Its [run guide](https://github.com/plutoframework/pluto-agent/blob/8926b584fd9665d2f8fc222c80f3b37acd5defc8/examples/summary/README.md) lists provider prerequisites.
 
 The constructor below is an excerpt from that program:
 
 ```go
 provider, err := openai.New(openai.Config{
-    APIKey:     os.Getenv("SUMMARY_OPENAI_API_KEY"),
-    Model:      "gpt-5.4",
-    HTTPClient: &http.Client{Timeout: 30 * time.Second},
+	APIKey:     os.Getenv("SUMMARY_OPENAI_API_KEY"),
+	Model:      "gpt-5.4",
+	HTTPClient: &http.Client{Timeout: 30 * time.Second},
 })
 ```
 
@@ -78,7 +78,7 @@ Or, from this checkout:
 ./scripts/example.sh
 ```
 
-The [synthetic example](https://github.com/plutoframework/pluto-agent/blob/7a93b3bd421ba8e35700c13a2fef3d0e8f51ede6/examples/purchase-review) reviews a $1,250 diagnostic
+The [synthetic example](https://github.com/plutoframework/pluto-agent/blob/8926b584fd9665d2f8fc222c80f3b37acd5defc8/examples/purchase-review) reviews a $1,250 diagnostic
 services purchase from Cedar Labs. Three typed tools read a purchase, vendor,
 and organization policy. The vendor tool calls an injected local HTTP client
 and fake service on a random loopback port. The scripted provider checks the
@@ -104,7 +104,7 @@ Every actual tool dispatch must satisfy all four gates:
 
 `Access{}` fails registration. Public access requires `Access{Public: true}`;
 it skips the permission check but still requires run and resource gates. Use
-the published [RBAC adapter](https://github.com/plutoframework/pluto-agent/blob/7a93b3bd421ba8e35700c13a2fef3d0e8f51ede6/integrations/plutorbac) rather than writing a
+the published [RBAC adapter](https://github.com/plutoframework/pluto-agent/blob/8926b584fd9665d2f8fc222c80f3b37acd5defc8/integrations/plutorbac) rather than writing a
 second grant algorithm. The provider receives schemas filtered by the run;
 dispatch checks remain authoritative even if the model requests a hidden tool.
 
@@ -120,7 +120,7 @@ arguments, and their SHA-256 hash. The host owns approval authentication,
 expiration, persistence, atomic consumption, and reuse policy. The hash is not
 an approval token. Approval never grants a missing permission.
 
-See [security and ownership](https://github.com/plutoframework/pluto-agent/blob/7a93b3bd421ba8e35700c13a2fef3d0e8f51ede6/docs/security.md) for the full host contract.
+See [security and ownership](https://github.com/plutoframework/pluto-agent/blob/8926b584fd9665d2f8fc222c80f3b37acd5defc8/docs/security.md) for the full host contract.
 
 ## Validation, limits, and events
 
@@ -129,7 +129,7 @@ non-null slices within a small documented subset. Required fields, exact field
 names, unknown fields, types, enum tags, duplicate keys, nulls, ranges, JSON depth,
 and byte size are checked before Go decoding. Use `Validate`, `ValidateResult`,
 and `ValidateOutput` for business constraints. Unsupported types fail during
-construction. See [schema support](https://github.com/plutoframework/pluto-agent/blob/7a93b3bd421ba8e35700c13a2fef3d0e8f51ede6/docs/schema.md).
+construction. See [schema support](https://github.com/plutoframework/pluto-agent/blob/8926b584fd9665d2f8fc222c80f3b37acd5defc8/docs/schema.md).
 
 The loop returns typed output, completion status, usage, and attempt counts.
 It bounds input/request/response/tool-result bytes, model/tool attempts, repair
@@ -161,7 +161,7 @@ models/capabilities/shapes error explicitly. It sends `store:false`, disables
 redirects, bounds transport bytes, and omits response bodies and URLs from
 transport errors. No live provider call was made to validate this release.
 
-[Provider details and official protocol references](https://github.com/plutoframework/pluto-agent/blob/7a93b3bd421ba8e35700c13a2fef3d0e8f51ede6/docs/providers.md) document
+[Provider details and official protocol references](https://github.com/plutoframework/pluto-agent/blob/8926b584fd9665d2f8fc222c80f3b37acd5defc8/docs/providers.md) document
 the deliberately narrow compatibility contract. The deterministic scripted
 provider tests runtime behavior; it does not measure model quality.
 
@@ -182,7 +182,7 @@ gci/gofumpt/golines/wsl_v5 configuration and 80-column target. Files stay below
 1,000 lines. Development scripts create a temporary workspace; committed module
 files have published pins and no local replacements.
 
-[Validation details](https://github.com/plutoframework/pluto-agent/blob/7a93b3bd421ba8e35700c13a2fef3d0e8f51ede6/docs/testing.md) distinguish deterministic correctness,
+[Validation details](https://github.com/plutoframework/pluto-agent/blob/8926b584fd9665d2f8fc222c80f3b37acd5defc8/docs/testing.md) distinguish deterministic correctness,
 bounded fuzz/mutation checks, and deferred stochastic evaluations. These checks
 do not constitute an independent security audit.
 

@@ -8,6 +8,7 @@ import hashlib
 import json
 import re
 import subprocess
+from doc_markdown import map_prose
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = [
@@ -16,7 +17,7 @@ SOURCES = [
     ('frontend/profiles', 'React and UI libraries', 'pluto-cli', 'docs/FRONTEND.md'),
     ('frontend/themes', 'TOML themes', 'pluto-cli', 'docs/THEMES.md'),
     ('frontend/registries', 'Custom component registries', 'pluto-cli', 'docs/COMPONENT-REGISTRIES.md'),
-    ('backend/features', 'Feature flags', 'pluto-cli', 'docs/FEATURE-FLAGS.md'),
+    ('backend/features', 'Feature flags', 'pluto-core', 'features/README.md'),
     ('backend/core', 'Core: pagination, idempotency and cache', 'pluto-core', 'docs/REFERENCE.md'),
     ('backend/state', 'State machines', 'pluto-core', 'state/README.md'),
     ('backend/telemetry', 'OpenTelemetry', 'pluto-core', 'telemetry/README.md'),
@@ -37,6 +38,14 @@ for slug, title, directory, filename in SOURCES:
     sha = git(repo, 'rev-parse', 'refs/remotes/origin/main')
     remote = git(repo, 'remote', 'get-url', 'origin').removesuffix('.git')
     source = subprocess.check_output(['git', '-C', str(repo), 'show', f'{sha}:{filename}'], text=True)
+    for match in re.finditer(
+        r'<!-- example-source: ([^\n]+) -->\s*```go\n(.*?)\n```\s*<!-- /example-source -->',
+        source, re.S,
+    ):
+        expected = subprocess.check_output(
+            ['git', '-C', str(repo), 'show', f'{sha}:{match[1]}'], text=True)
+        if match[2].strip() != expected.strip():
+            raise ValueError(f'Example drift in {filename}: {match[1]}')
     version = git(repo, 'describe', '--tags', '--always', sha)
     url = f'{remote}/blob/{sha}/{filename}'
     # Relative source links resolve against their original repository, not /docs/.
@@ -49,7 +58,7 @@ for slug, title, directory, filename in SOURCES:
         from posixpath import normpath, dirname, join
         path = normpath(join(dirname(filename), target))
         return match[1] + f'{remote}/blob/{sha}/{path}' + match[3]
-    source = re.sub(r'(\]\()([^\s)]+)(\))', link, source)
+    source = map_prose(source, lambda prose: re.sub(r'(\]\()([^\s)]+)(\))', link, prose))
     source = re.sub(r'^# .+\n', '', source, count=1)
     content = (f'---\ntitle: {json.dumps(title)}\ndescription: {json.dumps(title + " for the Pluto framework.")}\n---\n\n'
                f'> Reference snapshot: **{version}** · [Source at `{sha[:7]}`]({url}). '

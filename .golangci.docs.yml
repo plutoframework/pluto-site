@@ -1,0 +1,10 @@
+version: "2"
+formatters:
+  enable:
+    - gofumpt
+    - golines
+  settings:
+    golines:
+      max-len: 80
+      tab-len: 4
+      shorten-comments: false

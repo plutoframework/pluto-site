@@ -53,6 +53,9 @@ boundary clear.
 
 - Check commands against the pinned CLI and examples against published packages.
 - Compile complete examples; keep copied snippets checked against their source.
+- Run `python3 scripts/format-go-docs.py` with golangci-lint 2.15.0 on PATH.
+  Use `--write` on owning source guides before refreshing snapshots. Complete
+  source examples also pass their repository's gci and wsl checks.
 - Run affected repository formatters, linters and documentation checks.
 - Keep secrets out of source, logs, screenshots and generated artifacts.
 - Edit reference snapshots in their owning package, publish the source revision,

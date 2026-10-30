@@ -2,10 +2,10 @@
   {
     "page": "cli/reference",
     "repository": "https://github.com/plutoframework/cli",
-    "revision": "d3374da662c857e72bef657883c43e778378a5cb",
+    "revision": "b40f5e3f34ae512e6d3c420955b3c3d522d1e339",
     "source": "docs/REFERENCE.md",
-    "version": "v0.13.0-3-gd3374da",
-    "sha256": "c2e5397acd295ecb6ee08a32683395e937ecb2bede4aaaf42d0f0e02746c6e64"
+    "version": "v0.13.0-4-gb40f5e3",
+    "sha256": "f10a399acc4e202b22db6342be6ed18aab4b6330002fd924533a797d2cc73b06"
   },
   {
     "page": "frontend/state",
@@ -18,98 +18,98 @@
   {
     "page": "frontend/profiles",
     "repository": "https://github.com/plutoframework/cli",
-    "revision": "d3374da662c857e72bef657883c43e778378a5cb",
+    "revision": "b40f5e3f34ae512e6d3c420955b3c3d522d1e339",
     "source": "docs/FRONTEND.md",
-    "version": "v0.13.0-3-gd3374da",
-    "sha256": "8f7dac72cab8a6e5cbfe43df55b83c3293954840767de777761d261f46dba074"
+    "version": "v0.13.0-4-gb40f5e3",
+    "sha256": "941307ddb2fbbb93c1a55ffae346ab65ced95e1635e2dbe7dc62a112e8d6164b"
   },
   {
     "page": "frontend/themes",
     "repository": "https://github.com/plutoframework/cli",
-    "revision": "d3374da662c857e72bef657883c43e778378a5cb",
+    "revision": "b40f5e3f34ae512e6d3c420955b3c3d522d1e339",
     "source": "docs/THEMES.md",
-    "version": "v0.13.0-3-gd3374da",
+    "version": "v0.13.0-4-gb40f5e3",
     "sha256": "e2a8bfd1cb4428945c20df7d5c5013ed83595770f6ea991908061b030850dbec"
   },
   {
     "page": "frontend/registries",
     "repository": "https://github.com/plutoframework/cli",
-    "revision": "d3374da662c857e72bef657883c43e778378a5cb",
+    "revision": "b40f5e3f34ae512e6d3c420955b3c3d522d1e339",
     "source": "docs/COMPONENT-REGISTRIES.md",
-    "version": "v0.13.0-3-gd3374da",
+    "version": "v0.13.0-4-gb40f5e3",
     "sha256": "2bfb5f90cf8cfba2ad2c541bfcc2e3137159cc1c3d9ac1b2e2198f19c3f43a37"
   },
   {
     "page": "backend/features",
-    "repository": "https://github.com/plutoframework/cli",
-    "revision": "d3374da662c857e72bef657883c43e778378a5cb",
-    "source": "docs/FEATURE-FLAGS.md",
-    "version": "v0.13.0-3-gd3374da",
-    "sha256": "117ef033db01d16979cc185e166180a9bc22b4fa6070d53a80ca265857ce4018"
+    "repository": "https://github.com/plutoframework/pluto-core",
+    "revision": "05547485763757dd12b0a60d842900adabb33d39",
+    "source": "features/README.md",
+    "version": "v0.4.0-3-g0554748",
+    "sha256": "345fdcd498bae7f8600b6ae019fed4c6f86cbfad8e830d556157238f7b6d012c"
   },
   {
     "page": "backend/core",
     "repository": "https://github.com/plutoframework/pluto-core",
-    "revision": "8e1ccb5b1351d57c55652685232af0f219a58902",
+    "revision": "05547485763757dd12b0a60d842900adabb33d39",
     "source": "docs/REFERENCE.md",
-    "version": "v0.4.0-2-g8e1ccb5",
-    "sha256": "cce1bb2e1db0a75ca1b6a40b70f496f4fb6f9a87478899a15d76dc410ec7fed6"
+    "version": "v0.4.0-3-g0554748",
+    "sha256": "8076e02c3b95851c358c895d8d042b3cc2bcf703c00b8375cb92ada2b1a88a29"
   },
   {
     "page": "backend/state",
     "repository": "https://github.com/plutoframework/pluto-core",
-    "revision": "8e1ccb5b1351d57c55652685232af0f219a58902",
+    "revision": "05547485763757dd12b0a60d842900adabb33d39",
     "source": "state/README.md",
-    "version": "v0.4.0-2-g8e1ccb5",
+    "version": "v0.4.0-3-g0554748",
     "sha256": "0f1db196e4424dd6a7d344b712e16f5417f1d38af25e2aa1cfa6f23edfcc642a"
   },
   {
     "page": "backend/telemetry",
     "repository": "https://github.com/plutoframework/pluto-core",
-    "revision": "8e1ccb5b1351d57c55652685232af0f219a58902",
+    "revision": "05547485763757dd12b0a60d842900adabb33d39",
     "source": "telemetry/README.md",
-    "version": "v0.4.0-2-g8e1ccb5",
+    "version": "v0.4.0-3-g0554748",
     "sha256": "a0f664ce83cdbcaf07c7444037ac52504ec4f98ca4ac3c5ec6317ef3ca0935be"
   },
   {
     "page": "backend/auth",
     "repository": "https://github.com/plutoframework/pluto-auth",
-    "revision": "4bf6ac291383d87b508ee9cdafa44b9cb6e6742c",
+    "revision": "8f215a6f6a83e6265f16dca7254d141a79d43560",
     "source": "docs/REFERENCE.md",
-    "version": "stores/postgres/v0.3.0-3-g4bf6ac2",
-    "sha256": "f740191a15fcf135249b34db0a5515ae42f364572fe706b6f8858f828eeb5841"
+    "version": "stores/postgres/v0.3.0-4-g8f215a6",
+    "sha256": "eb3c77bed76f7d7ef65513d6d675999ae4e4c57e8e0258eed37cbb3ebbce22a9"
   },
   {
     "page": "backend/credentials",
     "repository": "https://github.com/plutoframework/pluto-auth",
-    "revision": "4bf6ac291383d87b508ee9cdafa44b9cb6e6742c",
+    "revision": "8f215a6f6a83e6265f16dca7254d141a79d43560",
     "source": "docs/LOCAL-CREDENTIALS.md",
-    "version": "stores/postgres/v0.3.0-3-g4bf6ac2",
-    "sha256": "aebe70ab98432034e958b7ec2aa45b9740080286bcdf80d8a6b2093b5326f0ee"
+    "version": "stores/postgres/v0.3.0-4-g8f215a6",
+    "sha256": "f848516aceb330a660e571cd21d338f881942ee2711918579d01912c8729ab16"
   },
   {
     "page": "backend/rbac",
     "repository": "https://github.com/plutoframework/pluto-rbac",
-    "revision": "613bc15c80efaab8d45202bb3899b9f657f71530",
+    "revision": "cd8946821b48d74962b9a96a187ef1434513e862",
     "source": "docs/REFERENCE.md",
-    "version": "v0.1.0-2-g613bc15",
-    "sha256": "1a59a480dadc986c16aee943034dc4337e66570c2f16fd1958441f380c5a0bb8"
+    "version": "v0.1.0-3-gcd89468",
+    "sha256": "47fbf6a1c84d92d534664588c0181ec5094dc5d1c912594468aecc511fabc009"
   },
   {
     "page": "backend/jobs",
     "repository": "https://github.com/plutoframework/pluto-jobs",
-    "revision": "f2e5352718a111c84e2f51cbc481eb122c2a0f91",
+    "revision": "507a189fe04115411e5e03979f3e88eb614523eb",
     "source": "docs/REFERENCE.md",
-    "version": "stores/postgres/v0.1.0-4-gf2e5352",
-    "sha256": "3a7cc50affdab5aea1f9f9e45614dee1d886a07687a99270c16a7c460c018715"
+    "version": "stores/postgres/v0.1.0-5-g507a189",
+    "sha256": "95b0e350c9c7851db48a6488f3330989e47e12f0bc36160a76fd326f45525542"
   },
   {
     "page": "backend/agents",
     "repository": "https://github.com/plutoframework/pluto-agent",
-    "revision": "7a93b3bd421ba8e35700c13a2fef3d0e8f51ede6",
+    "revision": "8926b584fd9665d2f8fc222c80f3b37acd5defc8",
     "source": "docs/REFERENCE.md",
-    "version": "v0.1.3-3-g7a93b3b",
-    "sha256": "61c1ac16c4750209293918d8ca395cf196bb74ac2f6e6a402371d5fb74361b6a"
+    "version": "v0.1.3-4-g8926b58",
+    "sha256": "32f2bb09868109add74a7ac0bf414d52e3223302f9b0c9314545d0db09eefe8e"
   },
   {
     "page": "example",

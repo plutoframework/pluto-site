@@ -33,7 +33,22 @@ export default defineConfig({
         { label: "CLI", items: [{ autogenerate: { directory: "cli" } }] },
         {
           label: "Backend",
-          items: [{ autogenerate: { directory: "backend" } }],
+          items: [
+            { label: "Core primitives", slug: "backend/core" },
+            {
+              label: "Authentication",
+              items: [
+                { label: "Overview and sessions", slug: "backend/auth" },
+                { label: "Password credentials", slug: "backend/credentials" },
+              ],
+            },
+            { label: "Roles and permissions", slug: "backend/rbac" },
+            { label: "Feature flags", slug: "backend/features" },
+            { label: "Jobs and transactional outbox", slug: "backend/jobs" },
+            { label: "State machines", slug: "backend/state" },
+            { label: "OpenTelemetry", slug: "backend/telemetry" },
+            { label: "Typed AI agents", slug: "backend/agents" },
+          ],
         },
         {
           label: "Frontend",

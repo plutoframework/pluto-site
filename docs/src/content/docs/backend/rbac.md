@@ -3,7 +3,7 @@ title: "Roles and permissions"
 description: "Roles and permissions for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.1.0-2-g613bc15** · [Source at `613bc15`](https://github.com/plutoframework/pluto-rbac/blob/613bc15c80efaab8d45202bb3899b9f657f71530/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.1.0-3-gcd89468** · [Source at `cd89468`](https://github.com/plutoframework/pluto-rbac/blob/cd8946821b48d74962b9a96a187ef1434513e862/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 A small Go authorization library with **zero third-party dependencies**.
@@ -30,24 +30,24 @@ const ReadReports rbac.PermissionID = "reports:read"
 const Analyst rbac.RoleID = "analyst"
 
 policy, err := rbac.New(rbac.Definition{
-    Permissions: []rbac.Permission{
-        {
-            ID:          ReadReports,
-            Name:        "Read reports",
-            Description: "Read reports allowed by resource policy.",
-        },
-    },
-    Roles: []rbac.Role{
-        {
-            ID:          Analyst,
-            Name:        "Analyst",
-            Description: "Inspect reports in the active scope.",
-            Permissions: []rbac.PermissionID{ReadReports},
-        },
-    },
+	Permissions: []rbac.Permission{
+		{
+			ID:          ReadReports,
+			Name:        "Read reports",
+			Description: "Read reports allowed by resource policy.",
+		},
+	},
+	Roles: []rbac.Role{
+		{
+			ID:          Analyst,
+			Name:        "Analyst",
+			Description: "Inspect reports in the active scope.",
+			Permissions: []rbac.PermissionID{ReadReports},
+		},
+	},
 })
 if err != nil {
-    return err
+	return err
 }
 
 allowed := policy.Allows([]rbac.RoleID{Analyst}, ReadReports)
@@ -86,32 +86,32 @@ explicitly enabled and requires a tenant on every request:
 
 ```go
 resolver, err := rbac.NewStaticResolver([]rbac.Assignment{
-    {
-        SubjectID: "alice",
-        Scope:     rbac.Scope{TenantID: "northstar"},
-        Roles:     []rbac.RoleID{Analyst},
-    },
+	{
+		SubjectID: "alice",
+		Scope:     rbac.Scope{TenantID: "northstar"},
+		Roles:     []rbac.RoleID{Analyst},
+	},
 })
 if err != nil {
-    return err
+	return err
 }
 
 authorizer, err := rbac.NewAuthorizer(
-    policy,
-    resolver,
-    rbac.Options{RequireTenant: true},
+	policy,
+	resolver,
+	rbac.Options{RequireTenant: true},
 )
 if err != nil {
-    return err
+	return err
 }
 
 err = authorizer.Authorize(ctx, rbac.Request{
-    SubjectID:  authenticatedActorID,
-    Scope:      rbac.Scope{TenantID: verifiedTenantID},
-    Permission: ReadReports,
+	SubjectID:  authenticatedActorID,
+	Scope:      rbac.Scope{TenantID: verifiedTenantID},
+	Permission: ReadReports,
 })
 if err != nil {
-    return err
+	return err
 }
 ```
 
@@ -132,7 +132,7 @@ For database-backed membership, implement the consumer-sized interface:
 
 ```go
 type RoleResolver interface {
-    Roles(context.Context, string, rbac.Scope) ([]rbac.RoleID, error)
+	Roles(context.Context, string, rbac.Scope) ([]rbac.RoleID, error)
 }
 ```
 
@@ -155,7 +155,7 @@ before and after resolution, and preserves the context error.
 
 RBAC answers whether a subject holds a capability in a scope. It does not prove
 that a fetched record belongs to that scope, allow self-approval, or bypass
-ownership rules. [The purchasing example](https://github.com/plutoframework/pluto-rbac/blob/613bc15c80efaab8d45202bb3899b9f657f71530/examples/purchasing/main.go) shows
+ownership rules. [The purchasing example](https://github.com/plutoframework/pluto-rbac/blob/cd8946821b48d74962b9a96a187ef1434513e862/examples/purchasing/main.go) shows
 separate checks for those conditions. A feature flag can disable a capability;
 enabling it does not grant the permission. Route checks and business-operation
 checks should use the same policy and verified scope.
