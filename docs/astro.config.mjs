@@ -39,7 +39,12 @@ export default defineConfig({
               label: "Authentication",
               items: [
                 { label: "Overview and sessions", slug: "backend/auth" },
+                {
+                  label: "Account authentication",
+                  slug: "backend/authentication",
+                },
                 { label: "Password credentials", slug: "backend/credentials" },
+                { label: "Expansion roadmap", slug: "backend/auth-roadmap" },
               ],
             },
             { label: "Roles and permissions", slug: "backend/rbac" },

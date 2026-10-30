@@ -9,7 +9,7 @@ with tempfile.TemporaryDirectory(prefix='pluto-docs-') as temporary:
     env = {**os.environ, 'GOWORK': 'off', 'GOBIN': str(root / 'bin')}
     def run(*args, cwd=root):
         subprocess.run(args, cwd=cwd, env=env, check=True)
-    run('go', 'install', 'github.com/plutoframework/cli/cmd/pluto@v0.13.0')
+    run('go', 'install', 'github.com/plutoframework/cli/cmd/pluto@v0.14.0')
     binary = str(root / 'bin/pluto')
     run(binary, '--no-input', 'init', 'mission-control', '--name', 'mission-control',
         '--module', 'example.com/mission-control', '--env-prefix', 'MISSION_CONTROL_',

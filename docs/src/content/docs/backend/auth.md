@@ -3,7 +3,7 @@ title: "Authentication"
 description: "Authentication for the Pluto framework."
 ---
 
-> Reference snapshot: **stores/postgres/v0.3.0-5-g553ff0b** · [Source at `553ff0b`](https://github.com/plutoframework/pluto-auth/blob/553ff0b2042e87221bfa5a9f32c0b99b67198669/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **stores/postgres/v0.4.0-1-gef51b7c** · [Source at `ef51b7c`](https://github.com/plutoframework/pluto-auth/blob/ef51b7c27ef72963f41df3c700db919efe785b71/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 An independent, deliberately narrow hard fork of
@@ -34,6 +34,13 @@ golang.org/x/crypto; Postgres uses pgx. Tooling dependencies, generated sqlc
 sources and optional modules do not become core runtime dependencies. The
 checked-in go.work joins modules for development; published modules contain
 actual version requirements without local filesystem replacements.
+
+## Account authentication and expansion
+
+See [account authentication](https://github.com/plutoframework/pluto-auth/blob/ef51b7c27ef72963f41df3c700db919efe785b71/docs/AUTHENTICATION.md) for v0.4's shared account policy,
+password evidence, recent-authentication guard and mandatory account-store upgrade
+migration. [The roadmap](https://github.com/plutoframework/pluto-auth/blob/ef51b7c27ef72963f41df3c700db919efe785b71/docs/ROADMAP.md) places social/OIDC, MFA/passkeys and account
+management in planned application capabilities, rather than permanent exclusions.
 
 ## Session setup
 
@@ -69,7 +76,7 @@ operation. For the complete local password lifecycle use
 an application-supplied Sender. The service constructs its session manager from
 the same fenced store and requires verified email for sign-in. Successful
 SignIn returns an IssuedSession; send it with transport.WriteCookie, never in
-JSON. [Local integration/API guide](https://github.com/plutoframework/pluto-auth/blob/553ff0b2042e87221bfa5a9f32c0b99b67198669/docs/LOCAL-CREDENTIALS.md) includes the
+JSON. [Local integration/API guide](https://github.com/plutoframework/pluto-auth/blob/ef51b7c27ef72963f41df3c700db919efe785b71/docs/LOCAL-CREDENTIALS.md) includes the
 compiling constructor and migration, delivery and operational boundaries.
 
 The older NewAuthenticator remains a low-level compatibility API for externally
@@ -132,10 +139,11 @@ not a drop-in replacement for Limen or a promise to maintain its plugin suite.
 
 ## Scope
 
-This round implements local password credentials only. Social/federated OIDC
-providers, MFA/passkeys, OAuth authorization servers, frontend/admin UI, email
-address changes and generic identity-platform features remain outside this
-library. There are no automatic admins, tenants or grants. Deployment still
+The current authentication method is local password credentials, backed by
+the shared account/evidence foundation. Social/federated OIDC
+providers, MFA/passkeys, frontend/admin UI and email-address changes are
+planned in the [expansion roadmap](https://github.com/plutoframework/pluto-auth/blob/ef51b7c27ef72963f41df3c700db919efe785b71/docs/ROADMAP.md). OAuth authorization-server and
+enterprise identity-platform roles remain separate scope decisions. There are no automatic admins, tenants or grants. Deployment still
 requires real delivery, shared limits, trusted ingress, migrations and an
 application-specific security review; this is not an audited production-ready
 identity service.

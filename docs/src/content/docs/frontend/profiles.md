@@ -3,7 +3,7 @@ title: "React and UI libraries"
 description: "React and UI libraries for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.13.0-4-gb40f5e3** · [Source at `b40f5e3`](https://github.com/plutoframework/cli/blob/b40f5e3f34ae512e6d3c420955b3c3d522d1e339/docs/FRONTEND.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.14.0** · [Source at `4ef6f3c`](https://github.com/plutoframework/cli/blob/4ef6f3cdd2b001157dd5ab4a84cad8fb126616a8/docs/FRONTEND.md). Commands and integration limits below belong to this revision.
 
 
 The CLI supports three curated React profiles: native, heroui-v3 and shadcn.
@@ -103,9 +103,9 @@ not changed. Traces, video and credential storage-state artifacts are not enable
   wizard scenarios passed. The mutation smoke killed all twelve seeded guards,
   with no survivors, invalid builds or timeouts.
 
-Visual samples: [native](https://github.com/plutoframework/cli/blob/b40f5e3f34ae512e6d3c420955b3c3d522d1e339/docs/evidence/native-components.png),
-[HeroUI v3](https://github.com/plutoframework/cli/blob/b40f5e3f34ae512e6d3c420955b3c3d522d1e339/docs/evidence/heroui-v3-components.png),
-[shadcn](https://github.com/plutoframework/cli/blob/b40f5e3f34ae512e6d3c420955b3c3d522d1e339/docs/evidence/shadcn-components.png).
+Visual samples: [native](https://github.com/plutoframework/cli/blob/4ef6f3cdd2b001157dd5ab4a84cad8fb126616a8/docs/evidence/native-components.png),
+[HeroUI v3](https://github.com/plutoframework/cli/blob/4ef6f3cdd2b001157dd5ab4a84cad8fb126616a8/docs/evidence/heroui-v3-components.png),
+[shadcn](https://github.com/plutoframework/cli/blob/4ef6f3cdd2b001157dd5ab4a84cad8fb126616a8/docs/evidence/shadcn-components.png).
 
 ## Responsive actions
 

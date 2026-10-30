@@ -3,14 +3,14 @@ title: "CLI reference"
 description: "CLI reference for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.13.0-4-gb40f5e3** · [Source at `b40f5e3`](https://github.com/plutoframework/cli/blob/b40f5e3f34ae512e6d3c420955b3c3d522d1e339/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.14.0** · [Source at `4ef6f3c`](https://github.com/plutoframework/cli/blob/4ef6f3cdd2b001157dd5ab4a84cad8fb126616a8/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 A working Cobra generator for small Go/Chi APIs. The application uses provisional
 app-local primitives, alongside the published Pluto runtime libraries. The module is
 `github.com/plutoframework/cli`. Go 1.25.5+ and Git are required.
 The executable is named `pluto`; install the release with
-`go install github.com/plutoframework/cli/cmd/pluto@v0.13.0`.
+`go install github.com/plutoframework/cli/cmd/pluto@v0.14.0`.
 
 ```sh
 git clone https://github.com/plutoframework/cli.git pluto-cli
@@ -597,7 +597,7 @@ pluto frontend add component purchase-review --from company/approval-panel --dry
 pluto frontend add component purchase-review --from company/approval-panel
 ```
 
-See [the registry contract](https://github.com/plutoframework/cli/blob/b40f5e3f34ae512e6d3c420955b3c3d522d1e339/docs/COMPONENT-REGISTRIES.md) and the runnable HeroUI
+See [the registry contract](https://github.com/plutoframework/cli/blob/4ef6f3cdd2b001157dd5ab4a84cad8fb126616a8/docs/COMPONENT-REGISTRIES.md) and the runnable HeroUI
 registry in examples/component-registry. This first version supports local,
 declarative multi-file items, exact npm pins, dependency graphs, saved source
 digests and optional curated shadcn primitives. It preserves authored code and
@@ -721,4 +721,16 @@ pending feedback, duplicate protection, scope-owned cleanup and preserved input
 on failure. Connected callbacks require an explicit actor/session/tenant scope.
 Optimistic projection is an explicit feature-layer choice; uncertain write
 outcomes require reconciliation before retry. Existing authored forms are not
-rewritten by a CLI upgrade. See [frontend guidance](https://github.com/plutoframework/cli/blob/b40f5e3f34ae512e6d3c420955b3c3d522d1e339/docs/FRONTEND.md#responsive-actions).
+rewritten by a CLI upgrade. See [frontend guidance](https://github.com/plutoframework/cli/blob/4ef6f3cdd2b001157dd5ab4a84cad8fb126616a8/docs/FRONTEND.md#responsive-actions).
+
+## Account authentication upgrade
+
+This revision uses Pluto Auth v0.4.0. Account-backed deployments explicitly apply
+`db/migrations/006_authentication.sql` after the existing migrations, before
+running the upgraded application. Constructors perform no DDL. Existing sessions
+keep unknown authentication evidence until the next real sign-in; rotation does
+not make them fresh. See [the authentication guide](https://plutoframework.github.io/pluto-site/docs/backend/authentication/).
+
+The library foundation adds account policy, method evidence and freshness guards.
+Native social sign-in, TOTP enrollment and their frontend flows remain next work;
+no factor policy is enabled automatically by this upgrade.

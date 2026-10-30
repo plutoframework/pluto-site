@@ -22,6 +22,8 @@ SOURCES = [
     ('backend/state', 'State machines', 'pluto-core', 'state/README.md'),
     ('backend/telemetry', 'OpenTelemetry', 'pluto-core', 'telemetry/README.md'),
     ('backend/auth', 'Authentication', 'pluto-auth', 'docs/REFERENCE.md'),
+    ('backend/authentication', 'Account authentication', 'pluto-auth', 'docs/AUTHENTICATION.md'),
+    ('backend/auth-roadmap', 'Authentication roadmap', 'pluto-auth', 'docs/ROADMAP.md'),
     ('backend/credentials', 'Local credential lifecycle', 'pluto-auth', 'docs/LOCAL-CREDENTIALS.md'),
     ('backend/rbac', 'Roles and permissions', 'pluto-rbac', 'docs/REFERENCE.md'),
     ('backend/jobs', 'Jobs and transactional outbox', 'pluto-jobs', 'docs/REFERENCE.md'),

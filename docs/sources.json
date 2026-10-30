@@ -2,10 +2,10 @@
   {
     "page": "cli/reference",
     "repository": "https://github.com/plutoframework/cli",
-    "revision": "b40f5e3f34ae512e6d3c420955b3c3d522d1e339",
+    "revision": "4ef6f3cdd2b001157dd5ab4a84cad8fb126616a8",
     "source": "docs/REFERENCE.md",
-    "version": "v0.13.0-4-gb40f5e3",
-    "sha256": "f10a399acc4e202b22db6342be6ed18aab4b6330002fd924533a797d2cc73b06"
+    "version": "v0.14.0",
+    "sha256": "2c15fc8470ec50a0b57c83c3b404ecd80241f0f23c9a36e530c433f702916d81"
   },
   {
     "page": "frontend/state",
@@ -18,25 +18,25 @@
   {
     "page": "frontend/profiles",
     "repository": "https://github.com/plutoframework/cli",
-    "revision": "b40f5e3f34ae512e6d3c420955b3c3d522d1e339",
+    "revision": "4ef6f3cdd2b001157dd5ab4a84cad8fb126616a8",
     "source": "docs/FRONTEND.md",
-    "version": "v0.13.0-4-gb40f5e3",
-    "sha256": "941307ddb2fbbb93c1a55ffae346ab65ced95e1635e2dbe7dc62a112e8d6164b"
+    "version": "v0.14.0",
+    "sha256": "55f751b9fe7fc5a2e38ac48ee2cbb96abb782904df43bbccebe9ff6414d13a5d"
   },
   {
     "page": "frontend/themes",
     "repository": "https://github.com/plutoframework/cli",
-    "revision": "b40f5e3f34ae512e6d3c420955b3c3d522d1e339",
+    "revision": "4ef6f3cdd2b001157dd5ab4a84cad8fb126616a8",
     "source": "docs/THEMES.md",
-    "version": "v0.13.0-4-gb40f5e3",
+    "version": "v0.14.0",
     "sha256": "e2a8bfd1cb4428945c20df7d5c5013ed83595770f6ea991908061b030850dbec"
   },
   {
     "page": "frontend/registries",
     "repository": "https://github.com/plutoframework/cli",
-    "revision": "b40f5e3f34ae512e6d3c420955b3c3d522d1e339",
+    "revision": "4ef6f3cdd2b001157dd5ab4a84cad8fb126616a8",
     "source": "docs/COMPONENT-REGISTRIES.md",
-    "version": "v0.13.0-4-gb40f5e3",
+    "version": "v0.14.0",
     "sha256": "2bfb5f90cf8cfba2ad2c541bfcc2e3137159cc1c3d9ac1b2e2198f19c3f43a37"
   },
   {
@@ -74,18 +74,34 @@
   {
     "page": "backend/auth",
     "repository": "https://github.com/plutoframework/pluto-auth",
-    "revision": "553ff0b2042e87221bfa5a9f32c0b99b67198669",
+    "revision": "ef51b7c27ef72963f41df3c700db919efe785b71",
     "source": "docs/REFERENCE.md",
-    "version": "stores/postgres/v0.3.0-5-g553ff0b",
-    "sha256": "d66912f7f3b3c2ab95528ee87814075e75a51690f0346f57cc78b70717ba51d0"
+    "version": "stores/postgres/v0.4.0-1-gef51b7c",
+    "sha256": "30d526030fb5587f8065cef3b2529a8daf03b1dd84fb72b9ef64ac1303a569fc"
+  },
+  {
+    "page": "backend/authentication",
+    "repository": "https://github.com/plutoframework/pluto-auth",
+    "revision": "ef51b7c27ef72963f41df3c700db919efe785b71",
+    "source": "docs/AUTHENTICATION.md",
+    "version": "stores/postgres/v0.4.0-1-gef51b7c",
+    "sha256": "0b7aab8b7be77c4d3371891c0200eb9c055cc125406a3f6bf8c2d5b47e049b30"
+  },
+  {
+    "page": "backend/auth-roadmap",
+    "repository": "https://github.com/plutoframework/pluto-auth",
+    "revision": "ef51b7c27ef72963f41df3c700db919efe785b71",
+    "source": "docs/ROADMAP.md",
+    "version": "stores/postgres/v0.4.0-1-gef51b7c",
+    "sha256": "48a3fb4f00605b00188f4f7b3d323cab62e59f52d861c014bee76079443aca51"
   },
   {
     "page": "backend/credentials",
     "repository": "https://github.com/plutoframework/pluto-auth",
-    "revision": "553ff0b2042e87221bfa5a9f32c0b99b67198669",
+    "revision": "ef51b7c27ef72963f41df3c700db919efe785b71",
     "source": "docs/LOCAL-CREDENTIALS.md",
-    "version": "stores/postgres/v0.3.0-5-g553ff0b",
-    "sha256": "74ea38aa07b8e7de352984716e8d68dadff4c7fc8e68cf0e8d93f9c172e2610e"
+    "version": "stores/postgres/v0.4.0-1-gef51b7c",
+    "sha256": "cecbc3c0ce84b9d665a570d010fb2d8ed25b91dc77bac338003a86cb6593d96f"
   },
   {
     "page": "backend/rbac",
@@ -114,9 +130,9 @@
   {
     "page": "example",
     "repository": "https://github.com/plutoframework/pluto-example",
-    "revision": "3d237f5b9956c092f7736a88aacc6e43f1ecdb6e",
+    "revision": "2b82896012d3649a56d2cf669e841e7ec4eb8fe9",
     "source": "docs/REFERENCE.md",
-    "version": "3d237f5",
-    "sha256": "afd620d244efdee5ee14145e9d2030b25117645c384c36d66171b22d18fb1c75"
+    "version": "2b82896",
+    "sha256": "7a92f6664eb74daa4efba66978539aa2b1eb6cc5346cc61f4c116d795d814087"
   }
 ]
