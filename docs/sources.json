@@ -74,18 +74,18 @@
   {
     "page": "backend/auth",
     "repository": "https://github.com/plutoframework/pluto-auth",
-    "revision": "8f215a6f6a83e6265f16dca7254d141a79d43560",
+    "revision": "553ff0b2042e87221bfa5a9f32c0b99b67198669",
     "source": "docs/REFERENCE.md",
-    "version": "stores/postgres/v0.3.0-4-g8f215a6",
-    "sha256": "eb3c77bed76f7d7ef65513d6d675999ae4e4c57e8e0258eed37cbb3ebbce22a9"
+    "version": "stores/postgres/v0.3.0-5-g553ff0b",
+    "sha256": "d66912f7f3b3c2ab95528ee87814075e75a51690f0346f57cc78b70717ba51d0"
   },
   {
     "page": "backend/credentials",
     "repository": "https://github.com/plutoframework/pluto-auth",
-    "revision": "8f215a6f6a83e6265f16dca7254d141a79d43560",
+    "revision": "553ff0b2042e87221bfa5a9f32c0b99b67198669",
     "source": "docs/LOCAL-CREDENTIALS.md",
-    "version": "stores/postgres/v0.3.0-4-g8f215a6",
-    "sha256": "f848516aceb330a660e571cd21d338f881942ee2711918579d01912c8729ab16"
+    "version": "stores/postgres/v0.3.0-5-g553ff0b",
+    "sha256": "74ea38aa07b8e7de352984716e8d68dadff4c7fc8e68cf0e8d93f9c172e2610e"
   },
   {
     "page": "backend/rbac",

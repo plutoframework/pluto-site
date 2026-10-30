@@ -30,7 +30,7 @@ jobs:
         with:
           install_args: golangci-lint@2.15.0
       - run: python3 scripts/test-doc-markdown.py
-      - run: python3 scripts/format-go-docs.py
+      - run: mise exec golangci-lint@2.15.0 -- python3 scripts/format-go-docs.py
       - run: npm --prefix docs ci
       - run: npm --prefix docs run build
       - run: python3 scripts/docs-smoke.py
