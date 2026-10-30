@@ -3,7 +3,7 @@ title: "CLI reference"
 description: "CLI reference for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.13.0-1-g67cd451** · [Source at `67cd451`](https://github.com/plutoframework/cli/blob/67cd4517a2b328a942bbfd938cd6bfc7195dc385/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.13.0-2-g6cbd571** · [Source at `6cbd571`](https://github.com/plutoframework/cli/blob/6cbd571381638234c992ab925e6f1db5e1c389a4/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 A working Cobra generator for small Go/Chi APIs. The application uses provisional
@@ -597,7 +597,7 @@ pluto frontend add component purchase-review --from company/approval-panel --dry
 pluto frontend add component purchase-review --from company/approval-panel
 ```
 
-See [the registry contract](https://github.com/plutoframework/cli/blob/67cd4517a2b328a942bbfd938cd6bfc7195dc385/docs/COMPONENT-REGISTRIES.md) and the runnable HeroUI
+See [the registry contract](https://github.com/plutoframework/cli/blob/6cbd571381638234c992ab925e6f1db5e1c389a4/docs/COMPONENT-REGISTRIES.md) and the runnable HeroUI
 registry in examples/component-registry. This first version supports local,
 declarative multi-file items, exact npm pins, dependency graphs, saved source
 digests and optional curated shadcn primitives. It preserves authored code and
@@ -721,4 +721,4 @@ pending feedback, duplicate protection, scope-owned cleanup and preserved input
 on failure. Connected callbacks require an explicit actor/session/tenant scope.
 Optimistic projection is an explicit feature-layer choice; uncertain write
 outcomes require reconciliation before retry. Existing authored forms are not
-rewritten by a CLI upgrade. See [frontend guidance](https://github.com/plutoframework/cli/blob/67cd4517a2b328a942bbfd938cd6bfc7195dc385/docs/FRONTEND.md#responsive-actions).
+rewritten by a CLI upgrade. See [frontend guidance](https://github.com/plutoframework/cli/blob/6cbd571381638234c992ab925e6f1db5e1c389a4/docs/FRONTEND.md#responsive-actions).

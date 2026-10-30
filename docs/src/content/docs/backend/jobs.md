@@ -3,7 +3,7 @@ title: "Jobs and transactional outbox"
 description: "Jobs and transactional outbox for the Pluto framework."
 ---
 
-> Reference snapshot: **stores/postgres/v0.1.0-2-g1bf6fa9** · [Source at `1bf6fa9`](https://github.com/plutoframework/pluto-jobs/blob/1bf6fa92c5c59d05f81dc5b788cc7a0f0c333867/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **stores/postgres/v0.1.0-3-g5afd507** · [Source at `5afd507`](https://github.com/plutoframework/pluto-jobs/blob/5afd5079632871cb86f08318d7b3ae00fed70492/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 A small Go transactional outbox and durable background worker. Applications
@@ -67,7 +67,7 @@ or RBAC. Only trusted application code should enqueue or access these tables.
 ```go
 worker, err := jobs.NewWorker(store, map[jobs.Kind]jobs.Handler{
     "order.created": func(ctx context.Context, job jobs.Job) error {
-        payload, err := jobs.Decode[OrderCreated](https://github.com/plutoframework/pluto-jobs/blob/1bf6fa92c5c59d05f81dc5b788cc7a0f0c333867/job)
+        payload, err := jobs.Decode[OrderCreated](https://github.com/plutoframework/pluto-jobs/blob/5afd5079632871cb86f08318d7b3ae00fed70492/job)
         if err != nil { return jobs.Permanent(err) }
         return sender.Send(ctx, job.ID, job.TenantID, payload)
     },

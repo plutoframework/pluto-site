@@ -3,7 +3,7 @@ title: "Typed AI agents"
 description: "Typed AI agents for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.1.3-1-g5b8b553** · [Source at `5b8b553`](https://github.com/plutoframework/pluto-agent/blob/5b8b5533638382b22211b125178ace3f807cbabc/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.1.3-2-g1aa4056** · [Source at `1aa4056`](https://github.com/plutoframework/pluto-agent/blob/1aa4056494c60ffe70341459415454bf3451b1f9/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 Typed, testable AI-backed Go application features: summarization,
@@ -64,7 +64,7 @@ result, err := a.Run(ctx, agent.Run[Dependencies]{
 
 Imports are `agent "github.com/plutoframework/pluto-agent"` and
 `"github.com/plutoframework/pluto-agent/providers/scripted"`. A complete version
-is compiled in [example_test.go](https://github.com/plutoframework/pluto-agent/blob/5b8b5533638382b22211b125178ace3f807cbabc/example_test.go).
+is compiled in [example_test.go](https://github.com/plutoframework/pluto-agent/blob/1aa4056494c60ffe70341459415454bf3451b1f9/example_test.go).
 
 Construct tools with `NewTool(ToolConfig[D, Args, Result]{...})`, then pass the
 resulting `[]Tool[D]` to `New`. `Handle` is an ordinary
@@ -84,7 +84,7 @@ Or, from this checkout:
 ./scripts/example.sh
 ```
 
-The [synthetic example](https://github.com/plutoframework/pluto-agent/blob/5b8b5533638382b22211b125178ace3f807cbabc/examples/purchase-review) reviews a $1,250 diagnostic
+The [synthetic example](https://github.com/plutoframework/pluto-agent/blob/1aa4056494c60ffe70341459415454bf3451b1f9/examples/purchase-review) reviews a $1,250 diagnostic
 services purchase from Cedar Labs. Three typed tools read a purchase, vendor,
 and organization policy. The vendor tool calls an injected local HTTP client
 and fake service on a random loopback port. The scripted provider checks the
@@ -110,7 +110,7 @@ Every actual tool dispatch must satisfy all four gates:
 
 `Access{}` fails registration. Public access requires `Access{Public: true}`;
 it skips the permission check but still requires run and resource gates. Use
-the published [RBAC adapter](https://github.com/plutoframework/pluto-agent/blob/5b8b5533638382b22211b125178ace3f807cbabc/integrations/plutorbac) rather than writing a
+the published [RBAC adapter](https://github.com/plutoframework/pluto-agent/blob/1aa4056494c60ffe70341459415454bf3451b1f9/integrations/plutorbac) rather than writing a
 second grant algorithm. The provider receives schemas filtered by the run;
 dispatch checks remain authoritative even if the model requests a hidden tool.
 
@@ -126,7 +126,7 @@ arguments, and their SHA-256 hash. The host owns approval authentication,
 expiration, persistence, atomic consumption, and reuse policy. The hash is not
 an approval token. Approval never grants a missing permission.
 
-See [security and ownership](https://github.com/plutoframework/pluto-agent/blob/5b8b5533638382b22211b125178ace3f807cbabc/docs/security.md) for the full host contract.
+See [security and ownership](https://github.com/plutoframework/pluto-agent/blob/1aa4056494c60ffe70341459415454bf3451b1f9/docs/security.md) for the full host contract.
 
 ## Validation, limits, and events
 
@@ -135,7 +135,7 @@ non-null slices within a small documented subset. Required fields, exact field
 names, unknown fields, types, enum tags, duplicate keys, nulls, ranges, JSON depth,
 and byte size are checked before Go decoding. Use `Validate`, `ValidateResult`,
 and `ValidateOutput` for business constraints. Unsupported types fail during
-construction. See [schema support](https://github.com/plutoframework/pluto-agent/blob/5b8b5533638382b22211b125178ace3f807cbabc/docs/schema.md).
+construction. See [schema support](https://github.com/plutoframework/pluto-agent/blob/1aa4056494c60ffe70341459415454bf3451b1f9/docs/schema.md).
 
 The loop returns typed output, completion status, usage, and attempt counts.
 It bounds input/request/response/tool-result bytes, model/tool attempts, repair
@@ -167,7 +167,7 @@ models/capabilities/shapes error explicitly. It sends `store:false`, disables
 redirects, bounds transport bytes, and omits response bodies and URLs from
 transport errors. No live provider call was made to validate this release.
 
-[Provider details and official protocol references](https://github.com/plutoframework/pluto-agent/blob/5b8b5533638382b22211b125178ace3f807cbabc/docs/providers.md) document
+[Provider details and official protocol references](https://github.com/plutoframework/pluto-agent/blob/1aa4056494c60ffe70341459415454bf3451b1f9/docs/providers.md) document
 the deliberately narrow compatibility contract. The deterministic scripted
 provider tests runtime behavior; it does not measure model quality.
 
@@ -188,7 +188,7 @@ gci/gofumpt/golines/wsl_v5 configuration and 80-column target. Files stay below
 1,000 lines. Development scripts create a temporary workspace; committed module
 files have published pins and no local replacements.
 
-[Validation details](https://github.com/plutoframework/pluto-agent/blob/5b8b5533638382b22211b125178ace3f807cbabc/docs/testing.md) distinguish deterministic correctness,
+[Validation details](https://github.com/plutoframework/pluto-agent/blob/1aa4056494c60ffe70341459415454bf3451b1f9/docs/testing.md) distinguish deterministic correctness,
 bounded fuzz/mutation checks, and deferred stochastic evaluations. These checks
 do not constitute an independent security audit.
 

@@ -3,7 +3,7 @@ title: "State machines"
 description: "State machines for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.4.0-1-g730ff42** · [Source at `730ff42`](https://github.com/plutoframework/pluto-core/blob/730ff427e042bc38edcb7dae10f2755817c9acd0/state/README.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.4.0-2-g8e1ccb5** · [Source at `8e1ccb5`](https://github.com/plutoframework/pluto-core/blob/8e1ccb5b1351d57c55652685232af0f219a58902/state/README.md). Commands and integration limits below belong to this revision.
 
 
 Review the purchase lifecycle in `examples/purchases/lifecycle.go`, then
