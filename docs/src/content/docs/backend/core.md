@@ -3,7 +3,7 @@ title: "Core: pagination, idempotency and cache"
 description: "Core: pagination, idempotency and cache for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.4.0** · [Source at `4df67f7`](https://github.com/plutoframework/pluto-core/blob/4df67f750c1cf221d3c63419391bc7cf156c6db7/README.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.4.0-1-g730ff42** · [Source at `730ff42`](https://github.com/plutoframework/pluto-core/blob/730ff427e042bc38edcb7dae10f2755817c9acd0/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 Focused shared Go runtime for Pluto cursor pagination and idempotent business
@@ -31,13 +31,13 @@ reviewed pgx/v5 v5.11.0 driver and generated typed sqlc queries.
   constructor validation. `Status` supports thin app error-envelope adapters.
 - `stores/postgres`: independent module, reference `schema.sql`, `New(pool)` for
   claims, `New(tx).Complete` for atomic completion and explicit bounded
-  `PruneCompleted`. No startup schema work. See [transaction example](https://github.com/plutoframework/pluto-core/blob/4df67f750c1cf221d3c63419391bc7cf156c6db7/docs/transactions.md).
+  `PruneCompleted`. No startup schema work. See [transaction example](https://github.com/plutoframework/pluto-core/blob/730ff427e042bc38edcb7dae10f2755817c9acd0/docs/transactions.md).
 
 ## Optional OpenTelemetry
 
 `github.com/plutoframework/pluto-core/telemetry` is an independently versioned
 adapter module; root consumers retain standard-library-only dependencies.
-See [telemetry setup and privacy contract](https://github.com/plutoframework/pluto-core/blob/4df67f750c1cf221d3c63419391bc7cf156c6db7/telemetry/README.md) for explicit
+See [telemetry setup and privacy contract](https://github.com/plutoframework/pluto-core/blob/730ff427e042bc38edcb7dae10f2755817c9acd0/telemetry/README.md) for explicit
 providers, OTLP export, Chi HTTP tracing/metrics, outbound HTTP propagation,
 PostgreSQL query tracing, cache/outbox/job decorators and slog correlation.
 Applications own startup configuration and bounded shutdown. Diagnostics never
@@ -172,6 +172,6 @@ events and pure business guards. `New` validates the definition once; `Next`
 decides a transition without mutating an entity. Unknown transitions fail
 closed. The caller retains authorization and atomic persistence ownership.
 
-See [the state package](https://github.com/plutoframework/pluto-core/blob/4df67f750c1cf221d3c63419391bc7cf156c6db7/state/README.md) and the compiling
-[purchase lifecycle](https://github.com/plutoframework/pluto-core/blob/4df67f750c1cf221d3c63419391bc7cf156c6db7/examples/purchases/lifecycle.go). The Pluto CLI command
+See [the state package](https://github.com/plutoframework/pluto-core/blob/730ff427e042bc38edcb7dae10f2755817c9acd0/state/README.md) and the compiling
+[purchase lifecycle](https://github.com/plutoframework/pluto-core/blob/730ff427e042bc38edcb7dae10f2755817c9acd0/examples/purchases/lifecycle.go). The Pluto CLI command
 `pluto add state GROUP` scaffolds an authored lifecycle and its tests.

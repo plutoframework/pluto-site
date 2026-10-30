@@ -1,6 +1,6 @@
 """Refresh reference pages from explicit, committed sibling repository revisions.
 
-Run locally to review upstream changes; CI builds the checked-in snapshots.
+Fetch sibling origin/main branches before refreshing published references; CI builds the checked-in snapshots.
 No working-tree content or secret files are read.
 """
 from pathlib import Path
@@ -11,21 +11,21 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = [
-    ('cli/reference', 'CLI reference', 'pluto-cli', 'README.md'),
-    ('frontend/state', 'Typed UI state', 'pluto-frontend', 'README.md'),
+    ('cli/reference', 'CLI reference', 'pluto-cli', 'docs/REFERENCE.md'),
+    ('frontend/state', 'Typed UI state', 'pluto-frontend', 'docs/REFERENCE.md'),
     ('frontend/profiles', 'React and UI libraries', 'pluto-cli', 'docs/FRONTEND.md'),
     ('frontend/themes', 'TOML themes', 'pluto-cli', 'docs/THEMES.md'),
     ('frontend/registries', 'Custom component registries', 'pluto-cli', 'docs/COMPONENT-REGISTRIES.md'),
     ('backend/features', 'Feature flags', 'pluto-cli', 'docs/FEATURE-FLAGS.md'),
-    ('backend/core', 'Core: pagination, idempotency and cache', 'pluto-core', 'README.md'),
+    ('backend/core', 'Core: pagination, idempotency and cache', 'pluto-core', 'docs/REFERENCE.md'),
     ('backend/state', 'State machines', 'pluto-core', 'state/README.md'),
     ('backend/telemetry', 'OpenTelemetry', 'pluto-core', 'telemetry/README.md'),
-    ('backend/auth', 'Authentication', 'pluto-auth', 'README.md'),
+    ('backend/auth', 'Authentication', 'pluto-auth', 'docs/REFERENCE.md'),
     ('backend/credentials', 'Local credential lifecycle', 'pluto-auth', 'docs/LOCAL-CREDENTIALS.md'),
-    ('backend/rbac', 'Roles and permissions', 'pluto-rbac', 'README.md'),
-    ('backend/jobs', 'Jobs and transactional outbox', 'pluto-jobs', 'README.md'),
-    ('backend/agents', 'Typed AI agents', 'pluto-agent', 'README.md'),
-    ('example', 'Purchasing application walkthrough', 'pluto-example', 'README.md'),
+    ('backend/rbac', 'Roles and permissions', 'pluto-rbac', 'docs/REFERENCE.md'),
+    ('backend/jobs', 'Jobs and transactional outbox', 'pluto-jobs', 'docs/REFERENCE.md'),
+    ('backend/agents', 'Typed AI agents', 'pluto-agent', 'docs/REFERENCE.md'),
+    ('example', 'Purchasing application walkthrough', 'pluto-example', 'docs/REFERENCE.md'),
 ]
 
 def git(repo, *args):
@@ -34,7 +34,7 @@ def git(repo, *args):
 manifest = []
 for slug, title, directory, filename in SOURCES:
     repo = ROOT.parent / directory
-    sha = git(repo, 'rev-parse', 'HEAD')
+    sha = git(repo, 'rev-parse', 'refs/remotes/origin/main')
     remote = git(repo, 'remote', 'get-url', 'origin').removesuffix('.git')
     source = subprocess.check_output(['git', '-C', str(repo), 'show', f'{sha}:{filename}'], text=True)
     version = git(repo, 'describe', '--tags', '--always', sha)

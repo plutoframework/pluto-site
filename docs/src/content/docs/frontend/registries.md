@@ -3,7 +3,7 @@ title: "Custom component registries"
 description: "Custom component registries for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.13.0** · [Source at `95aeac2`](https://github.com/plutoframework/cli/blob/95aeac2a84c95df0f4a4af5e24b041d561acc7b7/docs/COMPONENT-REGISTRIES.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.13.0-1-g67cd451** · [Source at `67cd451`](https://github.com/plutoframework/cli/blob/67cd4517a2b328a942bbfd938cd6bfc7195dc385/docs/COMPONENT-REGISTRIES.md). Commands and integration limits below belong to this revision.
 
 
 Configure a local source in the project's pluto.toml:

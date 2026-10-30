@@ -3,7 +3,7 @@ title: "OpenTelemetry"
 description: "OpenTelemetry for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.4.0** · [Source at `4df67f7`](https://github.com/plutoframework/pluto-core/blob/4df67f750c1cf221d3c63419391bc7cf156c6db7/telemetry/README.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.4.0-1-g730ff42** · [Source at `730ff42`](https://github.com/plutoframework/pluto-core/blob/730ff427e042bc38edcb7dae10f2755817c9acd0/telemetry/README.md). Commands and integration limits below belong to this revision.
 
 
 API: FromEnv(prefix, service, version, environment) (Config, error),

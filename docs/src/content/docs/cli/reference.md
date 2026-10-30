@@ -3,14 +3,14 @@ title: "CLI reference"
 description: "CLI reference for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.13.0** · [Source at `95aeac2`](https://github.com/plutoframework/cli/blob/95aeac2a84c95df0f4a4af5e24b041d561acc7b7/README.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.13.0-1-g67cd451** · [Source at `67cd451`](https://github.com/plutoframework/cli/blob/67cd4517a2b328a942bbfd938cd6bfc7195dc385/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 A working Cobra generator for small Go/Chi APIs. The application uses provisional
-app-local primitives, **not an imaginary published Pluto framework**. The module is
+app-local primitives, alongside the published Pluto runtime libraries. The module is
 `github.com/plutoframework/cli`. Go 1.25.5+ and Git are required.
 The executable is named `pluto`; install the release with
-`go install github.com/plutoframework/cli/cmd/pluto@v0.12.1`.
+`go install github.com/plutoframework/cli/cmd/pluto@v0.13.0`.
 
 ```sh
 git clone https://github.com/plutoframework/cli.git pluto-cli
@@ -407,7 +407,6 @@ The mise sqlc pin uses the explicit Go backend instead of an unavailable registr
 alias. sqlc 1.31.1 needs Go 1.26+ for generation; Go can fetch that toolchain without
 changing the application's Go 1.25.5+ target or runtime dependency graph.
 
-
 ## Optional data cache (schema 7)
 
 ```sh
@@ -444,7 +443,6 @@ schemas before writes and never overwrites authored application code.
 
 The disposable PostgreSQL check also starts Valkey and tests all three generated
 cache modes, including real authenticated reads, writes and deletes.
-
 
 ## React frontend and UI libraries
 
@@ -599,7 +597,7 @@ pluto frontend add component purchase-review --from company/approval-panel --dry
 pluto frontend add component purchase-review --from company/approval-panel
 ```
 
-See [the registry contract](https://github.com/plutoframework/cli/blob/95aeac2a84c95df0f4a4af5e24b041d561acc7b7/docs/COMPONENT-REGISTRIES.md) and the runnable HeroUI
+See [the registry contract](https://github.com/plutoframework/cli/blob/67cd4517a2b328a942bbfd938cd6bfc7195dc385/docs/COMPONENT-REGISTRIES.md) and the runnable HeroUI
 registry in examples/component-registry. This first version supports local,
 declarative multi-file items, exact npm pins, dependency graphs, saved source
 digests and optional curated shadcn primitives. It preserves authored code and
@@ -658,7 +656,6 @@ cooperative. The generated skeleton does not provide durable runs, replay storag
 exactly-once execution or approval workflows. Approval, when added to a write
 tool, is additional to permissions, run restrictions and resource authorization.
 
-
 ## Explicit business lifecycles
 
 ```sh
@@ -692,7 +689,6 @@ pluto vet
 go test ./internal/domain/purchases -run '^$' -fuzz FuzzLifecycle -fuzztime=5s
 ```
 
-
 ## Expanded frontend readability
 
 New React scaffolds include pinned ESLint Stylistic 5.10.0 and a visible
@@ -711,7 +707,6 @@ policy and ESLint configuration from a fresh scaffold, install the pinned dev
 plugin, and update the fmt/lint/test scripts before running `npm run fmt` and
 `npm run check`. No manifest or runtime API migration is required.
 
-
 Standalone comment blocks have one blank line above them, except at line 1.
 Consecutive comment lines stay together, and the comment remains attached to the
 code below. JavaScript and TypeScript lint/format checks enforce this convention,
@@ -726,4 +721,4 @@ pending feedback, duplicate protection, scope-owned cleanup and preserved input
 on failure. Connected callbacks require an explicit actor/session/tenant scope.
 Optimistic projection is an explicit feature-layer choice; uncertain write
 outcomes require reconciliation before retry. Existing authored forms are not
-rewritten by a CLI upgrade. See [frontend guidance](https://github.com/plutoframework/cli/blob/95aeac2a84c95df0f4a4af5e24b041d561acc7b7/docs/FRONTEND.md#responsive-actions).
+rewritten by a CLI upgrade. See [frontend guidance](https://github.com/plutoframework/cli/blob/67cd4517a2b328a942bbfd938cd6bfc7195dc385/docs/FRONTEND.md#responsive-actions).
