@@ -21,15 +21,14 @@ by default. Add `-g` for a user-wide install, or select a skill explicitly:
 npx skills add plutoframework/pluto-skills --skill pluto-api -a codex
 ```
 
-| Skill            | Covers                                               |
-| ---------------- | ---------------------------------------------------- |
-| `pluto-project`  | Initialization, configuration and upgrades           |
-| `pluto-api`      | Endpoints, operations and domain state               |
-| `pluto-security` | Authentication, RBAC, tenants and feature flags      |
-| `pluto-data`     | Persistence, pagination, idempotency, jobs and cache |
-| `pluto-frontend` | React, UI libraries, themes, registries and UI state |
-| `pluto-agents`   | Typed AI runs and tool authorization                 |
-
+| Skill              | Covers                                                             |
+| ------------------ | ------------------------------------------------------------------ |
+| `pluto-project`    | Initialization, configuration and upgrades                         |
+| `pluto-api`        | Endpoints, operations and domain state                             |
+| `pluto-security`   | Authentication, RBAC, tenants and feature flags                    |
+| `pluto-data`       | Persistence, pagination, idempotency, jobs and cache               |
+| `pluto-frontend`   | React, UI libraries, themes, registries and UI state               |
+| `pluto-agents`     | Typed AI runs and tool authorization                               |
 | `pluto-maintainer` | Framework changes, experience improvements and security validation |
 
 The maintainer skill has a short entrypoint and focused implementation, experience
