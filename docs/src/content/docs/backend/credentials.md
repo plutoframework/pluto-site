@@ -3,7 +3,7 @@ title: "Local credential lifecycle"
 description: "Local credential lifecycle for the Pluto framework."
 ---
 
-> Reference snapshot: **stores/postgres/v0.3.0-2-gdf2d9fd** · [Source at `df2d9fd`](https://github.com/plutoframework/pluto-auth/blob/df2d9fd78ce434dc69a53474660b8251367823e8/docs/LOCAL-CREDENTIALS.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **stores/postgres/v0.3.0-3-g4bf6ac2** · [Source at `4bf6ac2`](https://github.com/plutoframework/pluto-auth/blob/4bf6ac291383d87b508ee9cdafa44b9cb6e6742c/docs/LOCAL-CREDENTIALS.md). Commands and integration limits below belong to this revision.
 
 
 This MVP owns an account ID, canonical email, Argon2id password hash, verified /
@@ -15,7 +15,7 @@ frontend/admin UI and email-address changes remain outside this round.
 ## Replace demo bootstrap
 
 A compiling constructor lives in
-[`stores/postgres/examples/local/local.go`](https://github.com/plutoframework/pluto-auth/blob/df2d9fd78ce434dc69a53474660b8251367823e8/stores/postgres/examples/local/local.go).
+[`stores/postgres/examples/local/local.go`](https://github.com/plutoframework/pluto-auth/blob/4bf6ac291383d87b508ee9cdafa44b9cb6e6742c/stores/postgres/examples/local/local.go).
 It takes an existing pgx pool, a real Sender, shared AttemptLimiter, trusted
 client ingress middleware, exact trusted origins and optional password policy.
 It sends nothing and starts no listener. The adjacent example test uses only a

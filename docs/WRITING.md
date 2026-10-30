@@ -1,26 +1,12 @@
 # Writing Pluto documentation
 
-Use OpenCode's documentation (https://opencode.ai/docs/) as the editorial reference.
-Write original Pluto instructions; do not copy their prose.
+The canonical [documentation authoring guide](src/content/docs/maintainers/documentation.md)
+contains editorial rules, realistic-example standards and validation steps.
 
-- Open with what the feature does and when to use it.
-- Use short, descriptive headings: Install, Configure, Usage, Options.
-- Show a small working command or configuration before discussing edge cases.
-- Explain the result immediately after the example, including generated paths.
-- Put prerequisites before the step that needs them.
-- Use tables for flags/defaults and callouts for actionable limitations.
-- Keep marketing language and space metaphors out of instructions.
-- Link deeper package references rather than repeating implementation details.
-- Identify supported versions. Distinguish scaffolding from completed app wiring.
-- Check commands against the pinned CLI. Compile complete examples in CI.
+- Lead with the actual integration and application wiring.
+- Keep simulations and test doubles in labeled testing sections.
+- Check runnable examples against published APIs; state what was actually tested.
 
-Reference snapshots preserve upstream package wording and exact source revisions.
-Edit those in the package repository, then refresh with scripts/sync-docs.py.
-
-## Agent readers
-
-- Keep skill guidance in `plutoframework/pluto-skills`; link to canonical topics.
-- `scripts/export-markdown.py` publishes each content page as `/docs/<slug>.md`.
-- `docs/llms.txt` lists topics; the site-root `llms.txt` points to that index.
-- Keep exports derived from the checked-in source. Do not maintain a second manual.
-- Check Markdown targets with `scripts/check-docs.py` after assembling the site.
+Read the same guide [on the site](https://plutoframework.github.io/pluto-site/docs/maintainers/documentation/)
+or [as Markdown](https://plutoframework.github.io/pluto-site/docs/maintainers/documentation.md).
+Edit the canonical page above; do not maintain a second copy here.

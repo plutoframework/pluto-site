@@ -3,7 +3,7 @@ title: "Jobs and transactional outbox"
 description: "Jobs and transactional outbox for the Pluto framework."
 ---
 
-> Reference snapshot: **stores/postgres/v0.1.0-3-g5afd507** · [Source at `5afd507`](https://github.com/plutoframework/pluto-jobs/blob/5afd5079632871cb86f08318d7b3ae00fed70492/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **stores/postgres/v0.1.0-4-gf2e5352** · [Source at `f2e5352`](https://github.com/plutoframework/pluto-jobs/blob/f2e5352718a111c84e2f51cbc481eb122c2a0f91/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 A small Go transactional outbox and durable background worker. Applications
@@ -67,7 +67,7 @@ or RBAC. Only trusted application code should enqueue or access these tables.
 ```go
 worker, err := jobs.NewWorker(store, map[jobs.Kind]jobs.Handler{
     "order.created": func(ctx context.Context, job jobs.Job) error {
-        payload, err := jobs.Decode[OrderCreated](https://github.com/plutoframework/pluto-jobs/blob/5afd5079632871cb86f08318d7b3ae00fed70492/job)
+        payload, err := jobs.Decode[OrderCreated](https://github.com/plutoframework/pluto-jobs/blob/f2e5352718a111c84e2f51cbc481eb122c2a0f91/job)
         if err != nil { return jobs.Permanent(err) }
         return sender.Send(ctx, job.ID, job.TenantID, payload)
     },
@@ -137,7 +137,7 @@ idempotency implications before explicitly constructing replacement work.
 Out of scope: cron/schedulers, DAGs, bulk management, deduplication frameworks,
 other databases, brokers, native senders, provider integrations and benchmarks.
 
-## Runnable synthetic example
+## Testing: transactional outbox with a synthetic handler
 
 Use a disposable database; these commands apply explicit caller migrations.
 No external messages are sent. With `DATABASE_URL` exported:

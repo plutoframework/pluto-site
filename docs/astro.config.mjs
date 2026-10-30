@@ -41,6 +41,10 @@ export default defineConfig({
         },
         { label: "Working example", slug: "example" },
         {
+          label: "Maintainers",
+          items: [{ autogenerate: { directory: "maintainers" } }],
+        },
+        {
           label: "Product site ↗",
           link: "https://plutoframework.github.io/pluto-site/",
         },

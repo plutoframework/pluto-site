@@ -3,7 +3,7 @@ title: "CLI reference"
 description: "CLI reference for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.13.0-2-g6cbd571** · [Source at `6cbd571`](https://github.com/plutoframework/cli/blob/6cbd571381638234c992ab925e6f1db5e1c389a4/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.13.0-3-gd3374da** · [Source at `d3374da`](https://github.com/plutoframework/cli/blob/d3374da662c857e72bef657883c43e778378a5cb/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 A working Cobra generator for small Go/Chi APIs. The application uses provisional
@@ -597,7 +597,7 @@ pluto frontend add component purchase-review --from company/approval-panel --dry
 pluto frontend add component purchase-review --from company/approval-panel
 ```
 
-See [the registry contract](https://github.com/plutoframework/cli/blob/6cbd571381638234c992ab925e6f1db5e1c389a4/docs/COMPONENT-REGISTRIES.md) and the runnable HeroUI
+See [the registry contract](https://github.com/plutoframework/cli/blob/d3374da662c857e72bef657883c43e778378a5cb/docs/COMPONENT-REGISTRIES.md) and the runnable HeroUI
 registry in examples/component-registry. This first version supports local,
 declarative multi-file items, exact npm pins, dependency graphs, saved source
 digests and optional curated shadcn primitives. It preserves authored code and
@@ -619,14 +619,14 @@ API caches and pgx queries are instrumented too. Existing authored apps are pres
 
 ```sh
 pluto add agent purchases Review --permission purchases:read --dry-run
-pluto add agent purchases Review --permission purchases:read --provider scripted
+pluto add agent purchases Review --permission purchases:read --provider openai
 go mod tidy
 pluto fmt
 pluto vet
 ```
 
-The wizard offers the same command and provider choice. `--provider scripted`
-is the default; `--provider openai` emits a startup constructor that validates
+The example explicitly selects the real provider. The wizard offers the same
+choice. `--provider scripted` is the CLI default for deterministic tests; `--provider openai` emits a startup constructor that validates
 the namespaced runtime model/key environment without enabling a route.
 Provider selection is persisted in pluto.toml; credentials never are. Agent metadata uses schema 8; schema 7
 projects without agents remain readable. Adding an agent explicitly upgrades the
@@ -721,4 +721,4 @@ pending feedback, duplicate protection, scope-owned cleanup and preserved input
 on failure. Connected callbacks require an explicit actor/session/tenant scope.
 Optimistic projection is an explicit feature-layer choice; uncertain write
 outcomes require reconciliation before retry. Existing authored forms are not
-rewritten by a CLI upgrade. See [frontend guidance](https://github.com/plutoframework/cli/blob/6cbd571381638234c992ab925e6f1db5e1c389a4/docs/FRONTEND.md#responsive-actions).
+rewritten by a CLI upgrade. See [frontend guidance](https://github.com/plutoframework/cli/blob/d3374da662c857e72bef657883c43e778378a5cb/docs/FRONTEND.md#responsive-actions).

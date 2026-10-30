@@ -29,11 +29,13 @@ npx skills add plutoframework/pluto-skills --skill pluto-api -a codex
 | `pluto-data`       | Persistence, pagination, idempotency, jobs and cache               |
 | `pluto-frontend`   | React, UI libraries, themes, registries and UI state               |
 | `pluto-agents`     | Typed AI runs and tool authorization                               |
+| `pluto-docs`       | Documentation, realistic examples and authoring checks             |
 | `pluto-maintainer` | Framework changes, experience improvements and security validation |
 
 The maintainer skill has a short entrypoint and focused implementation, experience
 and security references. It applies to work on Pluto itself; the other skills
-guide application work.
+guide application work. Use `pluto-docs` for README and guide changes; see the
+[authoring guide](../maintainers/documentation/).
 
 Use `npx skills check` to inspect updates and `npx skills update` to apply them.
 See the [public collection](https://github.com/plutoframework/pluto-skills) for

@@ -3,7 +3,7 @@ title: "Authentication"
 description: "Authentication for the Pluto framework."
 ---
 
-> Reference snapshot: **stores/postgres/v0.3.0-2-gdf2d9fd** · [Source at `df2d9fd`](https://github.com/plutoframework/pluto-auth/blob/df2d9fd78ce434dc69a53474660b8251367823e8/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **stores/postgres/v0.3.0-3-g4bf6ac2** · [Source at `4bf6ac2`](https://github.com/plutoframework/pluto-auth/blob/4bf6ac291383d87b508ee9cdafa44b9cb6e6742c/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 An independent, deliberately narrow hard fork of
@@ -69,7 +69,7 @@ operation. For the complete local password lifecycle use
 an application-supplied Sender. The service constructs its session manager from
 the same fenced store and requires verified email for sign-in. Successful
 SignIn returns an IssuedSession; send it with transport.WriteCookie, never in
-JSON. [Local integration/API guide](https://github.com/plutoframework/pluto-auth/blob/df2d9fd78ce434dc69a53474660b8251367823e8/docs/LOCAL-CREDENTIALS.md) includes the
+JSON. [Local integration/API guide](https://github.com/plutoframework/pluto-auth/blob/4bf6ac291383d87b508ee9cdafa44b9cb6e6742c/docs/LOCAL-CREDENTIALS.md) includes the
 compiling constructor and migration, delivery and operational boundaries.
 
 The older NewAuthenticator remains a low-level compatibility API for externally
