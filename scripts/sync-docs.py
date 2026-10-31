@@ -4,6 +4,7 @@ Fetch sibling origin/main branches before refreshing published references; CI bu
 No working-tree content or secret files are read.
 """
 from pathlib import Path
+import argparse
 import hashlib
 import json
 import re
@@ -32,11 +33,40 @@ SOURCES = [
     ('example', 'Purchasing application walkthrough', 'pluto-example', 'docs/REFERENCE.md'),
 ]
 
+# Site-owned guidance sits outside versioned package snapshots. Keep these
+# notices during refreshes rather than hand-editing generated reference pages.
+GUIDE_NOTES = {
+    slug: '> Native second factors are implemented in the unreleased library '
+          'workflow. See [TOTP and recovery](../totp/) for setup, pending '
+          'sign-in and protected changes. Check the guide\'s release status '
+          'before selecting module versions.\n\n'
+    for slug in (
+        'backend/auth', 'backend/authentication', 'backend/oidc',
+        'backend/auth-roadmap', 'backend/credentials',
+    )
+}
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument(
+    '--repository', choices=sorted({source[2] for source in SOURCES}),
+    help='Refresh only this sibling repository; preserve other snapshots.',
+)
+args = parser.parse_args()
+
+
 def git(repo, *args):
     return subprocess.check_output(['git', '-C', str(repo), *args], text=True).strip()
 
+manifest_path = ROOT / 'docs/sources.json'
+existing = {
+    item['page']: item for item in json.loads(manifest_path.read_text())
+} if args.repository else {}
 manifest = []
+synchronized = 0
 for slug, title, directory, filename in SOURCES:
+    if args.repository and directory != args.repository:
+        manifest.append(existing[slug])
+        continue
     repo = ROOT.parent / directory
     sha = git(repo, 'rev-parse', 'refs/remotes/origin/main')
     remote = git(repo, 'remote', 'get-url', 'origin').removesuffix('.git')
@@ -65,11 +95,13 @@ for slug, title, directory, filename in SOURCES:
     source = re.sub(r'^# .+\n', '', source, count=1)
     content = (f'---\ntitle: {json.dumps(title)}\ndescription: {json.dumps(title + " for the Pluto framework.")}\n---\n\n'
                f'> Reference snapshot: **{version}** · [Source at `{sha[:7]}`]({url}). '
-               'Commands and integration limits below belong to this revision.\n\n' + source)
+               'Commands and integration limits below belong to this revision.\n\n'
+               + GUIDE_NOTES.get(slug, '') + source)
     dest = ROOT / 'docs/src/content/docs' / (slug + '.md')
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(content)
     manifest.append(dict(page=slug, repository=remote, revision=sha, source=filename,
                          version=version, sha256=hashlib.sha256(source.encode()).hexdigest()))
-(ROOT / 'docs/sources.json').write_text(json.dumps(manifest, indent=2) + '\n')
-print(f'Synchronized {len(manifest)} committed reference pages.')
+    synchronized += 1
+manifest_path.write_text(json.dumps(manifest, indent=2) + '\n')
+print(f'Synchronized {synchronized} committed reference pages.')

@@ -3,14 +3,17 @@ title: "Account authentication"
 description: "Account authentication for the Pluto framework."
 ---
 
-> Reference snapshot: **stores/postgres/oidc/v0.1.1** · [Source at `b28792a`](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/AUTHENTICATION.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **stores/postgres/oidc/v0.1.1-2-gebe9970** · [Source at `ebe9970`](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/AUTHENTICATION.md). Commands and integration limits below belong to this revision.
+
+> Native second factors are implemented in the unreleased library workflow. See [TOTP and recovery](../totp/) for setup, pending sign-in and protected changes. Check the guide's release status before selecting module versions.
 
 
 Pluto Auth v0.4 adds shared account policy, server-local authentication decisions
 and method evidence. The first integrated method is the existing password
 service. This is the foundation for native social sign-in, MFA and step-up flows;
-the optional [OIDC workflow](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/OIDC.md) now verifies provider sign-in. Native TOTP
-verification remains on the roadmap.
+the optional [OIDC workflow](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/OIDC.md) now verifies provider sign-in. Native TOTP
+verification is available in the optional [native second-factor workflow](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/TOTP.md)
+(unreleased).
 
 ## Upgrade
 
@@ -21,6 +24,8 @@ Account-backed `postgres.NewLocal` users must explicitly apply these in order:
 2. `migrations/002_local_credentials.sql` — password accounts and challenges.
 3. `migrations/003_authentication.sql` — account factor policy and evidence.
 4. `migrations/004_external_accounts.sql` — explicit local/external credential kinds.
+5. Optionally, `migrations/005_totp.sql` — native TOTP factors, pending challenges
+   and recovery digests, when using `stores/postgres/totp`.
 
 Apply each once through application migration tooling. No constructor runs DDL.
 Migration 003 preserves old sessions with **unknown** authentication evidence.
@@ -107,8 +112,9 @@ absolute session deadline. Password recovery does not remove a required factor.
 changes advance the account version and atomically revoke its sessions and
 password challenges. It is not enrollment or recovery. Do not enable this policy
 until a verified factor implementation and a recovery path are configured.
-Native factor enrollment/verification and corresponding CLI/UI flows are next
-work; they are not shipped by this foundation release.
+The optional [TOTP module](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/TOTP.md) now provides enrollment/verification and
+recovery with protected lifecycle APIs. Corresponding cross-repository CLI/UI
+flows remain follow-up work; they are not supplied by the core foundation.
 
 The existing `Start` and `StartVersioned` remain trusted issuance primitives.
 `LocalStore` rejects them when they would bypass a required factor. Never issue
@@ -130,5 +136,5 @@ completion and session creation. Existing reset/disable issuance-race tests cove
 the preferred account-backed path. Fuzz and mutation checks are bounded samples;
 no independent security audit or complete identity-provider claim is made.
 
-See the [expansion roadmap](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/ROADMAP.md) and
+See the [expansion roadmap](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/ROADMAP.md) and
 [OWASP authentication guidance](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html).

@@ -45,6 +45,7 @@ export default defineConfig({
                 },
                 { label: "OIDC and Google", slug: "backend/oidc" },
                 { label: "Password credentials", slug: "backend/credentials" },
+                { label: "TOTP and recovery", slug: "backend/totp" },
                 { label: "Expansion roadmap", slug: "backend/auth-roadmap" },
               ],
             },

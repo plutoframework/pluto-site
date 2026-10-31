@@ -17,6 +17,8 @@ This field guide covers **CLI v0.13.0** and **Core v0.4.0**. Package reference p
 ## Build on shared primitives
 
 - [Authentication](backend/auth/) and [RBAC](backend/rbac/) establish verified identity and permissions.
+- [TOTP and recovery](backend/totp/) covers the unreleased native second-factor
+  workflow, required migrations and host key-management boundaries.
 - [Core](backend/core/) provides pagination, idempotency and explicit data caching.
 - [Feature flags](backend/features/) control exposure; [state machines](backend/state/) describe business transitions.
 - [Jobs](backend/jobs/) deliver work after commit; [telemetry](backend/telemetry/) connects traces, metrics and logs.

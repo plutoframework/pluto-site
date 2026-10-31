@@ -74,42 +74,42 @@
   {
     "page": "backend/auth",
     "repository": "https://github.com/plutoframework/pluto-auth",
-    "revision": "b28792a6264aa43a151bea6665c480c12e50684e",
+    "revision": "ebe997074ec32f4ff5b1984b6632e06f9481ed5c",
     "source": "docs/REFERENCE.md",
-    "version": "stores/postgres/oidc/v0.1.1",
-    "sha256": "49f8c1a2067b03923950f48d92879245bc4ab4baea5f5d49234e6776267c5c04"
+    "version": "stores/postgres/oidc/v0.1.1-2-gebe9970",
+    "sha256": "4d56c04fba54b403074fe963e3cc0ec5a516868c3445bf661ff7b63cd573a08a"
   },
   {
     "page": "backend/authentication",
     "repository": "https://github.com/plutoframework/pluto-auth",
-    "revision": "b28792a6264aa43a151bea6665c480c12e50684e",
+    "revision": "ebe997074ec32f4ff5b1984b6632e06f9481ed5c",
     "source": "docs/AUTHENTICATION.md",
-    "version": "stores/postgres/oidc/v0.1.1",
-    "sha256": "e787006e0241303b4d1ad0849b6a9ad80cb5287fef996fe69e59cd09e1d522b7"
+    "version": "stores/postgres/oidc/v0.1.1-2-gebe9970",
+    "sha256": "352b244d50bc96340e0231352022af974a83884819ad41fabc4db713a099d33c"
   },
   {
     "page": "backend/oidc",
     "repository": "https://github.com/plutoframework/pluto-auth",
-    "revision": "b28792a6264aa43a151bea6665c480c12e50684e",
+    "revision": "ebe997074ec32f4ff5b1984b6632e06f9481ed5c",
     "source": "docs/OIDC.md",
-    "version": "stores/postgres/oidc/v0.1.1",
-    "sha256": "125cce6087163ca6f3b0126fff66a73fe2baaf3a6356092bf71657611ff7b347"
+    "version": "stores/postgres/oidc/v0.1.1-2-gebe9970",
+    "sha256": "e71be24fc41d5820c840f32854c433b11a37b7d9c3ad414db15acf126e23b979"
   },
   {
     "page": "backend/auth-roadmap",
     "repository": "https://github.com/plutoframework/pluto-auth",
-    "revision": "b28792a6264aa43a151bea6665c480c12e50684e",
+    "revision": "ebe997074ec32f4ff5b1984b6632e06f9481ed5c",
     "source": "docs/ROADMAP.md",
-    "version": "stores/postgres/oidc/v0.1.1",
-    "sha256": "44272d011b3899d119a1e56d3604fc8891f1b44a00a856382e2f886e4aa69605"
+    "version": "stores/postgres/oidc/v0.1.1-2-gebe9970",
+    "sha256": "c4a0156a8788d0c5008fbee29ed0042f17bdff020f56998a34cbedce027c063f"
   },
   {
     "page": "backend/credentials",
     "repository": "https://github.com/plutoframework/pluto-auth",
-    "revision": "b28792a6264aa43a151bea6665c480c12e50684e",
+    "revision": "ebe997074ec32f4ff5b1984b6632e06f9481ed5c",
     "source": "docs/LOCAL-CREDENTIALS.md",
-    "version": "stores/postgres/oidc/v0.1.1",
-    "sha256": "82958735f2f7075eac62779bf6e610b43928e751e4bdd2ad62dd3b785b428e0d"
+    "version": "stores/postgres/oidc/v0.1.1-2-gebe9970",
+    "sha256": "3f472959269e1cab572cba7ffa1bec5a64b69f574953ff6dae2ac09aa277f9d9"
   },
   {
     "page": "backend/rbac",

@@ -3,7 +3,9 @@ title: "OIDC and Google sign-in"
 description: "OIDC and Google sign-in for the Pluto framework."
 ---
 
-> Reference snapshot: **stores/postgres/oidc/v0.1.1** · [Source at `b28792a`](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/OIDC.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **stores/postgres/oidc/v0.1.1-2-gebe9970** · [Source at `ebe9970`](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/OIDC.md). Commands and integration limits below belong to this revision.
+
+> Native second factors are implemented in the unreleased library workflow. See [TOTP and recovery](../totp/) for setup, pending sign-in and protected changes. Check the guide's release status before selecting module versions.
 
 
 Use an OpenID Connect provider, including Google, through the optional
@@ -39,7 +41,7 @@ profiles fail closed; GitHub OAuth is a separate adapter, not OIDC.
 ## Wire the server
 
 The complete compiling composition is in
-[the PostgreSQL adapter example](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/stores/postgres/oidc/example_test.go).
+[the PostgreSQL adapter example](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/stores/postgres/oidc/example_test.go).
 It accepts an existing pool, key, provider configuration and actual trusted-client
 ingress limiter. It constructs encrypted persistence, the fenced session manager,
 OIDC service and HTTP handler. No test provider, no-op limiter or delivery stub is

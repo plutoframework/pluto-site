@@ -3,14 +3,16 @@ title: "Local credential lifecycle"
 description: "Local credential lifecycle for the Pluto framework."
 ---
 
-> Reference snapshot: **stores/postgres/oidc/v0.1.1** · [Source at `b28792a`](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/LOCAL-CREDENTIALS.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **stores/postgres/oidc/v0.1.1-2-gebe9970** · [Source at `ebe9970`](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/LOCAL-CREDENTIALS.md). Commands and integration limits below belong to this revision.
+
+> Native second factors are implemented in the unreleased library workflow. See [TOTP and recovery](../totp/) for setup, pending sign-in and protected changes. Check the guide's release status before selecting module versions.
 
 
 This MVP owns an account ID, canonical email, Argon2id password hash, verified /
 disabled flags, credential version and one challenge per purpose. It owns no
 application profile, role, tenant or membership. Enrollment never grants access
-to business resources. [Social/OIDC sign-in](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/OIDC.md) is an optional native module. MFA, OAuth authorization servers,
-frontend/admin UI and email-address changes are tracked in the [expansion roadmap](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/ROADMAP.md).
+to business resources. [Social/OIDC sign-in](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/OIDC.md) is an optional native module. MFA, OAuth authorization servers,
+frontend/admin UI and email-address changes are tracked in the [expansion roadmap](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/ROADMAP.md).
 
 ## Configure the service and HTTP adapter
 
@@ -125,7 +127,7 @@ membership and resource permissions through application operations.
    application migration tooling. No startup DDL is performed. Existing
    session-only users need no new schema or accounts and can retain `postgres.New`.
    Apply `stores/postgres/migrations/003_authentication.sql` next for v0.4's
-   shared account policy and evidence; see [the upgrade guide](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/AUTHENTICATION.md).
+   shared account policy and evidence; see [the upgrade guide](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/AUTHENTICATION.md).
 2. Construct `postgres.NewLocal(pool)`, `password.NewHasher`, and
    `password.NewService(ctx, store, hasher, limiter, sender, sessionConfig,
    lifecycleConfig)`. Sender and limiter are mandatory. Service constructs the

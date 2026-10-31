@@ -149,5 +149,11 @@ it does not advertise historical version switching.
 
 Fetch the intended sibling repositories before `python3 scripts/sync-docs.py`.
 The script reads their committed `origin/main` revisions, not local working trees.
+Use `python3 scripts/sync-docs.py --repository pluto-auth` to refresh only the auth
+snapshots and preserve unrelated package revisions. Site-owned guide notices in
+the sync script link published snapshots to the unreleased native-factor guide
+without relabeling unpublished APIs as released. The native-factor guide itself
+is authored at `src/content/docs/backend/totp.md`, not generated from a package
+snapshot.
 Long package references live in `docs/REFERENCE.md`; GitHub READMEs are the short
 entrypoints. Review snapshot revisions and source links before committing.
