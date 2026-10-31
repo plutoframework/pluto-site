@@ -36,6 +36,22 @@ The lifecycle generator includes meaningful unit cases and a fuzz target. Packag
 
 Generated projects use an 80-column formatter target, expanded Go formatting and a 1,000-line source ceiling. `pluto fmt` applies the configured formatters and whitespace fixes. `pluto vet` checks the architecture and generated contracts along with Go checks. Split responsibilities across files rather than compacting code to meet the ceiling.
 
+Go library maintainer commands (`make fmt` and `make vet`) enforce a blank line
+before each standalone comment block unless it starts on file line one. This
+also applies immediately inside a code block. Consecutive comment lines stay
+together and attached to the code below; trailing inline comments and compiler
+or linter directives retain their required placement. Generated Go and `testdata`
+fixtures are excluded. The CLI repository uses `scripts/fmt.sh` and
+`scripts/check.sh` for the same maintainer rule.
+
+The maintainer formatter applies comment spacing after configured Go formatters.
+The check compares that combined result because gofumpt otherwise removes blank
+lines before comments at the start of a block. The linter runner selects the
+configured semantic linters separately; the composed formatter owns leading
+whitespace instead of wsl's conflicting block-start rule. Frontend uses its existing ESLint
+comment-spacing rule. These maintainer commands do not change application
+`pluto fmt` or `pluto vet` behavior.
+
 ## Humans and agents
 
 Use the wizard for discovery. Use deterministic raw commands with `--no-input` for automation. Generators preserve authored files and offer `--dry-run`. Existing generated contracts require intentional migrations when the manifest schema changes.
