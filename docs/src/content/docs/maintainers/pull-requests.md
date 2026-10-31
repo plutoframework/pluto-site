@@ -71,6 +71,10 @@ To revise the PR, update the source branch with current `main` and your fixes,
 then dispatch the workflow again. Review and approve the resulting current head
 using your human account.
 
+If a submission is interrupted, dispatch it again. The App recovers a prepared
+branch only when its own authenticated check attests to that exact branch and
+commit; an unrelated branch collision requires a new source branch.
+
 The App uses installation tokens, never a maintainer's personal token, for its
 submissions, reviews and merges. It cannot approve its own PR. Neither a clean
 AI review nor the App's identity substitutes for required human approval.
