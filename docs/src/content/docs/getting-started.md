@@ -5,6 +5,12 @@ description: "Your first application with Pluto."
 
 This walkthrough targets CLI **v0.15.0**. Install Go **1.25.5+** and Git. Docker is needed when you run the generated PostgreSQL stack. Format/check commands require golangci-lint **2.15.0**, available through the generated mise setup.
 
+The optional [Core telemetry adapter](../backend/telemetry/) and the current
+[purchasing example](../example/) require Go **1.26+** for their patched
+OpenTelemetry dependencies. Core without that adapter retains its Go 1.25.5
+minimum. Use the same supported Go toolchain locally and in CI before updating
+these dependencies.
+
 ## Install Pluto
 
 ```sh

@@ -6,6 +6,7 @@ from pathlib import Path
 import argparse
 import re
 import subprocess
+import tempfile
 import textwrap
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +34,15 @@ def formatted(code):
             ['golangci-lint', 'fmt', '--stdin', '--config', str(ROOT / '.golangci.docs.yml')],
             input=source, capture_output=True, text=True, check=True)
         value = result.stdout
+        # Apply the canonical comment rule after gofumpt, which removes blank
+        # lines at the beginning of blocks. Keep snapshots identical to source.
+        with tempfile.TemporaryDirectory() as directory:
+            example = Path(directory) / 'excerpt.go'
+            example.write_text(value)
+            subprocess.run(
+                ['go', 'run', str(ROOT / 'scripts/commentspacing/main.go'),
+                 '-write', directory], check=True)
+            value = example.read_text()
         if prefix.endswith('func excerpt() {\n'):
             value = value.split('func excerpt() {\n', 1)[1].rsplit('\n}', 1)[0]
             value = textwrap.dedent(value)
