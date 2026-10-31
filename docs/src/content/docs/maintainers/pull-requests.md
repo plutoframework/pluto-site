@@ -110,5 +110,8 @@ not receive those credentials.
 
 GPU Router uses base URL `https://gpurouter.io/v1`, gateway model
 `openai/gpt-6-astra` and high reasoning effort. There is no weaker fallback.
+Each model request has a ten-minute deadline; timed-out calls are not replayed
+automatically. The review process has a fifteen-minute limit. A timeout keeps
+merging blocked; retry the review workflow after the provider recovers.
 `PLUTO_AUTO_MERGE=false` keeps a repository in review-only mode; `true` enables
 merging when every gate passes. This setting does not bypass branch rules.
