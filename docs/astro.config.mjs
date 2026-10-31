@@ -43,6 +43,7 @@ export default defineConfig({
                   label: "Account authentication",
                   slug: "backend/authentication",
                 },
+                { label: "OIDC and Google", slug: "backend/oidc" },
                 { label: "Password credentials", slug: "backend/credentials" },
                 { label: "Expansion roadmap", slug: "backend/auth-roadmap" },
               ],

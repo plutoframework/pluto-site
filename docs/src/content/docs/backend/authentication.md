@@ -3,13 +3,14 @@ title: "Account authentication"
 description: "Account authentication for the Pluto framework."
 ---
 
-> Reference snapshot: **stores/postgres/v0.4.0-1-gef51b7c** · [Source at `ef51b7c`](https://github.com/plutoframework/pluto-auth/blob/ef51b7c27ef72963f41df3c700db919efe785b71/docs/AUTHENTICATION.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **stores/postgres/oidc/v0.1.1** · [Source at `b28792a`](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/AUTHENTICATION.md). Commands and integration limits below belong to this revision.
 
 
 Pluto Auth v0.4 adds shared account policy, server-local authentication decisions
 and method evidence. The first integrated method is the existing password
 service. This is the foundation for native social sign-in, MFA and step-up flows;
-it does not yet implement an OIDC provider adapter or TOTP verification.
+the optional [OIDC workflow](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/OIDC.md) now verifies provider sign-in. Native TOTP
+verification remains on the roadmap.
 
 ## Upgrade
 
@@ -19,6 +20,7 @@ Account-backed `postgres.NewLocal` users must explicitly apply these in order:
 1. `schema.sql` — original sessions.
 2. `migrations/002_local_credentials.sql` — password accounts and challenges.
 3. `migrations/003_authentication.sql` — account factor policy and evidence.
+4. `migrations/004_external_accounts.sql` — explicit local/external credential kinds.
 
 Apply each once through application migration tooling. No constructor runs DDL.
 Migration 003 preserves old sessions with **unknown** authentication evidence.
@@ -128,5 +130,5 @@ completion and session creation. Existing reset/disable issuance-race tests cove
 the preferred account-backed path. Fuzz and mutation checks are bounded samples;
 no independent security audit or complete identity-provider claim is made.
 
-See the [expansion roadmap](https://github.com/plutoframework/pluto-auth/blob/ef51b7c27ef72963f41df3c700db919efe785b71/docs/ROADMAP.md) and
+See the [expansion roadmap](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/ROADMAP.md) and
 [OWASP authentication guidance](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html).

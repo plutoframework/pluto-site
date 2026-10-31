@@ -3,7 +3,7 @@ title: "Authentication"
 description: "Authentication for the Pluto framework."
 ---
 
-> Reference snapshot: **stores/postgres/v0.4.0-1-gef51b7c** · [Source at `ef51b7c`](https://github.com/plutoframework/pluto-auth/blob/ef51b7c27ef72963f41df3c700db919efe785b71/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **stores/postgres/oidc/v0.1.1** · [Source at `b28792a`](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 An independent, deliberately narrow hard fork of
@@ -37,9 +37,9 @@ actual version requirements without local filesystem replacements.
 
 ## Account authentication and expansion
 
-See [account authentication](https://github.com/plutoframework/pluto-auth/blob/ef51b7c27ef72963f41df3c700db919efe785b71/docs/AUTHENTICATION.md) for v0.4's shared account policy,
+See [account authentication](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/AUTHENTICATION.md) for v0.4's shared account policy,
 password evidence, recent-authentication guard and mandatory account-store upgrade
-migration. [The roadmap](https://github.com/plutoframework/pluto-auth/blob/ef51b7c27ef72963f41df3c700db919efe785b71/docs/ROADMAP.md) places social/OIDC, MFA/passkeys and account
+migration. [The roadmap](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/ROADMAP.md) places social/OIDC, MFA/passkeys and account
 management in planned application capabilities, rather than permanent exclusions.
 
 ## Session setup
@@ -76,7 +76,7 @@ operation. For the complete local password lifecycle use
 an application-supplied Sender. The service constructs its session manager from
 the same fenced store and requires verified email for sign-in. Successful
 SignIn returns an IssuedSession; send it with transport.WriteCookie, never in
-JSON. [Local integration/API guide](https://github.com/plutoframework/pluto-auth/blob/ef51b7c27ef72963f41df3c700db919efe785b71/docs/LOCAL-CREDENTIALS.md) includes the
+JSON. [Local integration/API guide](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/LOCAL-CREDENTIALS.md) includes the
 compiling constructor and migration, delivery and operational boundaries.
 
 The older NewAuthenticator remains a low-level compatibility API for externally
@@ -139,11 +139,17 @@ not a drop-in replacement for Limen or a promise to maintain its plugin suite.
 
 ## Scope
 
-The current authentication method is local password credentials, backed by
-the shared account/evidence foundation. Social/federated OIDC
-providers, MFA/passkeys, frontend/admin UI and email-address changes are
-planned in the [expansion roadmap](https://github.com/plutoframework/pluto-auth/blob/ef51b7c27ef72963f41df3c700db919efe785b71/docs/ROADMAP.md). OAuth authorization-server and
+Local password and optional OIDC/Google sign-in use the shared account/evidence
+foundation. GitHub OAuth, explicit account linking, MFA/passkeys, account-security
+UI and email-address changes remain in the [expansion roadmap](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/ROADMAP.md). OAuth authorization-server and
 enterprise identity-platform roles remain separate scope decisions. There are no automatic admins, tenants or grants. Deployment still
 requires real delivery, shared limits, trusted ingress, migrations and an
 application-specific security review; this is not an audited production-ready
 identity service.
+
+## Native OIDC sign-in
+
+The optional [OIDC workflow](https://github.com/plutoframework/pluto-auth/blob/b28792a6264aa43a151bea6665c480c12e50684e/docs/OIDC.md) provides generic OIDC and a pinned Google
+profile, encrypted PostgreSQL browser transactions and shared fenced sessions.
+The PostgreSQL v0.5 adapter requires migration 004 after 001–003. GitHub OAuth,
+explicit linking, native MFA and account settings are still roadmap work.

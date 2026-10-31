@@ -23,6 +23,7 @@ SOURCES = [
     ('backend/telemetry', 'OpenTelemetry', 'pluto-core', 'telemetry/README.md'),
     ('backend/auth', 'Authentication', 'pluto-auth', 'docs/REFERENCE.md'),
     ('backend/authentication', 'Account authentication', 'pluto-auth', 'docs/AUTHENTICATION.md'),
+    ('backend/oidc', 'OIDC and Google sign-in', 'pluto-auth', 'docs/OIDC.md'),
     ('backend/auth-roadmap', 'Authentication roadmap', 'pluto-auth', 'docs/ROADMAP.md'),
     ('backend/credentials', 'Local credential lifecycle', 'pluto-auth', 'docs/LOCAL-CREDENTIALS.md'),
     ('backend/rbac', 'Roles and permissions', 'pluto-rbac', 'docs/REFERENCE.md'),
