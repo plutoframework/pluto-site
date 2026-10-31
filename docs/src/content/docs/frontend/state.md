@@ -3,7 +3,7 @@ title: "Typed UI state"
 description: "Typed UI state for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.2.1-3-g6780ecc** · [Source at `6780ecc`](https://github.com/plutoframework/pluto-frontend/blob/6780eccbb70881d78deac27b3f26b4115228cc97/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.2.1-7-g4a6aa64** · [Source at `4a6aa64`](https://github.com/plutoframework/pluto-frontend/blob/4a6aa644eadc43ef53d37dbf7fe6fe5c5b50f0f5/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 Typed frontend primitives for Pluto applications. Start with explicit UI state

@@ -3,7 +3,7 @@ title: "CLI reference"
 description: "CLI reference for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.15.0** · [Source at `55df2cd`](https://github.com/plutoframework/cli/blob/55df2cd7bf10ce31c2a5b01463108eb2d1b70312/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.15.0-4-g2e3d89b** · [Source at `2e3d89b`](https://github.com/plutoframework/cli/blob/2e3d89bda87835e01ca7d669752f1a4068983e6d/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 A working Cobra generator for small Go/Chi APIs. The application uses provisional
@@ -597,7 +597,7 @@ pluto frontend add component purchase-review --from company/approval-panel --dry
 pluto frontend add component purchase-review --from company/approval-panel
 ```
 
-See [the registry contract](https://github.com/plutoframework/cli/blob/55df2cd7bf10ce31c2a5b01463108eb2d1b70312/docs/COMPONENT-REGISTRIES.md) and the runnable HeroUI
+See [the registry contract](https://github.com/plutoframework/cli/blob/2e3d89bda87835e01ca7d669752f1a4068983e6d/docs/COMPONENT-REGISTRIES.md) and the runnable HeroUI
 registry in examples/component-registry. This first version supports local,
 declarative multi-file items, exact npm pins, dependency graphs, saved source
 digests and optional curated shadcn primitives. It preserves authored code and
@@ -721,7 +721,7 @@ pending feedback, duplicate protection, scope-owned cleanup and preserved input
 on failure. Connected callbacks require an explicit actor/session/tenant scope.
 Optimistic projection is an explicit feature-layer choice; uncertain write
 outcomes require reconciliation before retry. Existing authored forms are not
-rewritten by a CLI upgrade. See [frontend guidance](https://github.com/plutoframework/cli/blob/55df2cd7bf10ce31c2a5b01463108eb2d1b70312/docs/FRONTEND.md#responsive-actions).
+rewritten by a CLI upgrade. See [frontend guidance](https://github.com/plutoframework/cli/blob/2e3d89bda87835e01ca7d669752f1a4068983e6d/docs/FRONTEND.md#responsive-actions).
 
 ## Account authentication upgrade
 

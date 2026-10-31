@@ -3,7 +3,7 @@ title: "Account authentication"
 description: "Account authentication for the Pluto framework."
 ---
 
-> Reference snapshot: **stores/postgres/oidc/v0.1.1-2-gebe9970** · [Source at `ebe9970`](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/AUTHENTICATION.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **stores/postgres/oidc/v0.1.1-7-gfa6986c** · [Source at `fa6986c`](https://github.com/plutoframework/pluto-auth/blob/fa6986cad990d0f11fcbbbc1becfd05b7d713026/docs/AUTHENTICATION.md). Commands and integration limits below belong to this revision.
 
 > Native second factors are implemented in the unreleased library workflow. See [TOTP and recovery](../totp/) for setup, pending sign-in and protected changes. Check the guide's release status before selecting module versions.
 
@@ -11,8 +11,8 @@ description: "Account authentication for the Pluto framework."
 Pluto Auth v0.4 adds shared account policy, server-local authentication decisions
 and method evidence. The first integrated method is the existing password
 service. This is the foundation for native social sign-in, MFA and step-up flows;
-the optional [OIDC workflow](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/OIDC.md) now verifies provider sign-in. Native TOTP
-verification is available in the optional [native second-factor workflow](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/TOTP.md)
+the optional [OIDC workflow](https://github.com/plutoframework/pluto-auth/blob/fa6986cad990d0f11fcbbbc1becfd05b7d713026/docs/OIDC.md) now verifies provider sign-in. Native TOTP
+verification is available in the optional [native second-factor workflow](https://github.com/plutoframework/pluto-auth/blob/fa6986cad990d0f11fcbbbc1becfd05b7d713026/docs/TOTP.md)
 (unreleased).
 
 ## Upgrade
@@ -112,7 +112,7 @@ absolute session deadline. Password recovery does not remove a required factor.
 changes advance the account version and atomically revoke its sessions and
 password challenges. It is not enrollment or recovery. Do not enable this policy
 until a verified factor implementation and a recovery path are configured.
-The optional [TOTP module](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/TOTP.md) now provides enrollment/verification and
+The optional [TOTP module](https://github.com/plutoframework/pluto-auth/blob/fa6986cad990d0f11fcbbbc1becfd05b7d713026/docs/TOTP.md) now provides enrollment/verification and
 recovery with protected lifecycle APIs. Corresponding cross-repository CLI/UI
 flows remain follow-up work; they are not supplied by the core foundation.
 
@@ -136,5 +136,5 @@ completion and session creation. Existing reset/disable issuance-race tests cove
 the preferred account-backed path. Fuzz and mutation checks are bounded samples;
 no independent security audit or complete identity-provider claim is made.
 
-See the [expansion roadmap](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/ROADMAP.md) and
+See the [expansion roadmap](https://github.com/plutoframework/pluto-auth/blob/fa6986cad990d0f11fcbbbc1becfd05b7d713026/docs/ROADMAP.md) and
 [OWASP authentication guidance](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html).

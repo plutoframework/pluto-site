@@ -3,7 +3,7 @@ title: "Authentication"
 description: "Authentication for the Pluto framework."
 ---
 
-> Reference snapshot: **stores/postgres/oidc/v0.1.1-2-gebe9970** · [Source at `ebe9970`](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **stores/postgres/oidc/v0.1.1-7-gfa6986c** · [Source at `fa6986c`](https://github.com/plutoframework/pluto-auth/blob/fa6986cad990d0f11fcbbbc1becfd05b7d713026/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 > Native second factors are implemented in the unreleased library workflow. See [TOTP and recovery](../totp/) for setup, pending sign-in and protected changes. Check the guide's release status before selecting module versions.
 
@@ -39,9 +39,9 @@ actual version requirements without local filesystem replacements.
 
 ## Account authentication and expansion
 
-See [account authentication](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/AUTHENTICATION.md) for v0.4's shared account policy,
+See [account authentication](https://github.com/plutoframework/pluto-auth/blob/fa6986cad990d0f11fcbbbc1becfd05b7d713026/docs/AUTHENTICATION.md) for v0.4's shared account policy,
 password evidence, recent-authentication guard and mandatory account-store upgrade
-migration. [The roadmap](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/ROADMAP.md) places social/OIDC, MFA/passkeys and account
+migration. [The roadmap](https://github.com/plutoframework/pluto-auth/blob/fa6986cad990d0f11fcbbbc1becfd05b7d713026/docs/ROADMAP.md) places social/OIDC, MFA/passkeys and account
 management in planned application capabilities, rather than permanent exclusions.
 
 ## Session setup
@@ -78,7 +78,7 @@ operation. For the complete local password lifecycle use
 an application-supplied Sender. The service constructs its session manager from
 the same fenced store and requires verified email for sign-in. Successful
 SignIn returns an IssuedSession; send it with transport.WriteCookie, never in
-JSON. [Local integration/API guide](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/LOCAL-CREDENTIALS.md) includes the
+JSON. [Local integration/API guide](https://github.com/plutoframework/pluto-auth/blob/fa6986cad990d0f11fcbbbc1becfd05b7d713026/docs/LOCAL-CREDENTIALS.md) includes the
 compiling constructor and migration, delivery and operational boundaries.
 
 The older NewAuthenticator remains a low-level compatibility API for externally
@@ -143,7 +143,7 @@ not a drop-in replacement for Limen or a promise to maintain its plugin suite.
 
 Local password and optional OIDC/Google sign-in use the shared account/evidence
 foundation. GitHub OAuth, explicit account linking, MFA/passkeys, account-security
-UI and email-address changes remain in the [expansion roadmap](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/ROADMAP.md). OAuth authorization-server and
+UI and email-address changes remain in the [expansion roadmap](https://github.com/plutoframework/pluto-auth/blob/fa6986cad990d0f11fcbbbc1becfd05b7d713026/docs/ROADMAP.md). OAuth authorization-server and
 enterprise identity-platform roles remain separate scope decisions. There are no automatic admins, tenants or grants. Deployment still
 requires real delivery, shared limits, trusted ingress, migrations and an
 application-specific security review; this is not an audited production-ready
@@ -151,7 +151,7 @@ identity service.
 
 ## Native OIDC sign-in
 
-The optional [OIDC workflow](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/OIDC.md) provides generic OIDC and a pinned Google
+The optional [OIDC workflow](https://github.com/plutoframework/pluto-auth/blob/fa6986cad990d0f11fcbbbc1becfd05b7d713026/docs/OIDC.md) provides generic OIDC and a pinned Google
 profile, encrypted PostgreSQL browser transactions and shared fenced sessions.
 The PostgreSQL v0.5 adapter requires migration 004 after 001–003. GitHub OAuth,
 explicit linking, native MFA and account settings are still roadmap work.

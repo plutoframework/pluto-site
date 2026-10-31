@@ -3,7 +3,7 @@ title: "Authentication roadmap"
 description: "Authentication roadmap for the Pluto framework."
 ---
 
-> Reference snapshot: **stores/postgres/oidc/v0.1.1-2-gebe9970** · [Source at `ebe9970`](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/ROADMAP.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **stores/postgres/oidc/v0.1.1-7-gfa6986c** · [Source at `fa6986c`](https://github.com/plutoframework/pluto-auth/blob/fa6986cad990d0f11fcbbbc1becfd05b7d713026/docs/ROADMAP.md). Commands and integration limits below belong to this revision.
 
 > Native second factors are implemented in the unreleased library workflow. See [TOTP and recovery](../totp/) for setup, pending sign-in and protected changes. Check the guide's release status before selecting module versions.
 
@@ -17,7 +17,7 @@ attribution, but do not restore its generic schema/plugin framework wholesale.
 | --- | --- | --- |
 | Shared account/ceremony foundation | v0.4 | Version/policy fence, method evidence, password integration, freshness guard |
 | Social and federated sign-in | In progress | OIDC/Google sign-in delivered; GitHub and explicit linking/unlinking remain |
-| Native second-factor workflow | Library implemented, unreleased | [TOTP](https://github.com/plutoframework/pluto-auth/blob/ebe997074ec32f4ff5b1984b6632e06f9481ed5c/docs/TOTP.md), pending sign-in, single-use recovery and protected changes; ecosystem CLI/UI follow-up remains |
+| Native second-factor workflow | Library implemented, unreleased | [TOTP](https://github.com/plutoframework/pluto-auth/blob/fa6986cad990d0f11fcbbbc1becfd05b7d713026/docs/TOTP.md), pending sign-in, single-use recovery and protected changes; ecosystem CLI/UI follow-up remains |
 | Account security management | Planned | Email/password changes, session/device management and step-up UI |
 | Passwordless and machine access | Planned | Passkeys, magic links and scoped API keys |
 

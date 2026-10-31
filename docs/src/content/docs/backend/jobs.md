@@ -3,7 +3,7 @@ title: "Jobs and transactional outbox"
 description: "Jobs and transactional outbox for the Pluto framework."
 ---
 
-> Reference snapshot: **stores/postgres/v0.1.0-5-g507a189** · [Source at `507a189`](https://github.com/plutoframework/pluto-jobs/blob/507a189fe04115411e5e03979f3e88eb614523eb/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **stores/postgres/v0.1.0-11-gd527cbc** · [Source at `d527cbc`](https://github.com/plutoframework/pluto-jobs/blob/d527cbc728298a1d82463fa466ddd586212bd9db/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 A small Go transactional outbox and durable background worker. Applications
@@ -127,6 +127,7 @@ func Insert(
 	}
 
 	if err := tx.Commit(ctx); err != nil {
+
 		// Keep this ID to reconcile an uncertain commit; do not enqueue anew.
 		return request.ID, err
 	}

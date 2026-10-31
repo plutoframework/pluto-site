@@ -3,7 +3,7 @@ title: "Roles and permissions"
 description: "Roles and permissions for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.1.0-3-gcd89468** · [Source at `cd89468`](https://github.com/plutoframework/pluto-rbac/blob/cd8946821b48d74962b9a96a187ef1434513e862/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.1.0-8-g78fcb5a** · [Source at `78fcb5a`](https://github.com/plutoframework/pluto-rbac/blob/78fcb5a1b30923070a8cc89c382579d9ac94cd8e/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 A small Go authorization library with **zero third-party dependencies**.
@@ -155,7 +155,7 @@ before and after resolution, and preserves the context error.
 
 RBAC answers whether a subject holds a capability in a scope. It does not prove
 that a fetched record belongs to that scope, allow self-approval, or bypass
-ownership rules. [The purchasing example](https://github.com/plutoframework/pluto-rbac/blob/cd8946821b48d74962b9a96a187ef1434513e862/examples/purchasing/main.go) shows
+ownership rules. [The purchasing example](https://github.com/plutoframework/pluto-rbac/blob/78fcb5a1b30923070a8cc89c382579d9ac94cd8e/examples/purchasing/main.go) shows
 separate checks for those conditions. A feature flag can disable a capability;
 enabling it does not grant the permission. Route checks and business-operation
 checks should use the same policy and verified scope.
