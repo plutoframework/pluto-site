@@ -80,7 +80,8 @@ concurrency and regression coverage still need substantive review.
 
 The canonical implementation is
 [`pluto/scripts/pr_automation`](https://github.com/plutoframework/pluto/tree/main/scripts/pr_automation).
-Repository entrypoints pin its reusable workflow and policy to a full commit SHA.
+Repository entrypoints are generated from its job template and pin the policy
+and reviewer source to full commit SHAs.
 Changes to that implementation, the pins and `CODEOWNERS` require maintainer
 review. Update the source and tests, exercise a pilot PR, then update the pins.
 Do not let a PR choose the policy used to evaluate itself.
