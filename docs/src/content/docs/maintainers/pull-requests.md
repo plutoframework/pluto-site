@@ -40,8 +40,10 @@ All of the following must hold for the current revision:
 - GitHub's native requirements pass: code-owner approval where applicable,
   current branch checks, resolved conversations and CodeQL thresholds.
 
-The App then approves eligible changes and enables GitHub's native squash
-auto-merge. New commits invalidate stale approvals and require checks and review
+The App approves eligible changes submitted by other identities, then squash
+merges them or queues GitHub's native auto-merge while native checks finish.
+App-authored PRs use the independent maintainer's approval. New commits
+invalidate stale approvals and require checks and review
 again. The App has no branch-protection bypass. API failures, model failures,
 unknown mergeability and incomplete file inventories do not grant approval.
 
@@ -59,10 +61,19 @@ to the current head commit and come from someone other than the PR author.
 Bots and dismissed or stale approvals do not count. GitHub also enforces native
 code-owner approval independently of the model's verdict.
 
-GitHub does not allow authors to approve their own PRs. A sole maintainer should
-have an automation identity open a sensitive PR, then review and approve it as
-that maintainer. A PR authored by the review App itself cannot receive its own
-App approval and needs an independent review.
+GitHub does not allow authors to approve their own PRs. It also requires approval
+from someone other than the last pusher. A sole maintainer can push a proposal
+branch containing the current `main`, then dispatch **Open a maintainer-reviewable
+PR** from `main` with that source branch and a title. Pluto PR Steward publishes
+the proposed tree on its own `review/<source-branch>` branch and opens the PR
+under its GitHub App identity. The source branch and its history remain intact.
+To revise the PR, update the source branch with current `main` and your fixes,
+then dispatch the workflow again. Review and approve the resulting current head
+using your human account.
+
+The App uses installation tokens, never a maintainer's personal token, for its
+submissions, reviews and merges. It cannot approve its own PR. Neither a clean
+AI review nor the App's identity substitutes for required human approval.
 
 ## Security checks
 
