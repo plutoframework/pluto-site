@@ -8,6 +8,14 @@ checks run alongside an Astra review through GPU Router. A deterministic merge
 policy decides whether the change qualifies for automatic approval. GitHub
 branch protections remain the final authority for merging.
 
+Developers and coding agents write code, push branches and open PRs using their
+normal contributor identities. **Pluto PR Steward is the reviewer.** It
+never writes code, pushes branches, opens PRs or creates replacement submissions.
+It reviews existing PRs, requests changes when it finds defects, approves passing
+changes and merges them when the policy and GitHub protections permit it.
+Steward authenticates as `jackbot-advrsty` for review comments, approvals,
+change requests and merges. The GitHub App signs the required check results.
+
 ## Open a pull request
 
 Run the repository's formatter and checks before opening the PR. Describe the
@@ -21,8 +29,12 @@ complete current diff and revisits previous findings. A comment alone does not
 prove that a finding was fixed.
 
 Draft PRs do not qualify for automatic merging. To retry a failed review, run the
-**Pluto PR review** workflow manually and supply the PR number. The same workflow
-reevaluates policy after CI finishes and after a review is submitted or dismissed.
+**Pluto PR review** workflow manually, supply the PR number and select
+**retry_review**. That option spends review tokens. Leave it off to reevaluate
+policy using existing evidence. CI completion and review notifications reuse a
+completed review for the same repository, PR, head, base and policy revision.
+Failed or interrupted attempts remain blocked until a new revision or an explicit
+retry; those notifications do not repeatedly call the model.
 
 ## What qualifies for automatic merging
 
@@ -40,11 +52,10 @@ All of the following must hold for the current revision:
 - GitHub's native requirements pass: code-owner approval where applicable,
   current branch checks, resolved conversations and CodeQL thresholds.
 
-The App approves eligible changes submitted by other identities, then squash
+Steward approves eligible changes submitted by other identities, then squash
 merges them or queues GitHub's native auto-merge while native checks finish.
-App-authored PRs use the independent maintainer's approval. New commits
-invalidate stale approvals and require checks and review
-again. The App has no branch-protection bypass. API failures, model failures,
+New commits invalidate stale approvals and require checks and review again.
+Steward has no branch-protection bypass. API failures, model failures,
 unknown mergeability and incomplete file inventories do not grant approval.
 
 ## Changes requiring a maintainer
@@ -61,23 +72,12 @@ to the current head commit and come from someone other than the PR author.
 Bots and dismissed or stale approvals do not count. GitHub also enforces native
 code-owner approval independently of the model's verdict.
 
-GitHub does not allow authors to approve their own PRs. It also requires approval
-from someone other than the last pusher. A sole maintainer can push a proposal
-branch containing the current `main`, then dispatch **Open a maintainer-reviewable
-PR** from `main` with that source branch and a title. Pluto PR Steward publishes
-the proposed tree on its own `review/<source-branch>` branch and opens the PR
-under its GitHub App identity. The source branch and its history remain intact.
-To revise the PR, update the source branch with current `main` and your fixes,
-then dispatch the workflow again. Review and approve the resulting current head
-using your human account.
-
-If a submission is interrupted, dispatch it again. The App recovers a prepared
-branch only when its own authenticated check attests to that exact branch and
-commit; an unrelated branch collision requires a new source branch.
-
-The App uses installation tokens, never a maintainer's personal token, for its
-submissions, reviews and merges. It cannot approve its own PR. Neither a clean
-AI review nor the App's identity substitutes for required human approval.
+GitHub does not allow authors to approve their own PRs and also requires approval
+from someone other than the last pusher. Sensitive changes require an eligible
+human maintainer other than the PR author. Steward's own approval never counts as
+that human approval, even though its machine account has GitHub's `User` type.
+The controller rejects PRs authored by the Steward account without spending model
+tokens. Steward does not author or recreate contributor PRs.
 
 ## Security checks
 
@@ -105,9 +105,14 @@ The `pluto-pr-steward` App publishes two checks: **Pluto review** records comple
 review evidence; **Pluto merge policy** grants or withholds merge eligibility.
 Required checks are bound to that App's identity, preventing an ordinary Actions
 job from substituting a check with the same name.
+The App check-signing token is separate from the `jackbot-advrsty` credential and
+is not passed to the model-review subprocess. The reviewer API client rejects PR
+creation, commit creation and branch writes.
 
 Credentials live in the **pluto-review** Actions environment, restricted to the
-`main` branch. The privileged reviewer runs on `pull_request_target` or trusted
+`main` branch. `PLUTO_STEWARD_TOKEN` authenticates the machine account; the App key
+is used only to mint repository-scoped check-signing tokens. The privileged
+reviewer runs on `pull_request_target` or trusted
 `workflow_run` events, checks out only pinned policy and reviewer source, and
 never executes PR code. Unprivileged PR tests and review-event notifications do
 not receive those credentials.
