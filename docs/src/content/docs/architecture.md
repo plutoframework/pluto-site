@@ -278,6 +278,44 @@ that the old invalid paths are rejected.
 
 ## Enforcement status
 
+Assign each requirement to the mechanism that can establish it. Compiler
+boundaries restrict construction and access; canonical checks restrict placement,
+dependencies and managed ownership; runtime and database checks establish live
+authority and commit behavior. Skills teach the supported decision and repair
+path. A skill instruction never substitutes for a missing compiler, tooling or
+runtime boundary.
+
+The following map is the architectural contract, not a claim that every installed
+release supports every row. Consult the
+[candidate workflow and version limits](../maintainers/architecture-migration/#candidate-enforcement-workflow)
+before selecting commands or APIs.
+
+| Area and owner | Compiler and canonical checks | Required runtime proof | Skill guidance |
+| --- | --- | --- | --- |
+| Validation and normalization — domain | Controlled value construction; private validated fields; reject operation-owned normalization and invalid contract bounds | Normalize once; reject invalid and zero inputs before effects | API, Data |
+| Resource authorization — operations and domain policy | Required resource-policy gate and private implementation; prohibit alternate entry callbacks | Permission and actual resource policy before entry and restricted use; denied direct calls produce no effects | Security, API, Agents |
+| Tenant scoping — trusted scope and data | Opaque issuer-bound execution; no strings-only authority construction; scoped ports | Current membership, exact issuer/tenant/resource, SQL isolation, actor/scope-bound cursors and cache keys | Security, Data |
+| Lifecycle transitions — domain | Private lifecycle fields, evaluated decisions, controlled construction/rehydration; reject raw transition/write paths | Owning machine and authoritative guard facts; wrong entity/state/version denied | API, Data |
+| Concurrent updates — data | Versioned restricted mutation port | Atomic scope/entity/state/version comparison; competing commits have the declared winner/conflict behavior | Data |
+| Mutation, audit and outbox — data | Declared effects and fixed commit adapter; operation cannot replace transaction sequencing | Inject failures in each durable step and commit; mutation, audit and delivery intent roll back together | Data |
+| Idempotency — operations and data | Explicit operation semantics and justified exemptions; opaque scoped claim/attempt | Authorization before replay; actor/scope/action/fingerprint binding; completion shares the business transaction | Data, API |
+| Collection visibility and pagination — data | Bounded collection/export contracts; explicit visibility and caps; reject raw unbounded entry results | Visibility before limit; stable keyset and scope binding; export cap and authorization on subsequent pages | Data |
+| Cache access — data | Restricted scoped adapter; reject cache mechanics in operations | Authorize hits and misses; verify current visibility; cached display data never supplies authoritative lifecycle guard facts | Data, Security |
+| Background effects and retries — entry and data | Typed kind-bound payloads and managed operation binding; finite declared attempts | Transactional enqueue; invalid payloads cause no effects; actual retry/final-attempt and repeated-delivery assertions | Data, Agents |
+
+Every row needs both an allowed consumer and a rejected counterexample. A build
+failure, unavailable database or unrelated test failure is not evidence that the
+intended violation was rejected. Required integration runners must fail on
+missing or skipped named cases. Mutation checks must identify the intended
+business assertion and retain a passing pristine control.
+
+For a new feature, first identify its domain decisions, operation authority and
+effects. Reuse the same declared operation from HTTP, workers and tools. A pure
+calculation needs a domain function; a durable lifecycle needs an owned machine
+and versioned writer; a collection needs a visibility-bound query; a retriable
+write needs declared replay semantics; deferred delivery needs a typed effect.
+Do not choose a state machine merely because code contains nested conditionals.
+
 Published CLI contract checks validate managed generated content, file limits and
 selected transitive import boundaries: operations cannot reach HTTP or storage
 implementations, handlers cannot reach storage, and paths cannot reach handlers
