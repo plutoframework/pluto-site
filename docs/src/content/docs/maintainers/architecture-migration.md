@@ -67,6 +67,68 @@ membership, permission and resource policy and supplies the execution scope.
 Restricted data ports recheck that scope on use, including cache hits and replay.
 Original cancellation and session revocation are checked again after policy I/O.
 
+### Adopt the supported local candidate
+
+Use a fresh application for positive conformance. Candidate initialization is
+noninteractive, requires multi tenancy and uses explicit absolute source paths:
+
+```sh
+pluto --no-input init /absolute/path/records --module example.com/records \
+  --multi-tenant --boundary-profile candidate \
+  --candidate-auth-source /absolute/path/pluto-auth \
+  --candidate-rbac-source /absolute/path/pluto-rbac \
+  --candidate-core-source /absolute/path/pluto-core \
+  --candidate-jobs-source /absolute/path/pluto-jobs
+cd /absolute/path/records
+pluto --no-input add blueprint --file record-contracts.toml
+go mod tidy
+pluto fmt
+pluto architecture check --directory . --format json
+pluto vet
+```
+
+The blueprint declares resources, independent operations, matching behavior
+contracts, roles, effects, HTTP endpoints, jobs and agent tools together.
+Generation validates the complete contract before writing. Conflicting names,
+authority, resource bindings, replay guarantees or retry budgets fail before a
+partial application is created. Role declarations are a catalog, not actor
+assignments; current memberships come from the explicit tenant/actor SQL table.
+
+This profile implements scoped records with controlled construction, explicit
+normalization, owner/tenant visibility, lifecycle guards (`none`, `owner`,
+`not_owner`), atomic writes and bounded delivery. It owns production Go source,
+including domain rules and operation workflows derived from metadata. Authored
+hooks and additional production files require a supported framework extension.
+Canonical checks also protect compiler directives, rehydration and construction
+entry points, native/unsafe/reflection escapes, and managed migrations. The
+canonical OpenAPI schema reader retains its required reflection under exact
+managed integrity checks.
+
+The current candidate accepts externally issued PostgreSQL sessions. Local
+credential/OIDC ingress, single tenancy and route-only feature flags are rejected
+until they have complete managed contracts. HTTP resource selection is explicit
+(`body`, `path:name`, `query:name`, or `collection`). Write tools require a host
+approved opaque intent and operation replay; model arguments and model completion
+alone cannot authorize or report a committed write. Workers authenticate their
+configured service credential for each delivery.
+
+Apply generated migrations explicitly. Configure worker credentials using
+`<PREFIX>JOB_<GROUP>_<ACTION>_CREDENTIAL` and effect destinations using
+`<PREFIX>EFFECT_<GROUP>_<ACTION>_URL`, with group/action names in uppercase.
+Destinations are deployment configuration. The fixed effect adapter verifies
+persisted work, reauthorizes, bounds HTTP delivery and supplies the stable delivery
+ID as the downstream idempotency key. The remote service must honor that key;
+local checks do not prove external exactly-once delivery.
+
+The CLI's candidate integration profile generates applications through these
+commands, checks canonical source ownership, compiles all packages and runs real
+PostgreSQL/race tests across three guard/visibility profiles. Its runtime consumer
+executes one write through HTTP, a queued worker and a host-approved tool, and
+checks denied authority, rollback and delivery behavior. Required named SQL and
+runtime cases must run; a skipped or missing case is not a pass. The frozen
+example remains a separate negative consumer and is never rewritten by these
+checks.
+
 The source-derived lifecycle rules identify state types used by Core machines:
 
 | Rule | Rejected shape | Required repair |
@@ -150,11 +212,12 @@ hosted merge-policy enforcement.
 Ignored build outputs are outside the baseline proof, as documented in the
 umbrella contributor guide.
 
-These candidates do not enable example migration yet. The remaining phases
-below still require broader rejection coverage, required execution and adoption
-of the constrained runtime paths. The real database proof covers the reference
-consumer, not every application. Package reference snapshots must be refreshed from authorized
-published source revisions before these APIs are presented as released.
+The original phase plan below describes the migration baseline. The supported
+local candidate now has generated adoption and composed runtime evidence; this
+does not make the frozen example compliant or authorize its migration. Broader
+business patterns, hosted required-check policy and published dependency adoption
+remain separate work. Package reference snapshots must be refreshed from
+authorized published source revisions before these APIs are presented as released.
 
 ## Framework package map
 
@@ -591,7 +654,9 @@ that every historical change passed CI or satisfied the new layer contract.
 
 ### Recurrence tests required to close the causes
 
-These are acceptance tests to implement, not tests claimed to have run:
+These are acceptance requirements for closing each historical cause. The
+candidate workflow above describes current evidence; this table alone is not a
+claim that every consumer, profile or hosted check has been verified.
 
 | Gaps | Reintroduce the original failure | Exercise the nearby bypass |
 | --- | --- | --- |
