@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           repository: plutoframework/pluto
-          ref: 850e9ccecf8f33dc6eb62b8764517603be70c995
+          ref: c5b2a88b22579c05db82af17812ded02bab77d5d
           path: policy
           persist-credentials: false
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
