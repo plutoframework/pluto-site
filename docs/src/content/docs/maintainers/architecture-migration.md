@@ -83,6 +83,7 @@ cd /absolute/path/records
 pluto --no-input add blueprint --file record-contracts.toml
 go mod tidy
 pluto fmt
+pluto openapi
 pluto architecture check --directory . --format json
 pluto vet
 ```
