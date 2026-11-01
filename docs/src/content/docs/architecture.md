@@ -159,6 +159,31 @@ boundaries must reject invalid values and prevent replay of a decision against
 another entity or version. These contracts extend the current Core decision API;
 they are not guarantees already supplied by `Next`.
 
+### Bound decisions in the unreleased candidate
+
+The Core candidate adds `state.Binding`, `Machine.Evaluate` and
+`Machine.Validate`; these APIs are unavailable in Core v0.4.0. The operation
+loads an authoritative snapshot containing scope, entity ID, current state and
+version, then evaluates the event with explicit guard facts. It passes the
+opaque evaluated decision to a restricted write port rather than a replacement
+record with writable lifecycle fields.
+
+The data adapter validates that decision against the current snapshot using the
+same machine instance. Identical rules on a separately constructed machine do
+not establish provenance. Zero or failed decisions, another scope or entity,
+and stale state or version fail validation. Every guard-relevant mutation must
+advance the persisted version, including a write that leaves the state
+unchanged. Otherwise a decision based on old facts can remain usable.
+
+Validation does not rerun guards or authorize the caller. Within its commit
+transaction, the adapter must revalidate current authority, atomically compare
+the bound scope, entity, state and version, advance the version, and persist the
+required audit and outbox entries. Evaluated values can be copied and replayed;
+only the database comparison prevents a second successful commit. See the
+[candidate Core change](https://github.com/plutoframework/pluto-core/pull/6)
+and [candidate setup](../maintainers/architecture-migration/#candidate-enforcement-workflow)
+before selecting dependencies.
+
 ## Authorized operation boundaries
 
 Every entry path must invoke the required authorization boundary for its use
@@ -226,6 +251,31 @@ is not proof of authorization or a successful commit. Rules involving multiple
 records need an appropriate transaction, locking or constraint strategy for
 those facts. See [state machines](../backend/state/) and
 [jobs](../backend/jobs/).
+
+### Typed delivery in the unreleased candidate
+
+The Jobs candidate adds `Definition[T]`, `NewDefinition`, `Prepare` and `Bind`;
+these APIs are unavailable in Jobs v0.1.1. Construct a named definition with the
+domain payload validator, prepare the request through that definition, and
+register its bound handler explicitly in the worker's kind-to-handler map.
+The operation still owns authorization and transactional enqueue.
+
+The bound handler checks stored job metadata, exact kind and raw UTF-8 before
+strict JSON decoding. Unknown fields, trailing input and domain-validation
+failures become permanent failures before invoking the operation. Custom JSON
+unmarshalers remain responsible for their own decoding semantics. A valid
+payload proves shape and domain validity; current operation authority is still
+required at execution time.
+
+Errors from the operation follow the worker's finite attempt limit and retry
+policy; the final attempt fails instead of scheduling another retry. Claim
+fencing prevents an expired or superseded claim from acknowledging, retrying or
+failing the current claim. Delivery remains at least once: a worker can execute
+an effect and lose its acknowledgement, so the external sink must deduplicate
+using the stable job ID and tenant. See the
+[candidate Jobs change](https://github.com/plutoframework/pluto-jobs/pull/4)
+and [candidate setup](../maintainers/architecture-migration/#candidate-enforcement-workflow)
+for dependency and integration limits.
 
 ## Assign shared concerns
 
