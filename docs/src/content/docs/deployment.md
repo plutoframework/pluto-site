@@ -23,6 +23,14 @@ Generic HTTP idempotency capture has a gap between business commit and replay co
 
 Pin module versions and commit Go/npm lockfiles. Updating the CLI does not rewrite existing authored code or silently migrate a frontend. Review the CLI reference's schema-specific migration instructions and the library's release notes.
 
+When updating the optional [Core telemetry adapter](../backend/telemetry/) or
+the [purchasing example](../example/), upgrade local development and CI to Go
+**1.26+** before resolving the patched OpenTelemetry dependencies. This changes
+the optional adapter's minimum Go version; Core without telemetry still supports
+Go 1.25.5. Rebuild and test your application after the toolchain and module
+updates. An OTLP endpoint with no path still uses `/v1/traces` and `/v1/metrics`;
+an explicit custom endpoint path is preserved.
+
 For state scaffolding in an older application:
 
 ```sh

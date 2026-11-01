@@ -3,7 +3,7 @@ title: "OpenTelemetry"
 description: "OpenTelemetry for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.4.0-8-gaa1edae** · [Source at `aa1edae`](https://github.com/plutoframework/pluto-core/blob/aa1edae6a3752caf56a24a923750fb86357e19dd/telemetry/README.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.4.0-9-ga276eb5** · [Source at `a276eb5`](https://github.com/plutoframework/pluto-core/blob/a276eb5b16566b0adc0d3e612c22c7d7a8707c22/telemetry/README.md). Commands and integration limits below belong to this revision.
 
 
 API: FromEnv(prefix, service, version, environment) (Config, error),
@@ -26,7 +26,8 @@ Standard exporter settings apply except explicit Endpoint overrides endpoints.
 W3C tracecontext only; no baggage, raw paths, URLs, errors, SQL or parameters.
 
 Official SDK/exporter documentation: https://opentelemetry.io/docs/languages/go/exporters/
-Latest v1.47 requires Go1.26; this module pins Go1.25-compatible v1.44.
+This optional module pins patched OTEL v1.45 and requires Go 1.26 or newer.
+Use a current patched Go toolchain. The core module remains Go 1.25-compatible.
 
 Environment precedence: telemetry stays disabled until PREFIX_OTEL_ENABLED=true;
 OTEL_SDK_DISABLED=true always disables it. Prefix sampling overrides
@@ -34,7 +35,8 @@ OTEL_TRACES_SAMPLER_ARG, then defaults to 1. Config.SampleRatio=0 intentionally
 samples no root spans; parent-based sampling honors upstream decisions. Explicit
 Config does not read application enable/sampling variables. The exporter SDK
 reads standard OTLP endpoint/header/timeout/TLS settings; Config.Endpoint overrides
-both signal endpoints. Resource identity is deliberately explicit: OTEL_SERVICE_NAME
+both signal endpoints. An endpoint without a path uses `/v1/traces` and
+`/v1/metrics`; an explicit path is preserved for both signals. Resource identity is deliberately explicit: OTEL_SERVICE_NAME
 and OTEL_RESOURCE_ATTRIBUTES are not read, avoiding accidental sensitive resource
 attributes. Use the three constructor identity arguments instead.
 

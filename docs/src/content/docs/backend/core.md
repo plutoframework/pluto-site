@@ -3,7 +3,7 @@ title: "Core: pagination, idempotency and cache"
 description: "Core: pagination, idempotency and cache for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.4.0-8-gaa1edae** · [Source at `aa1edae`](https://github.com/plutoframework/pluto-core/blob/aa1edae6a3752caf56a24a923750fb86357e19dd/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.4.0-9-ga276eb5** · [Source at `a276eb5`](https://github.com/plutoframework/pluto-core/blob/a276eb5b16566b0adc0d3e612c22c7d7a8707c22/docs/REFERENCE.md). Commands and integration limits below belong to this revision.
 
 
 Focused shared Go runtime for Pluto cursor pagination and idempotent business
@@ -207,7 +207,7 @@ the same key conflicts; unfinished requests remain blocked for reconciliation.
 
 The generic HTTP adapter completes the claim after the business operation. For
 atomic database mutation and completion, use the
-[same-transaction recipe](https://github.com/plutoframework/pluto-core/blob/aa1edae6a3752caf56a24a923750fb86357e19dd/docs/transactions.md). External delivery belongs in an
+[same-transaction recipe](https://github.com/plutoframework/pluto-core/blob/a276eb5b16566b0adc0d3e612c22c7d7a8707c22/docs/transactions.md). External delivery belongs in an
 outbox; this adapter cannot make an external side effect exactly once.
 
 ## Cache typed data with a scoped read-through loader
@@ -325,13 +325,13 @@ Those tests do not claim a live PostgreSQL or Valkey integration.
   constructor validation. `Status` supports thin app error-envelope adapters.
 - `stores/postgres`: independent module, reference `schema.sql`, `New(pool)` for
   claims, `New(tx).Complete` for atomic completion and explicit bounded
-  `PruneCompleted`. No startup schema work. See [transaction example](https://github.com/plutoframework/pluto-core/blob/aa1edae6a3752caf56a24a923750fb86357e19dd/docs/transactions.md).
+  `PruneCompleted`. No startup schema work. See [transaction example](https://github.com/plutoframework/pluto-core/blob/a276eb5b16566b0adc0d3e612c22c7d7a8707c22/docs/transactions.md).
 
 ## Optional OpenTelemetry
 
 `github.com/plutoframework/pluto-core/telemetry` is an independently versioned
 adapter module; root consumers retain standard-library-only dependencies.
-See [telemetry setup and privacy contract](https://github.com/plutoframework/pluto-core/blob/aa1edae6a3752caf56a24a923750fb86357e19dd/telemetry/README.md) for explicit
+See [telemetry setup and privacy contract](https://github.com/plutoframework/pluto-core/blob/a276eb5b16566b0adc0d3e612c22c7d7a8707c22/telemetry/README.md) for explicit
 providers, OTLP export, Chi HTTP tracing/metrics, outbound HTTP propagation,
 PostgreSQL query tracing, cache/outbox/job decorators and slog correlation.
 Applications own startup configuration and bounded shutdown. Diagnostics never
@@ -466,6 +466,6 @@ events and pure business guards. `New` validates the definition once; `Next`
 decides a transition without mutating an entity. Unknown transitions fail
 closed. The caller retains authorization and atomic persistence ownership.
 
-See [the state package](https://github.com/plutoframework/pluto-core/blob/aa1edae6a3752caf56a24a923750fb86357e19dd/state/README.md) and the compiling
-[purchase lifecycle](https://github.com/plutoframework/pluto-core/blob/aa1edae6a3752caf56a24a923750fb86357e19dd/examples/purchases/lifecycle.go). The Pluto CLI command
+See [the state package](https://github.com/plutoframework/pluto-core/blob/a276eb5b16566b0adc0d3e612c22c7d7a8707c22/state/README.md) and the compiling
+[purchase lifecycle](https://github.com/plutoframework/pluto-core/blob/a276eb5b16566b0adc0d3e612c22c7d7a8707c22/examples/purchases/lifecycle.go). The Pluto CLI command
 `pluto add state GROUP` scaffolds an authored lifecycle and its tests.

@@ -3,7 +3,7 @@ title: "Feature flags"
 description: "Feature flags for the Pluto framework."
 ---
 
-> Reference snapshot: **v0.4.0-8-gaa1edae** · [Source at `aa1edae`](https://github.com/plutoframework/pluto-core/blob/aa1edae6a3752caf56a24a923750fb86357e19dd/features/README.md). Commands and integration limits below belong to this revision.
+> Reference snapshot: **v0.4.0-9-ga276eb5** · [Source at `a276eb5`](https://github.com/plutoframework/pluto-core/blob/a276eb5b16566b0adc0d3e612c22c7d7a8707c22/features/README.md). Commands and integration limits below belong to this revision.
 
 
 Use flags to merge staged application behavior while keeping it unavailable by
