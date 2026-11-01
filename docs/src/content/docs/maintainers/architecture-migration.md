@@ -45,21 +45,27 @@ handler dependency contracts in `internal/background`. Existing authored files
 require an explicit migration. The generator must pass its own boundary checks
 before an existing consumer is changed.
 
-Schema 9 scaffolds separate managed operation gates from private authored
-`execute` implementations. The gate refreshes membership from the injected
-resolver and checks the declared permission with the published RBAC authorizer
-before entering authored code. A role supplied on a caller's principal does not
-grant permission. Protected writes require explicit permission metadata; public
-operations remain explicit declarations. Current membership is not proof of
-authentication: the application must derive subject identity from trusted wiring
-and enforce resource policy.
+Schema 10 declares operations independently of their HTTP, worker and tool
+entries. Each entry references one operation rather than authoring a separate
+business callback. Managed gates, adapters, registration and dependency wiring
+are checked against those declarations. Private implementation methods provide
+a compiler boundary; canonical checks reject replacement adapters and the
+captures or interface-embedding paths that Go alone permits.
 
-Managed gates, entry adapters, registration and the current-assignment adapter
-are checked against their declarations. The compiler blocks ordinary external
-calls to private implementations; canonical checks also reject alternate entry
-implementations, captures and interface-embedding bypasses that Go permits.
-Existing authored handlers and operations require an explicit migration; the CLI
-must not overwrite them to introduce the new shape.
+A published-dependency scaffold is a compatibility draft until its required
+protection contracts are supported. A membership lookup over caller-supplied
+subject strings does not establish authenticated identity. Canonical checks must
+reject that unsupported protection contract, even when the draft compiles.
+The explicit local candidate profile adopts the unpublished opaque identity,
+resource-policy and constrained-write APIs together. It is not a release claim
+or permission to silently replace published dependencies.
+
+The candidate contract separates authenticated identity from tenant membership.
+Auth issues a callback-lifetime opaque identity; the configured manager checks
+its exact issuer and live session. RBAC's identity gate verifies current tenant
+membership, permission and resource policy and supplies the execution scope.
+Restricted data ports recheck that scope on use, including cache hits and replay.
+Original cancellation and session revocation are checked again after policy I/O.
 
 The source-derived lifecycle rules identify state types used by Core machines:
 
@@ -74,40 +80,51 @@ analysis. External factories, generic wrappers, reflection and unsafe code remai
 unassessed. Private fields alone do not check every mutation inside their owning
 package. A structural pass does not prove a database transaction is correct.
 
-Two additive library APIs support subsequent enforcement:
+The candidate library contracts support the generated application boundary:
 
-- Core `Machine.Evaluate` returns an opaque decision bound to a scope, entity,
-  source state and version. A writer uses its injected `Machine.Validate` to
-  reject invalid values, another machine's decision or a different snapshot.
-  This does not authenticate callers, control entity construction or replace an
-  atomic database comparison. Versions must cover every guard-relevant change.
-- RBAC `Authorizer.Require` fixes a permission. `Within` supplies an opaque
-  execution capability bound to the requirement, subject, scope and resource.
-  A restricted writer uses `Use` to reauthorize and execute its private write
-  callback. Copies share expiration; the boundary closes admission and waits
-  for admitted uses before returning. Zero, foreign and expired capabilities
-  deny. This does not establish authenticated identity, prove query predicates
-  or make revocation atomic with a transaction.
+- Core `Machine.Evaluate` returns an opaque decision bound to scope, entity,
+  source state and version. A writer uses its owning machine to reject zero,
+  foreign or mismatched decisions. Guard-relevant facts come from authoritative
+  persistence, never a display cache; versions cover every such fact.
+- Auth `Manager.WithIdentity` supplies a private callback-lifetime identity.
+  `Manager.UseIdentity` rejects another issuer's identity and revalidates the
+  session. Authentication does not itself select or authorize a tenant.
+- RBAC's optional identity module binds that identity to live membership and a
+  required resource policy. Its opaque execution scope cannot be constructed
+  from caller-owned subject, role or tenant strings. Data access uses the same
+  gate again; revocation is not made atomic with a database transaction.
+- Jobs `Definition[T]` binds a payload to one kind, strict decoding and validation.
+  Prepared effects are transactionally enqueued; managed dispatch admits the
+  target operation and retries only within the declared bound.
 
-Core's nested shipment PostgreSQL reference consumer demonstrates one concrete
-write path. Its private pool and owning machine are injected at construction;
-the write port requires an evaluated decision. Fixed sqlc queries compare tenant,
-entity, source state and version and commit the status/version change with the
-outbox intent in one transaction. Migrations remain explicit. This application
-example is not a universal shipment API or a generic database abstraction.
+Core's nested shipment PostgreSQL consumer demonstrates the composed data
+contract. Private normalized inputs and narrow ports separate domain decisions
+from SQL and cache mechanics. Mutation, actor audit, typed outbox enqueue and
+idempotency completion commit together. Replay binds actor, tenant, operation,
+resource and input; queries apply visibility before pagination, exports are
+capped, and cached display reads still authorize. Lifecycle evaluation reloads
+SQL even when the display cache contains a matching-version record.
 
 Run `scripts/postgres-check.sh` from Core for disposable database evidence.
-Required integration mode rejects missing databases, absent required cases and
-skipped required cases. SQL mutation checks exercise predicate removal and broken
-transaction/commit paths. These checks are wired into Core's repository workflow;
-hosted branch-protection requirements still need independent verification.
+Candidate integration requires the explicit local dependency profile and
+`PLUTO_CORE_CANDIDATE_DATA=1`. Required mode rejects missing databases, absent
+required cases and skipped cases. SQL mutations must fail the intended semantic
+assertion; a build failure or unavailable database does not count as a kill.
 
-The umbrella's `scripts/check-operation-conformance.py --core PATH --rbac PATH`
-composes the candidate execution capability and SQL writer in a temporary
-consumer with local module replacements and a disposable database. It exercises
-the guarded write, denied/expired/cross-binding access, concurrency and rollback.
-Default generated applications still use published dependencies; the candidate
-capability-to-writer integration requires a release and deliberate adoption.
+The umbrella composes these libraries in a temporary consumer without changing
+the example or published dependency pins:
+
+```sh
+python3 scripts/check-operation-conformance.py \
+  --core ../pluto-core --rbac ../pluto-rbac \
+  --auth ../pluto-auth --jobs ../pluto-jobs
+```
+
+It runs named SQL/race cases for issuer and scope rejection, guarded writes,
+concurrency, replay, rollback, poisoned cache, bounded collections and typed
+retry exhaustion. It also checks that every required case ran rather than
+accepting a green command containing skipped tests. This proves the exercised
+consumer and adapters; arbitrary application SQL still needs its own proof.
 
 
 The umbrella repository owns the frozen-baseline runner. Supply an explicitly
@@ -122,11 +139,14 @@ python3 scripts/check-architecture-baseline.py \
 
 The runner pins the example revision and fingerprints tracked contents before
 and after inspection. It requires specific schema, dependency, invocation,
-operation-gate and lifecycle/write diagnostics with valid locations. A crash,
+operation-gate, lifecycle/write, normalization, cache, collection, replay and
+effect diagnostics with valid locations. A crash,
 malformed report or unrelated error
 does not satisfy the ledger. Success means the expected negative cases were
 observed; the example remains noncompliant. `--require-complete` rejects reports
-with unassessed boundaries and is expected to fail during this first stage.
+with unassessed boundaries. It remains stricter than the supported candidate
+contract: a source scanner cannot prove arbitrary Go business semantics or
+hosted merge-policy enforcement.
 Ignored build outputs are outside the baseline proof, as documented in the
 umbrella contributor guide.
 
