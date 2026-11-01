@@ -1,11 +1,12 @@
 ---
 title: "Pull requests and automated review"
-description: "How Pluto reviews changes, requires maintainer approval, and merges routine fixes."
+description: >-
+  How the independent Pluto PR Steward reviews, approves and merges changes.
 ---
 
 Pluto changes enter `main` through pull requests. Formatting, tests and security
 checks run alongside an Astra review through GPU Router. A deterministic merge
-policy decides whether the change qualifies for automatic approval. GitHub
+policy decides whether the independent reviewer can approve and merge. GitHub
 branch protections remain the final authority for merging.
 
 Developers and coding agents write code, push branches and open PRs using their
@@ -42,13 +43,16 @@ All of the following must hold for the current revision:
 
 - A complete structured Astra review exists for the current head, base and policy
   revision. Missing or partial review output blocks merging.
-- The review explicitly reports low risk, no concerns and no unresolved key
-  issues. Medium or high risk needs an independent maintainer approval; a
-  maintainer approval does not waive reported defects or security findings.
+- The review covers every changed file and explicitly recommends
+  `no_concerns_found`. Unresolved findings or concerns, including security
+  concerns, block approval; a positive recommendation alone does not waive them.
+- Intrinsic risk is assessed as low, medium or high. Unknown or malformed risk
+  blocks approval. A `needs_review` recommendation also blocks approval, even
+  when a human has approved the PR.
 - Every required repository CI workflow and the dependency-security workflow
   has a successful pull-request run for this head commit.
-- Sensitive changes have an independent maintainer's approval for this head.
-- No maintainer's request for changes remains outstanding.
+- No human maintainer's request for changes remains outstanding. Steward does
+  not dismiss those requests to make a PR eligible.
 - GitHub's native requirements pass: code-owner approval where applicable,
   current branch checks, resolved conversations and CodeQL thresholds.
 
@@ -58,24 +62,25 @@ New commits invalidate stale approvals and require checks and review again.
 Steward has no branch-protection bypass. API failures, model failures,
 unknown mergeability and incomplete file inventories do not grant approval.
 
-## Changes requiring a maintainer
+## Sensitive changes and reviewer independence
 
-Authentication and authorization repositories always require a maintainer.
-Across other repositories, the policy also protects authentication, authorization,
-cryptography, sessions, credentials, tenant boundaries, database migrations and
-SQL, dependency manifests and lockfiles, CI, build tooling and review policy.
-Both sides of a rename are checked. Binary files and omitted patches require
-manual review rather than being treated as reviewed text.
+The same evidence gates apply to authentication, authorization, cryptography,
+sessions, credentials, tenant boundaries, database migrations and SQL, dependency
+manifests and lockfiles, CI, build tooling and review policy. These categories do
+not impose a separate human-approval requirement. The independent Steward account
+can approve and merge them at any assessed intrinsic risk level when the complete
+review recommends `no_concerns_found`, no unresolved findings or concerns remain
+and all other gates pass.
 
-A human approval must come from a repository administrator or maintainer, belong
-to the current head commit and come from someone other than the PR author.
-Bots and dismissed or stale approvals do not count. GitHub also enforces native
-code-owner approval independently of the model's verdict.
+Complete coverage includes both sides of a rename. Unreadable binary content,
+omitted patches and incomplete file inventories remain coverage blockers; they
+must not be counted as reviewed text. A human approval cannot substitute for
+missing review evidence or waive unknown risk.
 
 GitHub does not allow authors to approve their own PRs and also requires approval
-from someone other than the last pusher. Sensitive changes require an eligible
-human maintainer other than the PR author. Steward's own approval never counts as
-that human approval, even though its machine account has GitHub's `User` type.
+from someone other than the last pusher. Steward must satisfy those independence
+requirements and any native code-owner rules. Its independent-account approval
+satisfies the policy without a separate human approval.
 The controller rejects PRs authored by the Steward account without spending model
 tokens. Steward does not author or recreate contributor PRs.
 
@@ -97,9 +102,10 @@ The canonical implementation is
 [`pluto/scripts/pr_automation`](https://github.com/plutoframework/pluto/tree/main/scripts/pr_automation).
 Repository entrypoints are generated from its job template and pin the policy
 and reviewer source to full commit SHAs.
-Changes to that implementation, the pins and `CODEOWNERS` require maintainer
-review. Update the source and tests, exercise a pilot PR, then update the pins.
-Do not let a PR choose the policy used to evaluate itself.
+Changes to that implementation, the pins and `CODEOWNERS` require the same
+complete independent review as other changes. Update the source and tests,
+exercise a pilot PR, then update the pins. Do not let a PR choose the policy used
+to evaluate itself.
 
 The `pluto-pr-steward` App publishes two checks: **Pluto review** records completed
 review evidence; **Pluto merge policy** grants or withholds merge eligibility.
