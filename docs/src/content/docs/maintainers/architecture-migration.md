@@ -289,15 +289,19 @@ presentation state; it is not the server data layer or an authority for records.
 
 ## Concrete gaps
 
-These are gaps against the target contract, not claims that every current path
-is incorrect or exploitable.
+This section records the original audit baseline. The candidate workflow above
+describes the subsequent enforcement and generated adoption; these historical
+findings do not describe the current candidate checker. They are gaps against
+the target contract, not claims that every application path is incorrect or
+exploitable.
 
 ### G1. The example is not yet a canonical CLI consumer
 
 The example manifest uses schema 1, puts local credential settings under
-`development`, and has no endpoint declarations. Current CLI code uses schema 8
-(with limited schema 7 acceptance), expects credential capability metadata, and
-derives managed contracts from endpoint declarations. The example's CI runs its
+`development`, and has no endpoint declarations. At the audit baseline, CLI code
+used schema 8 (with limited schema 7 acceptance), expected credential capability
+metadata, and derived managed contracts from endpoint declarations. The current
+candidate uses schema 10 and independent operations. The example's CI runs its
 own check script and backend architecture test. Simply adding `pluto vet` will
 not migrate those contracts.
 
