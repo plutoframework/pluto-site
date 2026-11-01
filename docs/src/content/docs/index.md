@@ -10,7 +10,8 @@ This field guide covers **CLI v0.13.0** and **Core v0.4.0**. Package reference p
 ## Get started
 
 1. [Create an application](getting-started/), add an endpoint and run its tests.
-2. Learn the [code conventions](conventions/) before adding business logic.
+2. Learn the [application layers](architecture/) and [code conventions](conventions/)
+   before adding business logic.
 3. Use the [CLI reference](cli/reference/) for flags and wizard behavior.
 4. Explore [the purchasing example](example/) for a complete application with authentication, tenants, approvals, audit history and a React UI.
 

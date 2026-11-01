@@ -5,14 +5,17 @@ description: "Conventions & testing with Pluto."
 
 Pluto favors visible wiring, readable Go and predictable locations. The CLI removes repetitive setup; application code owns the business decisions.
 
-## Follow the request
+## Place code by responsibility
 
-1. **Paths** declare endpoint identity, method, path, permissions and feature metadata.
-2. **Handlers** decode and validate HTTP input, obtain verified request context, call operations and map responses.
-3. **Operations** authorize, load tenant-scoped resources, apply business rules and coordinate writes.
-4. **Repositories** implement the persistence capabilities consumed by operations.
+Read [application architecture](../architecture/) before adding business logic.
+It defines presentation, entry adapters, application operations, domain rules,
+data and infrastructure adapters, with composition kept explicit. It also
+distinguishes the target boundaries from the checks implemented today.
 
-Use constructor injection and small consumer-owned interfaces. Keep HTTP and concrete database imports out of domain logic. Use application response models rather than exposing sqlc records directly.
+Handlers translate protocols, operations coordinate use cases, domain packages
+own business decisions, and adapters implement I/O. Use constructor injection and
+small consumer-owned interfaces. Endpoint metadata and wire models are contracts,
+not a home for business logic.
 
 ## Configuration
 

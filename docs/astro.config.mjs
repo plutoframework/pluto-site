@@ -23,6 +23,7 @@ export default defineConfig({
           items: [
             { label: "Introduction", slug: "index" },
             { label: "Your first application", slug: "getting-started" },
+            { label: "Application architecture", slug: "architecture" },
             { label: "Worked examples", slug: "examples" },
             { label: "Configuration", slug: "configuration" },
             { label: "AI skills & Markdown", slug: "ai-skills" },
