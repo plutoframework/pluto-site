@@ -33,9 +33,10 @@ command proves required CI execution or complete architectural compliance.
 The first checks classify conventional Go package paths and trace local imports,
 including helper packages. They report obsolete manifests, incomplete source
 inventory, unknown roles, unresolved imports and missing recognized local check
-invocations. Normal CLI contracts also apply the forbidden-dependency checks.
-External dependency internals, frontend dependencies, business-rule placement,
-authorization and lifecycle writes still need enforcement. Configuration and
+invocations. Normal CLI contracts also apply dependency, managed-operation and
+source-derived lifecycle checks. External dependency internals, frontend
+dependencies and complete business-rule/write analysis remain unassessed.
+Configuration and
 access-policy packages are supporting roles; their classification is not a
 purity guarantee. Build variants are inspected together without type checking.
 
@@ -44,6 +45,35 @@ handler dependency contracts in `internal/background`. Existing authored files
 require an explicit migration. The generator must pass its own boundary checks
 before an existing consumer is changed.
 
+Schema 9 scaffolds separate managed operation gates from private authored
+`execute` implementations. The gate refreshes membership from the injected
+resolver and checks the declared permission with the published RBAC authorizer
+before entering authored code. A role supplied on a caller's principal does not
+grant permission. Protected writes require explicit permission metadata; public
+operations remain explicit declarations. Current membership is not proof of
+authentication: the application must derive subject identity from trusted wiring
+and enforce resource policy.
+
+Managed gates, entry adapters, registration and the current-assignment adapter
+are checked against their declarations. The compiler blocks ordinary external
+calls to private implementations; canonical checks also reject alternate entry
+implementations, captures and interface-embedding bypasses that Go permits.
+Existing authored handlers and operations require an explicit migration; the CLI
+must not overwrite them to introduce the new shape.
+
+The source-derived lifecycle rules identify state types used by Core machines:
+
+| Rule | Rejected shape | Required repair |
+| --- | --- | --- |
+| `ARCH301` | Public mutable lifecycle-state fields in domain entities | Private state with controlled construction, mutation and rehydration |
+| `ARCH302` | A resolved raw `Machine.Next` call or method reference outside domain code | A domain-owned evaluator whose result is required by the write port |
+| `ARCH303` | Exported data entry points accepting raw lifecycle entities, including recognized containers and local wrappers | A constrained transition input and atomic scope/entity/state/version comparison; model initial creation separately |
+
+This is a local source inventory, not complete Go type or assignment-flow
+analysis. External factories, generic wrappers, reflection and unsafe code remain
+unassessed. Private fields alone do not check every mutation inside their owning
+package. A structural pass does not prove a database transaction is correct.
+
 Two additive library APIs support subsequent enforcement:
 
 - Core `Machine.Evaluate` returns an opaque decision bound to a scope, entity,
@@ -51,11 +81,34 @@ Two additive library APIs support subsequent enforcement:
   reject invalid values, another machine's decision or a different snapshot.
   This does not authenticate callers, control entity construction or replace an
   atomic database comparison. Versions must cover every guard-relevant change.
-- RBAC `Authorizer.Require` fixes a permission in a gate whose `Execute` method
-  resolves assignments on every execution before invoking its callback. The
-  operation must still establish trusted identity and scope, authorize the
-  actual resource and restrict access to its writer. The gate alone cannot
-  prevent unrelated code from calling a separate write API.
+- RBAC `Authorizer.Require` fixes a permission. `Within` supplies an opaque
+  execution capability bound to the requirement, subject, scope and resource.
+  A restricted writer uses `Use` to reauthorize and execute its private write
+  callback. Copies share expiration; the boundary closes admission and waits
+  for admitted uses before returning. Zero, foreign and expired capabilities
+  deny. This does not establish authenticated identity, prove query predicates
+  or make revocation atomic with a transaction.
+
+Core's nested shipment PostgreSQL reference consumer demonstrates one concrete
+write path. Its private pool and owning machine are injected at construction;
+the write port requires an evaluated decision. Fixed sqlc queries compare tenant,
+entity, source state and version and commit the status/version change with the
+outbox intent in one transaction. Migrations remain explicit. This application
+example is not a universal shipment API or a generic database abstraction.
+
+Run `scripts/postgres-check.sh` from Core for disposable database evidence.
+Required integration mode rejects missing databases, absent required cases and
+skipped required cases. SQL mutation checks exercise predicate removal and broken
+transaction/commit paths. These checks are wired into Core's repository workflow;
+hosted branch-protection requirements still need independent verification.
+
+The umbrella's `scripts/check-operation-conformance.py --core PATH --rbac PATH`
+composes the candidate execution capability and SQL writer in a temporary
+consumer with local module replacements and a disposable database. It exercises
+the guarded write, denied/expired/cross-binding access, concurrency and rollback.
+Default generated applications still use published dependencies; the candidate
+capability-to-writer integration requires a release and deliberate adoption.
+
 
 The umbrella repository owns the frozen-baseline runner. Supply an explicitly
 built candidate CLI; do not invoke checks from the baseline repository:
@@ -68,8 +121,9 @@ python3 scripts/check-architecture-baseline.py \
 ```
 
 The runner pins the example revision and fingerprints tracked contents before
-and after inspection. It requires specific schema, dependency and invocation
-diagnostics with valid locations. A crash, malformed report or unrelated error
+and after inspection. It requires specific schema, dependency, invocation,
+operation-gate and lifecycle/write diagnostics with valid locations. A crash,
+malformed report or unrelated error
 does not satisfy the ledger. Success means the expected negative cases were
 observed; the example remains noncompliant. `--require-complete` rejects reports
 with unassessed boundaries and is expected to fail during this first stage.
@@ -77,8 +131,9 @@ Ignored build outputs are outside the baseline proof, as documented in the
 umbrella contributor guide.
 
 These candidates do not enable example migration yet. The remaining phases
-below still require broader rejection coverage, required execution and actual
-database evidence. Package reference snapshots must be refreshed from authorized
+below still require broader rejection coverage, required execution and adoption
+of the constrained runtime paths. The real database proof covers the reference
+consumer, not every application. Package reference snapshots must be refreshed from authorized
 published source revisions before these APIs are presented as released.
 
 ## Framework package map
