@@ -175,11 +175,14 @@ and stale state or version fail validation. Every guard-relevant mutation must
 advance the persisted version, including a write that leaves the state
 unchanged. Otherwise a decision based on old facts can remain usable.
 
-Validation does not rerun guards or authorize the caller. Within its commit
-transaction, the adapter must revalidate current authority, atomically compare
-the bound scope, entity, state and version, advance the version, and persist the
-required audit and outbox entries. Evaluated values can be copied and replayed;
-only the database comparison prevents a second successful commit. See the
+Validation does not rerun guards or authorize the caller. Before the guarded
+commit, the adapter must revalidate current authority. Inside its transaction,
+it must atomically compare the bound scope, entity, state and version, advance
+the version, and persist the required audit and outbox entries. The candidate
+revalidates authority before beginning the transaction; this does not promise
+atomic revocation across independent identity and data stores. Evaluated values
+can be copied and replayed; only the database comparison prevents a second
+successful commit. See the
 [candidate Core change](https://github.com/plutoframework/pluto-core/pull/6)
 and [candidate setup](../maintainers/architecture-migration/#candidate-enforcement-workflow)
 before selecting dependencies.
