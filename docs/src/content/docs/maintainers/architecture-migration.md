@@ -10,11 +10,11 @@ roles is not automatically a defect; a dependency that prevents a required
 boundary from being enforced is a reason to split it.
 
 This is a source-based baseline from October 31, 2026, not a release or security
-certification. The map and gaps describe the baseline; the candidate capabilities
-below are unpublished and do not close the complete migration. The six layers
-are presentation, entry adapters, application
-operations, domain rules, data and infrastructure adapters. Composition and
-development tooling sit outside the runtime layers.
+certification. The map and gaps describe the baseline; the candidate
+capabilities below are unpublished and do not close the complete migration. The
+six layers are presentation, entry adapters, application operations, domain
+rules, data and infrastructure adapters. Composition and development tooling sit
+outside the runtime layers.
 
 ## Candidate enforcement workflow
 
@@ -36,9 +36,9 @@ inventory, unknown roles, unresolved imports and missing recognized local check
 invocations. Normal CLI contracts also apply dependency, managed-operation and
 source-derived lifecycle checks. External dependency internals, frontend
 dependencies and complete business-rule/write analysis remain unassessed.
-Configuration and
-access-policy packages are supporting roles; their classification is not a
-purity guarantee. Build variants are inspected together without type checking.
+Configuration and access-policy packages are supporting roles; their
+classification is not a purity guarantee. Build variants are inspected together
+without type checking.
 
 Fresh worker scaffolds place worker construction in `internal/app` and keep
 handler dependency contracts in `internal/background`. Existing authored files
@@ -48,15 +48,15 @@ before an existing consumer is changed.
 Schema 10 declares operations independently of their HTTP, worker and tool
 entries. Each entry references one operation rather than authoring a separate
 business callback. Managed gates, adapters, registration and dependency wiring
-are checked against those declarations. Private implementation methods provide
-a compiler boundary; canonical checks reject replacement adapters and the
-captures or interface-embedding paths that Go alone permits.
+are checked against those declarations. Private implementation methods provide a
+compiler boundary; canonical checks reject replacement adapters and the captures
+or interface-embedding paths that Go alone permits.
 
 A published-dependency scaffold is a compatibility draft until its required
 protection contracts are supported. A membership lookup over caller-supplied
 subject strings does not establish authenticated identity. Canonical checks must
-reject that unsupported protection contract, even when the draft compiles.
-The explicit local candidate profile adopts the unpublished opaque identity,
+reject that unsupported protection contract, even when the draft compiles. The
+explicit local candidate profile adopts the unpublished opaque identity,
 resource-policy and constrained-write APIs together. It is not a release claim
 or permission to silently replace published dependencies.
 
@@ -64,8 +64,9 @@ The candidate contract separates authenticated identity from tenant membership.
 Auth issues a callback-lifetime opaque identity; the configured manager checks
 its exact issuer and live session. RBAC's identity gate verifies current tenant
 membership, permission and resource policy and supplies the execution scope.
-Restricted data ports recheck that scope on use, including cache hits and replay.
-Original cancellation and session revocation are checked again after policy I/O.
+Restricted data ports recheck that scope on use, including cache hits and
+replay. Original cancellation and session revocation are checked again after
+policy I/O.
 
 ### Adopt the supported local candidate
 
@@ -106,29 +107,29 @@ canonical OpenAPI schema reader retains its required reflection under exact
 managed integrity checks.
 
 The current candidate accepts externally issued PostgreSQL sessions. Local
-credential/OIDC ingress, single tenancy and route-only feature flags are rejected
-until they have complete managed contracts. HTTP resource selection is explicit
-(`body`, `path:name`, `query:name`, or `collection`). Write tools require a host
-approved opaque intent and operation replay; model arguments and model completion
-alone cannot authorize or report a committed write. Workers authenticate their
-configured service credential for each delivery.
+credential/OIDC ingress, single tenancy and route-only feature flags are
+rejected until they have complete managed contracts. HTTP resource selection is
+explicit (`body`, `path:name`, `query:name`, or `collection`). Write tools
+require a host approved opaque intent and operation replay; model arguments and
+model completion alone cannot authorize or report a committed write. Workers
+authenticate their configured service credential for each delivery.
 
 Apply generated migrations explicitly. Configure worker credentials using
 `<PREFIX>JOB_<GROUP>_<ACTION>_CREDENTIAL` and effect destinations using
 `<PREFIX>EFFECT_<GROUP>_<ACTION>_URL`, with group/action names in uppercase.
 Destinations are deployment configuration. The fixed effect adapter verifies
-persisted work, reauthorizes, bounds HTTP delivery and supplies the stable delivery
-ID as the downstream idempotency key. The remote service must honor that key;
-local checks do not prove external exactly-once delivery.
+persisted work, reauthorizes, bounds HTTP delivery and supplies the stable
+delivery ID as the downstream idempotency key. The remote service must honor
+that key; local checks do not prove external exactly-once delivery.
 
 The CLI's candidate integration profile generates applications through these
 commands, checks canonical source ownership, compiles all packages and runs real
-PostgreSQL/race tests across three guard/visibility profiles. Its runtime consumer
-executes one write through HTTP, a queued worker and a host-approved tool, and
-checks denied authority, rollback and delivery behavior. Required named SQL and
-runtime cases must run; a skipped or missing case is not a pass. The frozen
-example remains a separate negative consumer and is never rewritten by these
-checks.
+PostgreSQL/race tests across three guard/visibility profiles. Its runtime
+consumer executes one write through HTTP, a queued worker and a host-approved
+tool, and checks denied authority, rollback and delivery behavior. Required
+named SQL and runtime cases must run; a skipped or missing case is not a pass.
+The frozen example remains a separate negative consumer and is never rewritten
+by these checks.
 
 The source-derived lifecycle rules identify state types used by Core machines:
 
@@ -139,9 +140,10 @@ The source-derived lifecycle rules identify state types used by Core machines:
 | `ARCH303` | Exported data entry points accepting raw lifecycle entities, including recognized containers and local wrappers | A constrained transition input and atomic scope/entity/state/version comparison; model initial creation separately |
 
 This is a local source inventory, not complete Go type or assignment-flow
-analysis. External factories, generic wrappers, reflection and unsafe code remain
-unassessed. Private fields alone do not check every mutation inside their owning
-package. A structural pass does not prove a database transaction is correct.
+analysis. External factories, generic wrappers, reflection and unsafe code
+remain unassessed. Private fields alone do not check every mutation inside their
+owning package. A structural pass does not prove a database transaction is
+correct.
 
 The candidate library contracts support the generated application boundary:
 
@@ -156,9 +158,9 @@ The candidate library contracts support the generated application boundary:
   required resource policy. Its opaque execution scope cannot be constructed
   from caller-owned subject, role or tenant strings. Data access uses the same
   gate again; revocation is not made atomic with a database transaction.
-- Jobs `Definition[T]` binds a payload to one kind, strict decoding and validation.
-  Prepared effects are transactionally enqueued; managed dispatch admits the
-  target operation and retries only within the declared bound.
+- Jobs `Definition[T]` binds a payload to one kind, strict decoding and
+  validation. Prepared effects are transactionally enqueued; managed dispatch
+  admits the target operation and retries only within the declared bound.
 
 Core's nested shipment PostgreSQL consumer demonstrates the composed data
 contract. Private normalized inputs and narrow ports separate domain decisions
@@ -203,22 +205,21 @@ python3 scripts/check-architecture-baseline.py \
 The runner pins the example revision and fingerprints tracked contents before
 and after inspection. It requires specific schema, dependency, invocation,
 operation-gate, lifecycle/write, normalization, cache, collection, replay and
-effect diagnostics with valid locations. A crash,
-malformed report or unrelated error
-does not satisfy the ledger. Success means the expected negative cases were
-observed; the example remains noncompliant. `--require-complete` rejects reports
-with unassessed boundaries. It remains stricter than the supported candidate
-contract: a source scanner cannot prove arbitrary Go business semantics or
-hosted merge-policy enforcement.
-Ignored build outputs are outside the baseline proof, as documented in the
-umbrella contributor guide.
+effect diagnostics with valid locations. A crash, malformed report or unrelated
+error does not satisfy the ledger. Success means the expected negative cases
+were observed; the example remains noncompliant. `--require-complete` rejects
+reports with unassessed boundaries. It remains stricter than the supported
+candidate contract: a source scanner cannot prove arbitrary Go business
+semantics or hosted merge-policy enforcement. Ignored build outputs are outside
+the baseline proof, as documented in the umbrella contributor guide.
 
 The original phase plan below describes the migration baseline. The supported
 local candidate now has generated adoption and composed runtime evidence; this
 does not make the frozen example compliant or authorize its migration. Broader
-business patterns, hosted required-check policy and published dependency adoption
-remain separate work. Package reference snapshots must be refreshed from
-authorized published source revisions before these APIs are presented as released.
+business patterns, hosted required-check policy and published dependency
+adoption remain separate work. Package reference snapshots must be refreshed
+from authorized published source revisions before these APIs are presented as
+released.
 
 ## Framework package map
 
@@ -252,8 +253,8 @@ does not make every function in that module appropriate for domain code.
 | `pluto-cli`: `internal/project`, `internal/frontend`, templates | Development tooling | Own generation, manifest migration and canonical application checks. Generated output has a layer; the generator itself is not a runtime layer. |
 | `pluto` umbrella repository; `pluto-site` | Ecosystem tooling and documentation | Own shared contributor policy and the manual; neither is an application runtime layer. |
 
-Repositories may legitimately span several layers. Do not rename repositories
-or create one module per layer simply to match the table. Split import packages
+Repositories may legitimately span several layers. Do not rename repositories or
+create one module per layer simply to match the table. Split import packages
 when concrete dependencies or callable effects defeat a boundary. Shared runtime
 mechanisms stay with their specialist owner, not automatically in Core.
 
@@ -318,8 +319,8 @@ graph. An external wrapper can therefore conceal dependencies that a local
 wrapper would expose. The example's backend checker has a different rule set.
 
 Frontend architecture code is generated from a CLI template, but frontend
-contract validation checks the profile and catalog, not that checker file or
-the package scripts invoking it. The example copy currently differs from the
+contract validation checks the profile and catalog, not that checker file or the
+package scripts invoking it. The example copy currently differs from the
 template in formatting; that alone is not evidence of different rule behavior.
 The issue is enforceable ownership and coverage, not just duplication on disk.
 
@@ -330,23 +331,25 @@ Evidence: [CLI checks][cli-checks], [frontend contracts][frontend-contracts],
 
 `internal/storage/postgres/jobs.go` imports `internal/background` for the audit
 job kind and payload. That package also defines the handler and constructs the
-worker. Put the job contract in a contract-only package consumed by both data and
-entry code. Keep enqueueing in the existing transaction.
+worker. Put the job contract in a contract-only package consumed by both data
+and entry code. Keep enqueueing in the existing transaction.
 
-Evidence: [data job adapter][example-jobs], [background handler][example-background].
+Evidence: [data job adapter][example-jobs], [background
+handler][example-background].
 
 ### G4. Operations contain policy and domain mutation
 
 Purchase visibility is expressed in `Get`, `List` and `ListPage`; membership
 self-change policy is implemented inside `ChangeRole`. Purchase creation and
 transition operations assemble mutable entity fields themselves. Move these
-decisions to owned domain constructors, resource policies and transitions.
-The broad `Repository` interface also combines purchase, membership and audit
-capabilities; split it by actual consumers rather than introduce a generic store.
+decisions to owned domain constructors, resource policies and transitions. The
+broad `Repository` interface also combines purchase, membership and audit
+capabilities; split it by actual consumers rather than introduce a generic
+store.
 
-Evidence: [purchase operations][example-purchases],
-[pagination operations][example-pagination],
-[membership operations][example-administration], [repository port][example-repository].
+Evidence: [purchase operations][example-purchases], [pagination
+operations][example-pagination], [membership
+operations][example-administration], [repository port][example-repository].
 
 ### G5. Operation and lifecycle authority remain conventions
 
@@ -357,7 +360,8 @@ struct is not itself authentication. `Purchase.Status` is public and
 an evaluated transition. Existing version/audit/outbox enforcement is valuable
 and must survive the change; it does not prevent all decision-path bypasses.
 
-Evidence: [domain models][example-models], [transaction adapter][example-transactions].
+Evidence: [domain models][example-models], [transaction
+adapter][example-transactions].
 
 ### G6. Cache mechanics and composition sit in operation code
 
@@ -375,10 +379,11 @@ configuration. OIDC combines sign-in orchestration and its concrete HTTP client.
 Auth root and RBAC also expose both pure decisions and orchestration through
 ports. They must not be blanket-allowlisted as pure. Introduce narrow contracts,
 split packages where needed, or constrain calls to verified pure capabilities.
-Do not force broad package splits where a role already has a sufficient boundary.
+Do not force broad package splits where a role already has a sufficient
+boundary.
 
-Evidence: [telemetry adapters][core-telemetry], [OIDC service][auth-oidc],
-[RBAC authorizer][rbac-authorizer].
+Evidence: [telemetry adapters][core-telemetry], [OIDC service][auth-oidc], [RBAC
+authorizer][rbac-authorizer].
 
 ### G8. Tool and worker entry paths mix responsibilities
 
@@ -388,18 +393,20 @@ dispatch, delivery coordination and worker construction. Separate their entry,
 operation, domain, data/infrastructure and composition roles while preserving
 per-dispatch access checks and repeat-delivery behavior.
 
-Evidence: [review operation][example-review], [background handler][example-background].
+Evidence: [review operation][example-review], [background
+handler][example-background].
 
 ### G9. Presentation write behavior is not uniform
 
 Purchases use `useActionMutation`; memberships use `useMutation` plus query
 invalidation. Both can compile and satisfy the import rules while expressing
 different handling of pending, uncertain and confirmed writes. Declare which
-endpoint actions require the Pluto write primitive and check those consumers.
-Do not classify all POST requests as durable business mutations or put auth
-writes into business replay storage.
+endpoint actions require the Pluto write primitive and check those consumers. Do
+not classify all POST requests as durable business mutations or put auth writes
+into business replay storage.
 
-Evidence: [purchase mutations][purchase-mutations], [membership mutations][membership-mutations].
+Evidence: [purchase mutations][purchase-mutations], [membership
+mutations][membership-mutations].
 
 ### G10. Data guarantees need required real-database evidence
 
@@ -407,8 +414,8 @@ The example has tests for tenant isolation, concurrent lifecycle decisions and
 atomic audit/outbox writes. PostgreSQL tests skip without a dedicated database
 URL; the inspected main CI workflow does not provision one. Generic HTTP replay
 also remains separate from atomic business completion. Require integration
-execution for these guarantees and declare replay semantics per operation.
-No passing import checker can prove SQL isolation or commit atomicity.
+execution for these guarantees and declare replay semantics per operation. No
+passing import checker can prove SQL isolation or commit atomicity.
 
 Evidence: [integration setup][example-integration], [example CI][example-ci],
 [Core transaction guidance][core-transactions].
@@ -417,10 +424,10 @@ Evidence: [integration setup][example-integration], [example CI][example-ci],
 
 The example was intentionally built first to prototype the desired application
 experience; the framework was derived from it. The project owner's account
-establishes that design sequence. The independent prototype was a starting point,
-not evidence of a failed attempt to follow a framework that already existed.
-Drift accumulated as the ecosystem evolved. Going forward, the example is the
-working proof of what Pluto supports and enforces.
+establishes that design sequence. The independent prototype was a starting
+point, not evidence of a failed attempt to follow a framework that already
+existed. Drift accumulated as the ecosystem evolved. Going forward, the example
+is the working proof of what Pluto supports and enforces.
 
 Read the [causal review](#causal-review) before implementing a gap's fix. The
 required order is: preserve the evidence, fix the upstream ecosystem, prove that
@@ -429,25 +436,26 @@ must not edit the example's source, manifest, checks or dependency pins to make
 the assessment easier. These phases may read it and run isolated tests against
 it. New compliant consumers belong in framework-owned test fixtures.
 
-The order represents dependencies, not calendar estimates. Candidate tooling
-can assess the baseline before release; validate real release pins before
-consumer adoption is complete. Publishing follows normal authorization.
+The order represents dependencies, not calendar estimates. Candidate tooling can
+assess the baseline before release; validate real release pins before consumer
+adoption is complete. Publishing follows normal authorization.
 
 ### Phase 0: Preserve the baseline and define expected failures
 
 **Owner:** CLI architecture tooling and the architecture guide.
 
 - Pin the example revision and record relevant working-tree differences so that
-  the test subject is reproducible. Keep this baseline available after migration.
+  the test subject is reproducible. Keep this baseline available after
+  migration.
 - Define canonical roles, allowed dependencies, generated/authored ownership and
   external capabilities. Record expected findings for G1–G10, the responsible
   upstream owner, evidence and the kind of enforcement needed.
-- Distinguish static violations, missing required contracts, runtime failures and
-  absent required execution evidence. A placement finding is not proof of a
+- Distinguish static violations, missing required contracts, runtime failures
+  and absent required execution evidence. A placement finding is not proof of a
   behavioral defect, and a passing behavioral test does not waive placement.
-- Review instructions, skills and templates for conflicting or obsolete guidance.
-  Prepare the framework-owned corrections; leave baseline example guidance intact
-  until migration. Record which constraints are newly adopted.
+- Review instructions, skills and templates for conflicting or obsolete
+  guidance. Prepare the framework-owned corrections; leave baseline example
+  guidance intact until migration. Record which constraints are newly adopted.
 
 **Exit:** a reproducible baseline and an explicit expected-failure ledger exist.
 Each gap names how the framework will detect it and how that detection will be
@@ -475,33 +483,37 @@ verified. An inventory alone is not proof of enforcement.
   must not produce an accepted success. Validate protected merge/check settings
   rather than infer them from repository files.
 - Provision the existing disposable PostgreSQL suite in the external harness;
-  make missing prerequisites and skipped required cases fail its integration gate.
-  Do not modify baseline application code to provide that assertion.
+  make missing prerequisites and skipped required cases fail its integration
+  gate. Do not modify baseline application code to provide that assertion.
 
 **Exit:** framework tooling emits actionable failures against the unchanged
 baseline for implemented rules, with explicit coverage/blockers for the rest.
-Unit tests and compliant generated fixtures verify that valid code passes. Do not
-mark G1–G10 closed or begin example cleanup at this partial-coverage milestone.
+Unit tests and compliant generated fixtures verify that valid code passes. Do
+not mark G1–G10 closed or begin example cleanup at this partial-coverage
+milestone.
 
 ### Phase 2: Fix upstream APIs, generators and enforcement coverage
 
-**Owner:** Core, Auth, RBAC, Jobs, Agent, Frontend and CLI in their existing roles.
+**Owner:** Core, Auth, RBAC, Jobs, Agent, Frontend and CLI in their existing
+roles.
 
-- Separate generated job contracts from handlers and worker construction. Provide
-  canonical transport mechanics and declared operation/adapter extension points.
-  Close generated entry packages to business decisions, including adjacent files.
+- Separate generated job contracts from handlers and worker construction.
+  Provide canonical transport mechanics and declared operation/adapter extension
+  points. Close generated entry packages to business decisions, including
+  adjacent files.
 - Expose narrow telemetry and OIDC contracts where their concrete dependencies
   prevent separation. Distinguish pure Auth/RBAC capabilities from effectful
   orchestration; do not blanket-allowlist whole modules as pure.
 - Provide supported data decorators for caching, consumer-sized operation ports,
   domain constructor/policy locations and explicit composition paths. Preserve
   typed application SQL and migrations rather than add a generic database layer.
-- Require operation gates for HTTP, worker and tool calls. Restrict execution-scope
-  construction and mutation access; define resource binding, freshness and
-  background authority. A stored actor ID is not permission.
+- Require operation gates for HTTP, worker and tool calls. Restrict
+  execution-scope construction and mutation access; define resource binding,
+  freshness and background authority. A stored actor ID is not permission.
 - Provide controlled lifecycle initialization, transition and rehydration paths.
   Bind writes to evaluated changes, tenant/entity and expected version; reject
-  invalid zero values and decision reuse. Keep Core state a pure decision engine.
+  invalid zero values and decision reuse. Keep Core state a pure decision
+  engine.
 - Establish typed commit contracts for mutation, audit, outbox and atomic replay
   where declared. Exercise PostgreSQL rollback, tenant isolation, concurrent
   decisions and multi-record constraints in framework conformance tests.
@@ -521,11 +533,13 @@ expands. No example source change counts as an upstream fix.
 
 ### Phase 3: Prove rejection of the unchanged example
 
-**Owner:** framework conformance harness and the owners of each expected finding.
+**Owner:** framework conformance harness and the owners of each expected
+finding.
 
-- Run the completed canonical checks against the preserved baseline. Match actual
-  findings to the G1–G10 ledger, including prerequisite and execution-evidence
-  failures. Record rule IDs, locations, tool versions and outcomes.
+- Run the completed canonical checks against the preserved baseline. Match
+  actual findings to the G1–G10 ledger, including prerequisite and
+  execution-evidence failures. Record rule IDs, locations, tool versions and
+  outcomes.
 - A known violation accepted by the checker is a framework test failure. Repair
   the analyzer, API contract, generator or test harness and rerun; do not move
   code, suppress the expectation or special-case the example to pass this gate.
@@ -548,11 +562,12 @@ This is the mandatory checkpoint before changing the example.
 **Owner:** example application, consuming the corrected framework and tooling.
 
 - Migrate the manifest and managed contracts explicitly, preserving routes,
-  permissions, flags, schemas and authored intent. Do not merely bump the schema.
+  permissions, flags, schemas and authored intent. Do not merely bump the
+  schema.
 - Adopt canonical checks and supported transport mechanisms; remove independent
   framework/checker implementations only after their replacement is available.
-- Separate job contracts, auth/worker/tool entry points and composition; move cache
-  mechanics to data and business decisions into their domain owners.
+- Separate job contracts, auth/worker/tool entry points and composition; move
+  cache mechanics to data and business decisions into their domain owners.
 - Adopt restricted operation/lifecycle/write contracts and the consistent
   frontend mutation/effect paths. Preserve existing authorization, tenant,
   concurrency, audit, outbox and replay semantics through behavior tests.
@@ -572,12 +587,13 @@ are closed; old baseline regressions still produce their expected failures.
 - Require changes to generators, APIs and rules to enumerate affected consumers,
   update migrations and exercise the example plus clean generated fixtures.
 - Retain the old baseline or minimal equivalent negative fixtures as regression
-  evidence; do not turn expected historical failure into a waived current failure.
+  evidence; do not turn expected historical failure into a waived current
+  failure.
 - Verify canonical-check ownership and trusted CI execution on every applicable
   change. Keep skills linked to current rules and supported diagnostic repairs.
-- Track observed recurrences and reopen upstream causes when a known class passes
-  unexpectedly. The working example demonstrates the current framework contract;
-  it must not become a separate implementation again.
+- Track observed recurrences and reopen upstream causes when a known class
+  passes unexpectedly. The working example demonstrates the current framework
+  contract; it must not become a separate implementation again.
 
 **Exit:** ongoing required gates catch recurrence and consumer drift. A correct
 example and a framework that rejects the old incorrect paths remain separate,
@@ -598,10 +614,10 @@ The migration is complete only when all gaps above are closed and:
 - The release-pin consumer checks pass without local workspace replacements.
 - Skills link the canonical architecture and diagnostic repairs; documentation
   reports implemented guarantees and migration limits accurately.
-- Every gap has an evidence-backed causal record, an upstream owning fix and
-  an executable recurrence test. The original failure and its nearest practical
-  bypass must fail through the actual required consumer check, not only a checker
-  unit test. Unresolved causes remain explicitly open.
+- Every gap has an evidence-backed causal record, an upstream owning fix and an
+  executable recurrence test. The original failure and its nearest practical
+  bypass must fail through the actual required consumer check, not only a
+  checker unit test. Unresolved causes remain explicitly open.
 
 This plan does not defer CI until the end: each phase adds its own required
 negative fixtures and consumer checks. Operational tests that skip are not
@@ -611,8 +627,8 @@ evidence of a database or delivery guarantee.
 
 For every finding, ask two separate questions: what allowed the state to be
 introduced, and what allowed it to survive? Follow both paths through the public
-API, generator, instructions, consumer migration, check implementation and actual
-CI invocation. A fix to the example alone closes neither path by default.
+API, generator, instructions, consumer migration, check implementation and
+actual CI invocation. A fix to the example alone closes neither path by default.
 
 Call a violation of an established invariant an error. A requirement introduced
 by the six-layer contract creates migration debt in older code; do not claim the
@@ -632,11 +648,12 @@ primitives. Independent prototyping was intentional. The missing enforced
 transition to a canonical framework consumer allowed that separation and later
 drift to persist.
 
-There is no evidence in the inspected changes that an agent deliberately disabled
-a failing rule to introduce these cases. Git authorship does not establish whether
-an agent wrote code, what instructions it saw, or which commands actually ran.
-Historical CI run logs and live repository protection settings were not inspected.
-Distinguish a potential bypass in current tooling from evidence that it was used.
+There is no evidence in the inspected changes that an agent deliberately
+disabled a failing rule to introduce these cases. Git authorship does not
+establish whether an agent wrote code, what instructions it saw, or which
+commands actually ran. Historical CI run logs and live repository protection
+settings were not inspected. Distinguish a potential bypass in current tooling
+from evidence that it was used.
 
 The existing backend/frontend architecture checks passed during the mapping
 exercise. That establishes that the present rules accept the present tree, not
@@ -693,17 +710,19 @@ For each correction, keep these fields in its issue/PR or maintained gap record:
    and/or trusted CI change, with consumer changes as part of adoption.
 6. **Counterfactual proof:** show the old path is accepted or possible before
    the correction and rejected afterward; exercise the nearest plausible bypass
-   and confirm the supported path still works in a generated consumer and example.
+   and confirm the supported path still works in a generated consumer and
+   example.
 7. **Closure evidence:** actual required-check execution, compatibility/release
-   status, unresolved uncertainty and accountable owner. Do not close at code move,
-   a new prompt instruction, or a passing unit test alone.
+   status, unresolved uncertainty and accountable owner. Do not close at code
+   move, a new prompt instruction, or a passing unit test alone.
 
 Repository-local checks cannot prevent a caller from choosing not to run them.
 For changes entering the maintained codebase, trusted required CI and protected
-merge policy must enforce execution independently of editable application scripts.
-Validate that setup rather than infer it from a workflow filename. If a rule was
-actually disabled, fix both the disabling route and any API/generator affordance
-that made bypass attractive; do not stop at telling the agent to obey the rule.
+merge policy must enforce execution independently of editable application
+scripts. Validate that setup rather than infer it from a workflow filename. If a
+rule was actually disabled, fix both the disabling route and any API/generator
+affordance that made bypass attractive; do not stop at telling the agent to obey
+the rule.
 
 ## Source baseline
 

@@ -9,13 +9,15 @@ explicit composition root. Features such as purchasing span several layers;
 authentication, auditing and telemetry have responsibilities at several
 boundaries.
 
-This is the target architecture contract for framework development and application
-design. Existing generators and applications implement parts of it. The
-[enforcement status](#enforcement-status) distinguishes current checks from work
-still needed; this guide does not introduce new CLI commands or migrate code.
+This is the target architecture contract for framework development and
+application design. Existing generators and applications implement parts of it.
+The [enforcement status](#enforcement-status) distinguishes current checks from
+work still needed; this guide does not introduce new CLI commands or migrate
+code.
 
 For the existing package inventory, concrete gaps and phased adoption criteria,
-see [architecture mapping and migration](../maintainers/architecture-migration/).
+see [architecture mapping and
+migration](../maintainers/architecture-migration/).
 
 ## The layers
 
@@ -29,30 +31,31 @@ see [architecture mapping and migration](../maintainers/architecture-migration/)
 | Infrastructure adapters | Identity-provider, payment, email, model-provider and other external-service integrations; external delivery mechanisms | Business decisions to operations/domain rules; persistence to data capabilities |
 
 Layers describe responsibilities and dependency rules, not separate services,
-processes, repositories or Go modules. A small app can implement them in a single
-server. Features organize code within layers; they do not create permission to
-bypass a boundary.
+processes, repositories or Go modules. A small app can implement them in a
+single server. Features organize code within layers; they do not create
+permission to bypass a boundary.
 
 The data layer is a first-class boundary. A remote object store belongs to data
-even when its client uses HTTP. A payment provider belongs to infrastructure even
-when it retains records. Classify the capability by responsibility, not protocol
-or vendor. Data and infrastructure are separate implementation boundaries used
-through ports; neither is a mandatory step after the other in a request pipeline.
+even when its client uses HTTP. A payment provider belongs to infrastructure
+even when it retains records. Classify the capability by responsibility, not
+protocol or vendor. Data and infrastructure are separate implementation
+boundaries used through ports; neither is a mandatory step after the other in a
+request pipeline.
 
-The composition root loads validated configuration, constructs concrete adapters,
-injects dependencies, registers entry points and owns startup/shutdown. It can
-reference every server layer for wiring. It must not execute request-specific
-business rules or become a service locator.
+The composition root loads validated configuration, constructs concrete
+adapters, injects dependencies, registers entry points and owns
+startup/shutdown. It can reference every server layer for wiring. It must not
+execute request-specific business rules or become a service locator.
 
 ## Dependency rules
 
 Runtime calls and source dependencies are different. An operation calls a
-repository at runtime, but imports a small interface rather than PostgreSQL.
-The PostgreSQL adapter satisfies that interface. This keeps the operation usable
+repository at runtime, but imports a small interface rather than PostgreSQL. The
+PostgreSQL adapter satisfies that interface. This keeps the operation usable
 from HTTP, a worker or an agent tool without importing those transports.
 
-The following table describes allowed production dependencies between roles.
-It is a target for transitive checking, including helper packages.
+The following table describes allowed production dependencies between roles. It
+is a target for transitive checking, including helper packages.
 
 | Source role | Allowed dependencies | Forbidden dependencies |
 | --- | --- | --- |
@@ -76,9 +79,10 @@ boundary, but must state their consistency guarantees. A database transaction
 does not roll back an object upload or a cache write. Persisting outbox intent
 belongs to data; sending the corresponding email belongs to infrastructure.
 
-Do not solve a forbidden import by moving it into `utils`, a callback, or another
-helper. Classify every production package by responsibility. Tests can compose
-multiple layers to exercise a complete path without changing production rules.
+Do not solve a forbidden import by moving it into `utils`, a callback, or
+another helper. Classify every production package by responsibility. Tests can
+compose multiple layers to exercise a complete path without changing production
+rules.
 
 ## Where code lives
 
@@ -101,8 +105,8 @@ a placement guide, not a claim that every current scaffold generates them.
 | Endpoint and wire contracts | `internal/paths/` and application API/model packages; no use-case execution |
 
 The example currently has some flat operation/domain packages and provisional
-HTTP helpers in `internal/pluto`. Classify their contents by responsibility before
-splitting them; a directory rename alone does not establish a boundary.
+HTTP helpers in `internal/pluto`. Classify their contents by responsibility
+before splitting them; a directory rename alone does not establish a boundary.
 
 Endpoint metadata is a declaration consumed by registration and generation, not
 an executable layer. Request/response types describe the wire format. Domain
@@ -118,15 +122,16 @@ three lines long. There is no size-based exception.
 
 An operation may branch to propagate an error, handle absence, or act on a typed
 domain result. It must delegate decisions such as an approval threshold,
-discount calculation, self-approval prohibition or permitted lifecycle transition.
-This distinction is about responsibility, not the presence of an `if` statement.
+discount calculation, self-approval prohibition or permitted lifecycle
+transition. This distinction is about responsibility, not the presence of an
+`if` statement.
 
-The target is to keep generated entry adapters closed to authored business logic,
-with explicit extension points in operations and domain packages. A generator may
-create an initial authored domain file; its permanent role is domain code, not
-an entry adapter. Existing CLI handler and operation stubs are authored files and
-remain protected from overwrite. Changing their ownership requires a deliberate
-generator migration.
+The target is to keep generated entry adapters closed to authored business
+logic, with explicit extension points in operations and domain packages. A
+generator may create an initial authored domain file; its permanent role is
+domain code, not an entry adapter. Existing CLI handler and operation stubs are
+authored files and remain protected from overwrite. Changing their ownership
+requires a deliberate generator migration.
 
 Domain rules take explicit facts and return values, decisions or domain errors.
 An operation supplies verified identity, loaded records and any required current
@@ -145,48 +150,49 @@ The target lifecycle contract requires all of the following:
    expected version.
 5. Enforce stale-write rejection atomically in the database.
 
-Prefer private fields and controlled constructors/mutation methods so the compiler
-enforces ownership wherever possible. Go package privacy alone cannot prevent
-arbitrary assignments inside the owning package; type-aware checks must cover
-those paths and restrict access to rehydration entry points. Private fields also
-do not prove that a zero value is valid. Mutation and persistence boundaries must
-reject invalid values and prevent replay of a decision against another entity or
-version. These contracts extend the current Core decision API; they are not
-guarantees already supplied by `Next`.
+Prefer private fields and controlled constructors/mutation methods so the
+compiler enforces ownership wherever possible. Go package privacy alone cannot
+prevent arbitrary assignments inside the owning package; type-aware checks must
+cover those paths and restrict access to rehydration entry points. Private
+fields also do not prove that a zero value is valid. Mutation and persistence
+boundaries must reject invalid values and prevent replay of a decision against
+another entity or version. These contracts extend the current Core decision API;
+they are not guarantees already supplied by `Next`.
 
 ## Authorized operation boundaries
 
 Every entry path must invoke the required authorization boundary for its use
-case. Merely finding an `Authorize` call somewhere in a function is insufficient.
-The target is a required operation wrapper coupled to a restricted write
-interface, so callers cannot skip the gate and invoke the underlying mutation.
-Bind authorization to the current actor, tenant, resource and action, and define
-when mutable membership or policy facts must be revalidated. A flag or a stale
-authorization result cannot substitute for current permission.
+case. Merely finding an `Authorize` call somewhere in a function is
+insufficient. The target is a required operation wrapper coupled to a restricted
+write interface, so callers cannot skip the gate and invoke the underlying
+mutation. Bind authorization to the current actor, tenant, resource and action,
+and define when mutable membership or policy facts must be revalidated. A flag
+or a stale authorization result cannot substitute for current permission.
 
-This is a contract for future typed boundaries and runtime enforcement, not a new
-published wrapper API. Tests must attempt denied direct operation calls as well
-as HTTP calls, including attempts to reuse authority for another resource.
+This is a contract for future typed boundaries and runtime enforcement, not a
+new published wrapper API. Tests must attempt denied direct operation calls as
+well as HTTP calls, including attempts to reuse authority for another resource.
 
 ## Network and authentication boundaries
 
 Network code belongs at two edges. Incoming HTTP is an entry adapter; outbound
 HTTP to an identity provider, payment service or model provider is an
-infrastructure adapter. Database, cache and object-store protocols belong to data
-adapters. Domain code must not know these protocols. Server
-timeouts, TLS termination and ingress limits belong to deployment/transport
-configuration, wired through composition where application-owned.
+infrastructure adapter. Database, cache and object-store protocols belong to
+data adapters. Domain code must not know these protocols. Server timeouts, TLS
+termination and ingress limits belong to deployment/transport configuration,
+wired through composition where application-owned.
 
-Authentication is a capability spanning these boundaries, not a single step
-that makes all later calls trusted:
+Authentication is a capability spanning these boundaries, not a single step that
+makes all later calls trusted:
 
 - Entry adapters establish caller context through trusted authentication
   integrations. Client-supplied roles and tenant IDs are not proof of authority.
 - Identity infrastructure verifies credentials, sessions or provider responses.
 - Operations require the appropriate identity, current tenant membership,
-  permissions, authentication evidence and feature availability for the use case.
-- Domain resource policies decide relationships such as ownership or whether
-  an approver may decide their own request, using verified facts.
+  permissions, authentication evidence and feature availability for the use
+  case.
+- Domain resource policies decide relationships such as ownership or whether an
+  approver may decide their own request, using verified facts.
 - Storage preserves tenant scope and concurrency constraints on every relevant
   read and write.
 
@@ -204,19 +210,22 @@ domain code.
 2. The entry adapter decodes the request and supplies verified caller context to
    the approval operation.
 3. The operation enforces access and loads the purchase through a scoped port.
-4. The domain lifecycle evaluates the event and guard facts, returning a decision.
+4. The domain lifecycle evaluates the event and guard facts, returning a
+   decision.
 5. The operation asks its write port to persist the change with the expected
    version and required audit/delivery intent.
 6. The storage adapter atomically checks the version and commits the mutation,
-   audit and declared outbox work. A stale decision fails rather than overwrites.
-7. The entry adapter maps the committed result or error to the wire contract.
-   A worker later delivers outbox work through its own operation and adapter.
+   audit and declared outbox work. A stale decision fails rather than
+   overwrites.
+7. The entry adapter maps the committed result or error to the wire contract. A
+   worker later delivers outbox work through its own operation and adapter.
 
 The application calls domain, data and infrastructure capabilities at different
-points; domain code does not call down into storage. A successful state decision is not
-proof of authorization or a successful commit. Rules involving multiple records
-need an appropriate transaction, locking or constraint strategy for those facts.
-See [state machines](../backend/state/) and [jobs](../backend/jobs/).
+points; domain code does not call down into storage. A successful state decision
+is not proof of authorization or a successful commit. Rules involving multiple
+records need an appropriate transaction, locking or constraint strategy for
+those facts. See [state machines](../backend/state/) and
+[jobs](../backend/jobs/).
 
 ## Assign shared concerns
 
@@ -257,18 +266,19 @@ the same boundaries on the example that it enforces on consumer applications.
 
 The example still owns its business rules, schemas, typed queries, explicit
 wiring and application behavior tests at Pluto's authored extension points.
-Using Pluto exclusively includes supported libraries and adapters selected through
-Pluto; it does not require replacing vendor drivers with homemade code.
+Using Pluto exclusively includes supported libraries and adapters selected
+through Pluto; it does not require replacing vendor drivers with homemade code.
 
-When a framework capability or check is missing, implement it in the owning Pluto
-module or generator and then consume it in the example. Provisional example-local
-framework helpers and architecture checks are migration debt. Consolidate checks
-in Pluto and make the example invoke them; do not keep parallel copies or grant
-the example an exemption. Keep application-specific business assertions in the
-example, and use it as a real consumer proving that the shared rules work.
+When a framework capability or check is missing, implement it in the owning
+Pluto module or generator and then consume it in the example. Provisional
+example-local framework helpers and architecture checks are migration debt.
+Consolidate checks in Pluto and make the example invoke them; do not keep
+parallel copies or grant the example an exemption. Keep application-specific
+business assertions in the example, and use it as a real consumer proving that
+the shared rules work.
 
-Preserve the existing example as a failing baseline during framework repair.
-Fix libraries, generators, analyzers and trusted check execution first, then run
+Preserve the existing example as a failing baseline during framework repair. Fix
+libraries, generators, analyzers and trusted check execution first, then run
 them against that unchanged baseline. Require clear failures for the known drift
 before migrating the example. If a known violation passes, fix the upstream
 enforcement; do not clean up the example to hide the missed detection. A schema
@@ -279,15 +289,16 @@ that the old invalid paths are rejected.
 ## Enforcement status
 
 Assign each requirement to the mechanism that can establish it. Compiler
-boundaries restrict construction and access; canonical checks restrict placement,
-dependencies and managed ownership; runtime and database checks establish live
-authority and commit behavior. Skills teach the supported decision and repair
-path. A skill instruction never substitutes for a missing compiler, tooling or
-runtime boundary.
+boundaries restrict construction and access; canonical checks restrict
+placement, dependencies and managed ownership; runtime and database checks
+establish live authority and commit behavior. Skills teach the supported
+decision and repair path. A skill instruction never substitutes for a missing
+compiler, tooling or runtime boundary.
 
-The following map is the architectural contract, not a claim that every installed
-release supports every row. Consult the
-[candidate workflow and version limits](../maintainers/architecture-migration/#candidate-enforcement-workflow)
+The following map is the architectural contract, not a claim that every
+installed release supports every row. Consult the [candidate workflow and
+version
+limits](../maintainers/architecture-migration/#candidate-enforcement-workflow)
 before selecting commands or APIs.
 
 | Area and owner | Compiler and canonical checks | Required runtime proof | Skill guidance |
@@ -316,16 +327,17 @@ and versioned writer; a collection needs a visibility-bound query; a retriable
 write needs declared replay semantics; deferred delivery needs a typed effect.
 Do not choose a state machine merely because code contains nested conditionals.
 
-Published CLI contract checks validate managed generated content, file limits and
-selected transitive import boundaries: operations cannot reach HTTP or storage
-implementations, handlers cannot reach storage, and paths cannot reach handlers
-or operations. The example also has an application-local architecture test.
-These checks do not prove that a handler or operation contains no business rules,
-and they do not yet enforce every role in this guide.
+Published CLI contract checks validate managed generated content, file limits
+and selected transitive import boundaries: operations cannot reach HTTP or
+storage implementations, handlers cannot reach storage, and paths cannot reach
+handlers or operations. The example also has an application-local architecture
+test. These checks do not prove that a handler or operation contains no business
+rules, and they do not yet enforce every role in this guide.
 
 The unpublished implementation adds a read-only architecture inspection command,
 frozen-baseline evidence runner, bound lifecycle decisions and permission gates.
-See the [candidate enforcement workflow](../maintainers/architecture-migration/#candidate-enforcement-workflow)
+See the [candidate enforcement
+workflow](../maintainers/architecture-migration/#candidate-enforcement-workflow)
 for usage and limits. These additions are building blocks; they do not yet make
 the complete contract mandatory or authorize migration of the frozen example.
 
@@ -352,12 +364,12 @@ Direct assignment is forbidden here.
 Evaluate the lifecycle and persist through its transition writer.
 ```
 
-Heuristics such as nested-branch detection can suggest an
-extraction; they cannot prove that a state machine is the right business model.
-Required CI checks must run the same contracts as local tooling. Skills teach
-placement and repair decisions; tooling must enforce their outcomes. The contract
-is a small, explicit set of places where business decisions can be authored and
-a checked set of ways those decisions can affect the world.
+Heuristics such as nested-branch detection can suggest an extraction; they
+cannot prove that a state machine is the right business model. Required CI
+checks must run the same contracts as local tooling. Skills teach placement and
+repair decisions; tooling must enforce their outcomes. The contract is a small,
+explicit set of places where business decisions can be authored and a checked
+set of ways those decisions can affect the world.
 
 Translate this architecture into checks one boundary at a time, preserving
 authored code and documenting migration requirements. Check behavior as well as
@@ -374,6 +386,7 @@ repairing only the example is incomplete.
 
 Distinguish a missing rule from a bypassed rule, and a newly adopted constraint
 from an existing requirement. Record evidence and unknowns rather than infer
-agent intent from code. Use the [causal review and closure criteria](../maintainers/architecture-migration/#causal-review)
-for each finding. Local tooling, trusted required CI and library/runtime contracts
-must work together; skills teach the supported path but cannot enforce it alone.
+agent intent from code. Use the [causal review and closure
+criteria](../maintainers/architecture-migration/#causal-review) for each
+finding. Local tooling, trusted required CI and library/runtime contracts must
+work together; skills teach the supported path but cannot enforce it alone.
