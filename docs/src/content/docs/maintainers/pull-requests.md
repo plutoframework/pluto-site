@@ -149,7 +149,9 @@ not qualify; this audit cannot authorize an open PR or bless a bypassed merge.
 The canonical implementation is
 [`pluto/scripts/pr_automation`](https://github.com/plutoframework/pluto/tree/main/scripts/pr_automation).
 Repository entrypoints are generated from its job template and pin the policy
-and reviewer source to full commit SHAs.
+and reviewer source to full commit SHAs. Canonical CI verifies that the policy
+source pin matches the exact automation scripts being reviewed; no separate
+manual attestation is required.
 Changes to that implementation, the pins and `CODEOWNERS` require the same
 complete independent review as other changes. Update the source and tests,
 exercise a pilot PR, then update the pins. Do not let a PR choose the policy used
