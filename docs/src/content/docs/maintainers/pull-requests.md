@@ -1,132 +1,55 @@
 ---
-title: "Pull requests and automated review"
+title: "Pull requests and review"
 description: >-
-  How the independent Pluto PR Steward reviews, approves and merges changes.
+  Prepare changes, pass CI and security checks, and obtain maintainer review.
 ---
 
-Pluto changes enter `main` through pull requests. Formatting, tests and security
-checks run alongside an Astra review through GPU Router. A deterministic merge
-policy decides whether the independent reviewer can approve and merge. GitHub
-branch protections remain the final authority for merging.
+Pluto changes enter `main` through pull requests. Maintainers review the current
+diff alongside CI and security results. GitHub's branch protections, required
+checks and code-owner rules govern merging.
 
-Developers and coding agents write code, push branches and open PRs using their
-normal contributor identities. **Pluto PR Steward is the reviewer.** It
-never writes code, pushes branches, opens PRs or creates replacement submissions.
-It reviews existing PRs, requests changes when it finds defects, approves passing
-changes and merges them when the policy and GitHub protections permit it.
-Steward authenticates as `jackbot-advrsty` for review comments, approvals,
-change requests and merges. The GitHub App signs the required check results.
+## Prepare the change
 
-## Open a pull request
+Keep each PR focused on a coherent change. Run the repository's formatter and
+checks before opening it, and include a regression for a reproduced defect.
+Describe the resulting behavior, validation, compatibility and migration needs.
+Record test evidence in the PR rather than adding work-summary files.
 
-Run the repository's formatter and checks before opening the PR. Describe the
-behavior changed, the tests run and any compatibility or documentation impact.
-Keep implementation summaries and test evidence in the PR rather than adding
-report files to the repository.
+Follow the repository's contributing instructions. Public behavior changes also
+need their owning documentation updated; see the
+[documentation guide](../documentation/) for source ownership and snapshot
+refreshes. Keep a PR in draft while implementation or validation is incomplete.
 
-The reviewer runs when a PR is opened, reopened, marked ready or updated. Feedback
-is kept on the PR. Push fixes to the same branch; the next review evaluates the
-complete current diff and revisits previous findings. A comment alone does not
-prove that a finding was fixed.
+## Obtain review
 
-Draft PRs do not qualify for automatic merging. To retry a failed review, run the
-**Pluto PR review** workflow manually, supply the PR number and select
-**retry_review**. That option spends review tokens. Leave it off to reevaluate
-policy using existing evidence. CI completion and review notifications reuse a
-completed review for the same repository, PR, head, base and policy revision.
-Failed or interrupted attempts remain blocked until a new revision or an explicit
-retry; those notifications do not repeatedly call the model.
+Request a human reviewer with relevant expertise. Review the complete current
+diff, including generated files, dependency updates, migrations and CI changes.
+Authentication, authorization, tenant boundaries, transactions and concurrency
+need substantive review beyond passing tests.
 
-## What qualifies for automatic merging
+Push fixes to the same branch and explain how they address feedback. Verify
+reported defects with code and regression evidence. Resolve discussions when
+the concern has been addressed, and retain outstanding requests for changes.
+New commits may invalidate prior approvals and require another review.
 
-All of the following must hold for the current revision:
+## Check CI and security results
 
-- A complete structured Astra review exists for the current head, base and policy
-  revision. Missing or partial review output blocks merging.
-- The review covers every changed file and explicitly recommends
-  `no_concerns_found`. Unresolved findings or concerns, including security
-  concerns, block approval; a positive recommendation alone does not waive them.
-- Intrinsic risk is assessed as low, medium or high. Unknown or malformed risk
-  blocks approval. A `needs_review` recommendation also blocks approval, even
-  when a human has approved the PR.
-- Every required repository CI workflow and the dependency-security workflow
-  has a successful pull-request run for this head commit.
-- No human maintainer's request for changes remains outstanding. Steward does
-  not dismiss those requests to make a PR eligible.
-- GitHub's native requirements pass: code-owner approval where applicable,
-  current branch checks, resolved conversations and CodeQL thresholds.
+Every required check must succeed for the current revision before merging.
+Inspect failures and repair their cause before rerunning checks. Missing or
+skipped validation is not evidence of a pass; describe prerequisites and
+remaining coverage explicitly.
 
-Steward approves eligible changes submitted by other identities, then squash
-merges them or queues GitHub's native auto-merge while native checks finish.
-New commits invalidate stale approvals and require checks and review again.
-Steward has no branch-protection bypass. API failures, model failures,
-unknown mergeability and incomplete file inventories do not grant approval.
-
-## Sensitive changes and reviewer independence
-
-The same evidence gates apply to authentication, authorization, cryptography,
-sessions, credentials, tenant boundaries, database migrations and SQL, dependency
-manifests and lockfiles, CI, build tooling and review policy. These categories do
-not impose a separate human-approval requirement. The independent Steward account
-can approve and merge them at any assessed intrinsic risk level when the complete
-review recommends `no_concerns_found`, no unresolved findings or concerns remain
-and all other gates pass.
-
-Complete coverage includes both sides of a rename. Unreadable binary content,
-omitted patches and incomplete file inventories remain coverage blockers; they
-must not be counted as reviewed text. A human approval cannot substitute for
-missing review evidence or waive unknown risk.
-
-GitHub does not allow authors to approve their own PRs and also requires approval
-from someone other than the last pusher. Steward must satisfy those independence
-requirements and any native code-owner rules. Its independent-account approval
-satisfies the policy without a separate human approval.
-The controller rejects PRs authored by the Steward account without spending model
-tokens. Steward does not author or recreate contributor PRs.
-
-## Security checks
-
-Dependency checks run `govulncheck` for tracked Go modules and `npm audit` for
+Dependency checks use `govulncheck` for tracked Go modules and `npm audit` for
 tracked npm lockfiles. High and critical npm vulnerabilities fail the check.
-CodeQL uses extended queries; its native merge rule blocks high or critical
-security alerts and error-level findings. Secret scanning and push protection
-are enabled separately in repository settings.
+CodeQL and the repository's native security rules also apply. Secret scanning
+and push protection are configured separately in repository settings.
 
-Passing these checks and AI review is evidence for a merge decision, not an
-independent security audit. Runtime authorization, transaction ownership,
-concurrency and regression coverage still need substantive review.
+## Merge
 
-## Maintain the automation
+A maintainer merges after review, required checks, code-owner approval and
+conversation-resolution requirements are satisfied. Use GitHub's normal merge
+flow and preserve branch protections. Address blocking findings rather than
+bypassing checks or dismissing requests for changes to obtain a green status.
 
-The canonical implementation is
-[`pluto/scripts/pr_automation`](https://github.com/plutoframework/pluto/tree/main/scripts/pr_automation).
-Repository entrypoints are generated from its job template and pin the policy
-and reviewer source to full commit SHAs.
-Changes to that implementation, the pins and `CODEOWNERS` require the same
-complete independent review as other changes. Update the source and tests,
-exercise a pilot PR, then update the pins. Do not let a PR choose the policy used
-to evaluate itself.
-
-The `pluto-pr-steward` App publishes two checks: **Pluto review** records completed
-review evidence; **Pluto merge policy** grants or withholds merge eligibility.
-Required checks are bound to that App's identity, preventing an ordinary Actions
-job from substituting a check with the same name.
-The App check-signing token is separate from the `jackbot-advrsty` credential and
-is not passed to the model-review subprocess. The reviewer API client rejects PR
-creation, commit creation and branch writes.
-
-Credentials live in the **pluto-review** Actions environment, restricted to the
-`main` branch. `PLUTO_STEWARD_TOKEN` authenticates the machine account; the App key
-is used only to mint repository-scoped check-signing tokens. The privileged
-reviewer runs on `pull_request_target` or trusted
-`workflow_run` events, checks out only pinned policy and reviewer source, and
-never executes PR code. Unprivileged PR tests and review-event notifications do
-not receive those credentials.
-
-GPU Router uses base URL `https://gpurouter.io/v1`, gateway model
-`openai/gpt-6-astra` and high reasoning effort. There is no weaker fallback.
-Each model request has a ten-minute deadline; timed-out calls are not replayed
-automatically. The review process has a fifteen-minute limit. A timeout keeps
-merging blocked; retry the review workflow after the provider recovers.
-`PLUTO_AUTO_MERGE=false` keeps a repository in review-only mode; `true` enables
-merging when every gate passes. This setting does not bypass branch rules.
+Passing CI supports the review decision; it does not replace an independent
+security audit or prove runtime authorization and transaction correctness.
