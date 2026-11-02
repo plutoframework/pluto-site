@@ -42,14 +42,22 @@ retry; those notifications do not repeatedly call the model.
 Before inference, the controller binds review input to the exact repository, PR,
 head and base. It verifies the file inventory and text against immutable Git trees
 and blobs, including both sides of renames and verified empty files. Recovered
-patches must match those files; missing, unreadable or mismatched content blocks
-review.
+patches must match those files. Generated files, checksums and lockfiles remain
+in the complete inventory; filenames do not grant review exemptions. Binary or
+nonregular files, unreadable content and mismatched inputs block verification
+instead of being counted as reviewed.
 
-The reviewer plans every chunk before the first model request. A plan that
-filters, omits or clips files is rejected before inference. Checks publish
-allowlisted failure reasons rather than raw provider errors or subprocess logs.
-Repair the reported input or configuration problem before spending tokens on an
-explicit retry.
+The reviewer plans every chunk before the first model request. Each call has a
+96,000-token total cap, including the rendered input and 16,384 reserved output
+tokens. A review permits at most five model calls, with no automatic retries or
+fallback model. A plan that filters, omits or clips files, or exceeds these
+limits, is rejected before inference.
+
+Keep PRs reviewable. If a complete review cannot fit these limits, split large
+changes into coherent PRs or ask maintainers to resolve input-verification or
+review-configuration problems. Do not retry an unchanged incomplete plan. Checks
+publish allowlisted failure reasons rather than raw provider errors or subprocess
+logs; resolve the reported cause before requesting a token-spending retry.
 
 Automatic events for the same head run serially without canceling an active
 review. Wait for that review to finish before requesting a manual retry. A new
@@ -68,7 +76,9 @@ All of the following must hold for the current revision:
   blocks approval. A `needs_review` recommendation also blocks approval, even
   when a human has approved the PR.
 - Every required repository CI workflow and the dependency-security workflow
-  has a successful pull-request run for this head commit.
+  has a successful canonical pull-request run for this head commit. If a workflow
+  also has push runs for this head, its latest push run must succeed too. A
+  successful PR run does not waive a failing or unfinished push duplicate.
 - No human maintainer's request for changes remains outstanding. Steward does
   not dismiss those requests to make a PR eligible.
 - GitHub's native requirements pass: code-owner approval where applicable,
