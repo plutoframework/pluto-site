@@ -59,9 +59,14 @@ review-configuration problems. Do not retry an unchanged incomplete plan. Checks
 publish allowlisted failure reasons rather than raw provider errors or subprocess
 logs; resolve the reported cause before requesting a token-spending retry.
 
-Automatic events for the same head run serially without canceling an active
-review. Wait for that review to finish before requesting a manual retry. A new
-head still needs its own review; serialization cannot make stale evidence valid.
+A read-only resolver first identifies the current PR using GitHub's built-in
+credential, without Steward, App-signing or model-provider credentials.
+
+Review jobs share a queue for the same repository, PR number and head SHA,
+without canceling an active review. Different PRs pointing to the same commit
+have independent queues. Wait for the current review to finish before requesting
+a manual retry. A new head still needs its own review; serialization cannot make
+stale evidence valid.
 
 ## What qualifies for automatic merging
 
