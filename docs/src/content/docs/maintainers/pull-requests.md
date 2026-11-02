@@ -37,6 +37,24 @@ completed review for the same repository, PR, head, base and policy revision.
 Failed or interrupted attempts remain blocked until a new revision or an explicit
 retry; those notifications do not repeatedly call the model.
 
+## Verified review input
+
+Before inference, the controller binds review input to the exact repository, PR,
+head and base. It verifies the file inventory and text against immutable Git trees
+and blobs, including both sides of renames and verified empty files. Recovered
+patches must match those files; missing, unreadable or mismatched content blocks
+review.
+
+The reviewer plans every chunk before the first model request. A plan that
+filters, omits or clips files is rejected before inference. Checks publish
+allowlisted failure reasons rather than raw provider errors or subprocess logs.
+Repair the reported input or configuration problem before spending tokens on an
+explicit retry.
+
+Automatic events for the same head run serially without canceling an active
+review. Wait for that review to finish before requesting a manual retry. A new
+head still needs its own review; serialization cannot make stale evidence valid.
+
 ## What qualifies for automatic merging
 
 All of the following must hold for the current revision:
@@ -95,6 +113,19 @@ are enabled separately in repository settings.
 Passing these checks and AI review is evidence for a merge decision, not an
 independent security audit. Runtime authorization, transaction ownership,
 concurrency and regression coverage still need substantive review.
+
+## Verify a merge receipt
+
+After an actual Steward merge, a racing notification can leave a false-red
+merge-policy check. Run **Pluto PR review** with the merged PR number and leave
+**retry_review** off to audit the existing receipt without calling the model or
+attempting another merge.
+
+Repair requires the Steward's approval, signed complete positive review and
+successful required checks for the reviewed head. GitHub must confirm that
+Steward merged that head into `main`, with the expected base parent and the
+reviewed head's exact tree in the squash commit. Missing or mismatched proof does
+not qualify; this audit cannot authorize an open PR or bless a bypassed merge.
 
 ## Maintain the automation
 
