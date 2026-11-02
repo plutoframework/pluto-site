@@ -5,9 +5,9 @@ description: >-
 ---
 
 Pluto changes enter `main` through pull requests. Formatting, tests and security
-checks run alongside an Astra review through GPU Router. A deterministic merge
-policy decides whether the independent reviewer can approve and merge. GitHub
-branch protections remain the final authority for merging.
+checks run alongside an independent model review through GPU Router. A
+deterministic merge policy decides whether the independent reviewer can approve
+and merge. GitHub branch protections remain the final authority for merging.
 
 Developers and coding agents write code, push branches and open PRs using their
 normal contributor identities. **Pluto PR Steward is the reviewer.** It
@@ -33,7 +33,8 @@ Draft PRs do not qualify for automatic merging. To retry a failed review, run th
 **Pluto PR review** workflow manually, supply the PR number and select
 **retry_review**. That option spends review tokens. Leave it off to reevaluate
 policy using existing evidence. CI completion and review notifications reuse a
-completed review for the same repository, PR, head, base and policy revision.
+completed review for the same repository, PR, head, base, policy revision and
+selected model. Changing the selected model invalidates cached review evidence.
 Failed or interrupted attempts remain blocked until a new revision or an explicit
 retry; those notifications do not repeatedly call the model.
 
@@ -72,8 +73,9 @@ stale evidence valid.
 
 All of the following must hold for the current revision:
 
-- A complete structured Astra review exists for the current head, base and policy
-  revision. Missing or partial review output blocks merging.
+- A complete structured review from the selected approved model exists for the
+  current head, base and policy revision. Missing or partial review output blocks
+  merging.
 - The review covers every changed file and explicitly recommends
   `no_concerns_found`. Unresolved findings or concerns, including security
   concerns, block approval; a positive recommendation alone does not waive them.
@@ -169,11 +171,20 @@ reviewer runs on `pull_request_target` or trusted
 never executes PR code. Unprivileged PR tests and review-event notifications do
 not receive those credentials.
 
-GPU Router uses base URL `https://gpurouter.io/v1`, gateway model
-`openai/gpt-6-astra` and high reasoning effort. There is no weaker fallback.
+GPU Router uses base URL `https://gpurouter.io/v1`. For a rollout using the
+approved model-selector profile, operators set the protected Actions repository
+variable `PLUTO_REVIEW_MODEL` to one of these exact route literals:
 
-Long review requests use streaming transport; the Astra model, high reasoning
-effort and review requirements are unchanged. Only normal terminal completion
+- Opus 5.5, the default: `openai/anthropic/claude-opus-5.5`.
+- Astra: `openai/openai/gpt-6-astra`.
+
+An empty or unset variable selects Opus 5.5. Unknown values are rejected before
+requests. Selection comes only from the protected variable; failures never
+silently switch models. Both approved models use high reasoning effort and the
+same review limits and gates.
+
+Long review requests use streaming transport with one transport attempt per
+call, no automatic retry and no fallback model. Only normal terminal completion
 qualifies: interrupted or truncated responses, or responses without finish
 information, block approval.
 
