@@ -171,6 +171,12 @@ not receive those credentials.
 
 GPU Router uses base URL `https://gpurouter.io/v1`, gateway model
 `openai/gpt-6-astra` and high reasoning effort. There is no weaker fallback.
+
+Long review requests use streaming transport; the Astra model, high reasoning
+effort and review requirements are unchanged. Only normal terminal completion
+qualifies: interrupted or truncated responses, or responses without finish
+information, block approval.
+
 Each model request has a ten-minute deadline; timed-out calls are not replayed
 automatically. The review process has a fifteen-minute limit. A timeout keeps
 merging blocked; retry the review workflow after the provider recovers.
