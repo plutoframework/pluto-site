@@ -5,6 +5,17 @@ description: Configure project choices and runtime settings in Pluto.
 
 Pluto saves generator choices in `pluto.toml`. Runtime settings come from your application's config package and environment.
 
+## Master and factory settings
+
+The experimental software factory adds a secret-free master configuration at
+`$XDG_CONFIG_HOME/pluto/pluto.toml` (normally `~/.config/pluto/pluto.toml`) and a
+resolved `factory.toml` for each factory. These are distinct from an application's
+project manifest. Explicit setup choices override master defaults, and changes
+to master defaults do not silently alter existing factories.
+
+See [Software factory (experimental)](../cli/factory/) for installation, fnox
+backends, guided/headless setup, GitHub issue intake and prototype limits.
+
 ## Project settings
 
 Set the application name, module and environment prefix when initializing:
