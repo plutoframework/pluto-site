@@ -338,6 +338,19 @@ Missing, pending or non-successful required checks withhold merge requests,
 including the interval before GitHub reports a new workflow run. The adapter
 does not use an administrator merge bypass.
 
+Integration assesses every product acceptance criterion against current
+candidate/configuration evidence. Worker remaining-work prose is advisory:
+publication, merging and issue closure are coordinator duties, not a reason to
+start another coding increment. Only explicitly incomplete criteria justify a
+continuation. A final all-passed advance is recorded as terminal completion
+intent; closing still requires confirmed owned merges for every writable repo.
+
+Publication checks all repositories for an empty diff before pushing anything.
+An unchanged candidate is a typed `github.no_changes` result: reconcile prior
+merges and acceptance instead of blindly retrying or claiming completion.
+Already-running coordinators do not hot-reload these rules. Older queued merge
+records without the new acceptance bindings require explicit reconciliation.
+
 Recoverable errors trigger bounded autonomous recovery. Notifications report
 what happened and what the coordinator is doing without blocking unrelated
 work. Missing authority or exhausted recovery options defer only affected work.
