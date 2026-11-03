@@ -358,6 +358,11 @@ a coding worker. PR-head CI is distinct from default-branch CI, and no required
 checks is not evidence that CI executed. A final check observation immediately
 before closure prevents a changed or failed rerun from using stale green proof.
 
+Default-branch workflow jobs are collected automatically for the exact merged
+commit, with branch, workflow, run-attempt and job identities checked separately
+from PR-head results. A brief discovery wait allows newly triggered main-branch
+runs to appear. Missing or unverified execution is never recorded as green CI.
+
 Recoverable errors trigger bounded autonomous recovery. Notifications report
 what happened and what the coordinator is doing without blocking unrelated
 work. Missing authority or exhausted recovery options defer only affected work.
