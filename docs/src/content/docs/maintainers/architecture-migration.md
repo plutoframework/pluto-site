@@ -106,10 +106,20 @@ entry points, native/unsafe/reflection escapes, and managed migrations. The
 canonical OpenAPI schema reader retains its required reflection under exact
 managed integrity checks.
 
-The current candidate accepts externally issued PostgreSQL sessions. Local
-credential/OIDC ingress, single tenancy and route-only feature flags are
-rejected until they have complete managed contracts. HTTP resource selection is
-explicit (`body`, `path:name`, `query:name`, or `collection`). Write tools
+The current candidate accepts externally issued PostgreSQL sessions or, with
+`--local-credentials` (and optionally `--oidc`), managed credential ingress.
+Password and OIDC sign-in create sessions through the runtime's single fenced
+`postgres.NewLocal` manager, which also issues every opaque operation identity;
+no entry accepts a subject string and sign-in never grants membership. The only
+authored production file is `internal/auth/credentials/integrations.go`, which
+supplies the Sender, trusted-client Ingress, shared attempt Limiter and optional
+PasswordPolicy. Pluto creates it once and never overwrites it. `ARCH609` limits
+that package to the standard library, third-party delivery clients and
+`pluto-auth/methods/password`; application packages, Pluto authority modules,
+stores and database clients are rejected. A managed replica-shared PostgreSQL
+limiter is supplied to the seam. Startup fails until the seam returns complete
+integrations. Single tenancy and route-only feature flags remain rejected until
+they have complete managed contracts. HTTP resource selection is explicit (`body`, `path:name`, `query:name`, or `collection`). Write tools
 require a host approved opaque intent and operation replay; model arguments and
 model completion alone cannot authorize or report a committed write. Workers
 authenticate their configured service credential for each delivery.
@@ -128,6 +138,10 @@ PostgreSQL/race tests across three guard/visibility profiles. Its runtime
 consumer executes one write through HTTP, a queued worker and a host-approved
 tool, and checks denied authority, rollback and delivery behavior. Required
 named SQL and runtime cases must run; a skipped or missing case is not a pass.
+Separate local-credential and OIDC consumers add a protected blueprint, require
+`pluto vet` to pass, and exercise signup, verification, sign-in, membership
+denial, foreign-issuer rejection, reset revocation, logout and the shared
+attempt window against PostgreSQL.
 The frozen example remains a separate negative consumer and is never rewritten
 by these checks.
 
