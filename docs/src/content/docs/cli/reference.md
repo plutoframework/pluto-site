@@ -154,7 +154,7 @@ serve it at runtime. `pluto openapi` derives an artifact from those paths and ac
 Go wire models; `--check` verifies freshness. Endpoint addition automatically regenerates it.
 The artifact uses sorted keys and keeps objects or arrays that fit in 80 columns on one
 line, so credential and OIDC route catalogs stay within the 1,000-line file limit.
-Rerun `pluto openapi` after upgrading the CLI to refresh an older indented artifact.
+Existing published applications keep their created-once emitter and format.
 No business validations, resource policies or recursive model support are inferred.
 
 `*_gen.go` is wholly CLI-owned and checked semantically before regeneration.
