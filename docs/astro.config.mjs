@@ -24,6 +24,7 @@ export default defineConfig({
             { label: "Introduction", slug: "index" },
             { label: "Your first application", slug: "getting-started" },
             { label: "Application architecture", slug: "architecture" },
+            { label: "Authored roles", slug: "authored-roles" },
             { label: "Worked examples", slug: "examples" },
             { label: "Configuration", slug: "configuration" },
             { label: "AI skills & Markdown", slug: "ai-skills" },

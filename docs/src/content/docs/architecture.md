@@ -127,8 +127,9 @@ transition. This distinction is about responsibility, not the presence of an
 `if` statement.
 
 The target is to keep generated entry adapters closed to authored business
-logic, with explicit extension points in operations and domain packages. A
-generator may create an initial authored domain file; its permanent role is
+logic. Operations and domain packages are the extension points; in the
+candidate profile, authored [rules, logic and adapters](../authored-roles/) are
+the declared roles. A generator may create an initial authored domain file; its permanent role is
 domain code, not an entry adapter. Existing CLI handler and operation stubs are
 authored files and remain protected from overwrite. Changing their ownership
 requires a deliberate generator migration.
