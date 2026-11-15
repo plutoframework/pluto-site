@@ -100,7 +100,19 @@ This profile implements scoped records with controlled construction, explicit
 normalization, owner/tenant visibility, lifecycle guards (`none`, `owner`,
 `not_owner`), atomic writes and bounded delivery. It owns production Go source,
 including domain rules and operation workflows derived from metadata. Authored
-hooks and additional production files require a supported framework extension.
+code lives in declared authored roles (rules, logic and adapters) described in
+[authored roles](../../authored-roles/); there is no other hook or extra
+production file. The scoped-record profile generates the gate, workflow,
+contract, scope, sqlc queries helper and composition.
+Four rules police the roles. `ARCH610` restricts each role's imports (pure
+standard library, its own group's packages and declared third-party modules;
+no pools, drivers or Pluto authority modules). `ARCH611` restricts shape: no
+`init`, package-level variables or goroutines, a body that matches its
+generated contract, logic reachable only from its generated workflow, and no
+adapter access to the sqlc `DBTX` interface or `WithTx`. `ARCH612` checks
+authored SQL and migrations for tenant binding, forced row-level security and
+append-only triggers. `ARCH613` checks migration numbering. `ARCH603` also
+rejects an adapter that builds its own `scope.Queries`.
 Canonical checks also protect compiler directives, rehydration and construction
 entry points, native/unsafe/reflection escapes, and managed migrations. The
 canonical OpenAPI schema reader retains its required reflection under exact
@@ -234,6 +246,59 @@ business patterns, hosted required-check policy and published dependency
 adoption remain separate work. Package reference snapshots must be refreshed
 from authorized published source revisions before these APIs are presented as
 released.
+
+## Candidate dependency pins
+
+Local `--candidate-<lib>-source` checkouts only build on one machine. For CI or
+any host the Go module proxy reaches, pass a pushed full commit hash per library
+instead (`<lib>` is `auth`, `rbac`, `core` or `jobs`):
+
+```sh
+pluto --no-input init /absolute/path/records --module example.com/records \
+  --multi-tenant --boundary-profile candidate \
+  --candidate-auth-revision <40-hex commit> \
+  --candidate-rbac-revision <40-hex commit> \
+  --candidate-core-revision <40-hex commit> \
+  --candidate-jobs-revision <40-hex commit>
+```
+
+A library uses either a source or a revision, never both. The revision resolves
+to the exact pseudo-version of every module the profile binds from that library.
+Nothing is written until the pins verify: each module downloads at exactly that
+version with `go.sum` checksums, declares its own module path, survives minimal
+version selection and compiles against a probe of the required candidate APIs.
+Pins are saved under `[boundary.pins]` in `pluto.toml` and become plain `go.mod`
+requirements with no `replace` directive. Blueprints restore the exact pins;
+canonical checks and `pluto vet` reject a pinned requirement at another version
+or any replacement of a pinned module. `go mod tidy` may only prune pins that no
+package imports.
+
+## Migrating with `pluto migrate`
+
+`pluto migrate --to candidate` moves a published application through ordered,
+idempotent steps, planned completely before any write. It needs a clean Git tree;
+`--dry-run` prints the step list, changed paths, the full diff and manual items.
+It accepts the same `--candidate-<lib>-source` or `--candidate-<lib>-revision`
+flags, plus `--contracts` for the behavior contracts endpoint metadata cannot
+define. It exits nonzero while any manual item remains.
+
+Two rules matter for existing code:
+
+- **Framework migration numbering.** Framework migrations keep their default
+  numbers (`002` sessions through `008` credential attempts). Existing files are
+  never renamed: a framework migration keeps its default number when free or
+  holding identical content, reuses the number of a content-identical file, and
+  otherwise takes the next number below `099`. Only non-default numbers are
+  recorded under `[migrations.framework]`. `001` is fixed; `099` and above are
+  generated memberships and resources. A content-identical file with a different
+  name blocks with the rename it needs. `ARCH613` then rejects a framework
+  migration at a number other than the one recorded, and any two unmanaged
+  migrations sharing a number.
+- **Scaffold-test policy.** A pristine scaffold test whose subject the candidate
+  profile no longer generates is never deleted silently. It is deleted with a
+  note when a candidate test sits beside it as a replacement; kept when its
+  package and imports still resolve; and otherwise reported as a manual item
+  asking you to delete it or port its cases. Edited tests are always manual.
 
 ## Framework package map
 
